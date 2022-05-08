@@ -2,7 +2,7 @@
  * This file creates the parent class of the User on the library system, contains the user's:
  * - Name
  * - User ID
- * - 10 digit phone number
+ * - 10-digit phone number
  * - Email ID
  * - Account's date of creation
  */
@@ -15,7 +15,7 @@ public class libUser {
     private int usrID;
     private long phoneNum;
     private String userEmail;
-    private Localdate creationDate;
+    private LocalDate creationDate;
 
     protected boolean isAdmin = false;
 
