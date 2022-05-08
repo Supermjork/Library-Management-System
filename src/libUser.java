@@ -7,14 +7,17 @@
  * - Account's date of creation
  */
 
-import java.util.LocalDate;
+import java.time.LocalDate;
 
-class libUser {
+public class libUser {
+    //Basic info
     private String usrName;
     private int usrID;
     private long phoneNum;
     private String userEmail;
     private Localdate creationDate;
+
+    protected boolean isAdmin = false;
 
     public libUser(String usrName, int usrID, long phoneNum, String userEmail) {
         this.usrName = usrName;
@@ -60,7 +63,7 @@ class libUser {
         this.creationDate = LocalDate.of(year, month, day);
     }
 
-    public Localdate getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 }
