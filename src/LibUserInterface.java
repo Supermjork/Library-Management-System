@@ -3,13 +3,12 @@ import java.time.LocalDate;
  * This file creates the parent class of the User on the library system, contains the user's:
  * - Name
  * - User ID
- * - 10 digit phone number
+ * - 10-digit phone number
  * - Email ID
  * - Account's date of creation
  */
 interface LibUserInterface {
-    //Basic info
-    LocalDate creationDate = LocalDate.now();
+    //Basic info (Deleted all fields, assuming they are static and wrote them in the child class(es))
 
     void setName(String usrName);
     String getUsrName();
