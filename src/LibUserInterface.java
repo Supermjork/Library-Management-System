@@ -8,12 +8,7 @@ import java.time.LocalDate;
  * - Account's date of creation
  */
 interface LibUserInterface {
-    //Basic info
-    String usrName = null;
-    static int usrID = 0;
-    long phoneNum = 0;
-    String userEmail = null;
-    LocalDate creationDate = LocalDate.now();
+    //Basic info (Deleted all fields, assuming they are static and wrote them in the child class(es))
 
     void setName(String usrName);
     String getUsrName();
