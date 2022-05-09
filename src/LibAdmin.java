@@ -10,7 +10,7 @@ public class LibAdmin implements LibUserInterface {    //Basic Info for student,
     private String userEmail;
     private LocalDate creationDate;
 
-    LibAdmin(String studentName, int studentID, long studentPhone, String studentEmail) {
+    public LibAdmin(String studentName, int studentID, long studentPhone, String studentEmail) {
         usrName = studentName;
         usrID = studentID;
         phoneNum = studentPhone;

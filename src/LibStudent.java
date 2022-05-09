@@ -8,7 +8,7 @@ public class LibStudent implements LibUserInterface {
     private String userEmail;
     private LocalDate creationDate;
 
-    LibStudent(String studentName, int studentID, long studentPhone, String studentEmail) {
+    public LibStudent(String studentName, int studentID, long studentPhone, String studentEmail) {
         usrName = studentName;
         usrID = studentID;
         phoneNum = studentPhone;
