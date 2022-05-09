@@ -1,15 +1,14 @@
-import java.time.LocalDate;
-
 /**
  * This file creates the parent class of the User on the library system, contains the user's:
  * - Name
  * - User ID
- * - 10 digit phone number
+ * - 10-digit phone number
  * - Email ID
  * - Account's date of creation
  */
+import java.time.LocalDate;
 
-abstract class LibUserAbstract {
+abstract class LibUserAbstract { //ABSTRACT IS NOT ALLOWED IN PROJECT, DO NOT USE
     //Basic info
     private String usrName;
     private int usrID;
@@ -68,8 +67,4 @@ abstract class LibUserAbstract {
     abstract void placeOrder();
     abstract void viewUserRequests();
     abstract void viewUserRequests(int userId);
-
-
-
-
 }
