@@ -14,7 +14,7 @@ public class GenericFileReader {
      * @param <E> The type of the collection
      * @param fileName is the file we want to read
      * @param collection The collection we want to add the file contents to
-     * @param delimiter A new line is the delimiter between each element 
+     * @note delimiter A new line is the delimiter between each element
      *                  in the collection.
      */
     private static <E extends Collection> void readFileTo(String fileName, E collection) {
