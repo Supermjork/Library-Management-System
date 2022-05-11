@@ -1,3 +1,7 @@
+package library;
+
+import java.time.LocalDate;
+
 /**
  * Creating the object for Book, which will contain:-
  * - Book name
@@ -6,9 +10,6 @@
  * - Issue Date in Library (dayL, monthL, yearL)
  * - Issue Date Globally when the book was released (dayG, monthG, yearG)
  */
-
-import java.time.LocalDate;
-
 public class LibBook {
     private String bookName;
     private String bookAuthor;

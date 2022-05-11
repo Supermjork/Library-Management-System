@@ -1,8 +1,10 @@
+package library;
+
+import java.time.LocalDate;
+
 /**
  * Child class of the libUser which inherits basic fields, uses super constructor, also overrides privileges
  */
-import java.time.LocalDate;
-
 public class LibAdmin implements LibUserInterface {    //Basic Info for student, created constructor as there cannot be super() due to interface
     private String usrName;
     private int usrID;

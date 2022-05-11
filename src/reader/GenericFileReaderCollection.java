@@ -1,3 +1,5 @@
+package reader;
+
 import java.io.*;
 import java.util.Collection;
 
@@ -7,7 +9,7 @@ import java.util.Collection;
  * @apiNote Still a prototype.
  * @version 1.0 Beta  
  */
-public class GenericFileReader {
+public class GenericFileReaderCollection {
 
     /**
      * Reads a file and adds it to whichever structure mentioned.
