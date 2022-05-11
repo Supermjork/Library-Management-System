@@ -9,6 +9,8 @@ public class LibStudent implements LibUserInterface {
     private long phoneNum;
     private String userEmail;
     private LocalDate creationDate;
+    private final int maxBorrowBooks = 3;
+    private int currentBorrowedBooks;
 
     public LibStudent(String studentName, int studentID, long studentPhone, String studentEmail) {
         usrName = studentName;
@@ -16,6 +18,10 @@ public class LibStudent implements LibUserInterface {
         phoneNum = studentPhone;
         userEmail = studentEmail;
         creationDate = LocalDate.now();
+    }
+
+    public void addAmountBorrowed() {
+        currentBorrowedBooks++;
     }
 
     //Intellij created such methods and their @Override, I filled in the returns after copying the info fields

@@ -1,3 +1,5 @@
+package requests;
+
 import library.LibBook;
 import library.LibStudent;
 import java.time.LocalDate;
@@ -21,5 +23,11 @@ public class LibOrder implements LibRequest {
     public LibRequest createRequest(LibBook book, LibStudent student) {
         LibOrder order = new LibOrder(book.getBookID(), student.getUsrID());
         return order;
+    }
+
+    @Override
+    public String toString() {
+        return "The ordered book ID: " + bookID + ", the ordering user ID: " + studentID +
+                ", ordered on: " + orderDate;
     }
 }
