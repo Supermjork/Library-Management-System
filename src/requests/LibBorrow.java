@@ -22,7 +22,7 @@ public class LibBorrow implements LibRequest {
     public LibRequest createRequest(LibBook book, LibStudent student) {
         LibBorrow borrow = new LibBorrow(book.getBookID(), student.getUsrID());
         System.out.println("Your due date is: " + borrowDate.plusDays(14));
-        student.addAmountBorrowed();
+        student.incBorrowAmount();
         return borrow;
     }
 
