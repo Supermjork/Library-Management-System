@@ -3,9 +3,11 @@ package requests;
 import library.LibBook;
 import library.LibStudent;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class LibReturn implements LibRequest{
     protected final int fineRate = 50;
+    protected int fine;
     protected long bookID;
     protected int studentID;
     protected LocalDate returnDate;
@@ -16,10 +18,19 @@ public class LibReturn implements LibRequest{
         returnDate = LocalDate.now();
     }
 
+    public int calculateFine(LibBorrow borrowRequest) {
+        int daysAfterDue = (int) ChronoUnit.DAYS.between(borrowRequest.borrowDate, returnDate);
+        if(daysAfterDue == 0) {
+            return 0;
+        } else {
+            fine = daysAfterDue * fineRate;
+            return fine;
+        }
+    }
+
     @Override
     public LibRequest createRequest(LibBook book, LibStudent student) {
-        LibReturn returnReq = new LibReturn(book.getBookID(), student.getUsrID());
-        return returnReq;
+        return new LibReturn(book.getBookID(), student.getUsrID());
     }
 
     @Override
