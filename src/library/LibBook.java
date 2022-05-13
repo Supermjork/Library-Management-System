@@ -20,17 +20,18 @@ public class LibBook {
     private int stockAmount;
 
     public LibBook(String bookName, String bookAuthor, int bookID, int dayL, int monthL, int yearL, int dayG,
-                   int monthG, int yearG) {
+                   int monthG, int yearG, int stockAmount) {
         this.bookName = bookName;
         this.bookAuthor = bookAuthor;
         this.bookID = bookID;
         issLibDate = LocalDate.of(yearL, monthL, dayL);
         issGloDate = LocalDate.of(yearG, monthG, dayG);
+        this.stockAmount = stockAmount;
     }
 
     // Accessors and Modifiers for each private field above.
 
-    // Book Name 
+    // Book Name
     public void setBookName(String bookName) {
         this.bookName = bookName;
     }
