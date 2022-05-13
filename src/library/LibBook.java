@@ -10,12 +10,14 @@ import java.time.LocalDate;
  * - Issue Date in Library (dayL, monthL, yearL)
  * - Issue Date Globally when the book was released (dayG, monthG, yearG)
  */
+
 public class LibBook {
     private String bookName;
     private String bookAuthor;
+    private LocalDate issLibDate;  // Issuing date for when the book was added to the library
+    private LocalDate issGloDate;  //    ~      ~   ~    ~   ~   ~    ~  released globally
     private int bookID;
-    private LocalDate issLibDate;  //Issuing date for when the book was added to the library
-    private LocalDate issGloDate;  //   ~      ~   ~    ~   ~   ~    ~  released globally
+    private int stockAmount;
 
     public LibBook(String bookName, String bookAuthor, int bookID, int dayL, int monthL, int yearL, int dayG,
                    int monthG, int yearG) {
@@ -26,6 +28,9 @@ public class LibBook {
         issGloDate = LocalDate.of(yearG, monthG, dayG);
     }
 
+    // Accessors and Modifiers for each private field above.
+
+    // Book Name
     public void setBookName(String bookName) {
         this.bookName = bookName;
     }
@@ -34,6 +39,7 @@ public class LibBook {
         return bookName;
     }
 
+    // Book Author
     public void setBookAuthor(String bookAuthor) {
         this.bookAuthor = bookAuthor;
     }
@@ -42,14 +48,7 @@ public class LibBook {
         return bookAuthor;
     }
 
-    public void setBookID(int bookID) {
-        this.bookID = bookID;
-    }
-
-    public int getBookID() {
-        return bookID;
-    }
-
+    // Date when book got issued in the library
     public void setIssLibDate(int dayL, int monthL, int yearL) {
         this.issLibDate = LocalDate.of(yearL, monthL, dayL);
     }
@@ -58,11 +57,38 @@ public class LibBook {
         return issLibDate;
     }
 
+    // Global release date
     public void setIssGloDate(int dayG, int monthG, int yearG) {
         this.issGloDate = LocalDate.of(yearG, monthG, dayG);
     }
 
     public LocalDate getIssGloDate() {
         return issGloDate;
+    }
+
+    // Book unique ID
+    public void setBookID(int bookID) {
+        this.bookID = bookID;
+    }
+
+    public int getBookID() {
+        return bookID;
+    }
+
+    // The amount of this book in stock with increment/decrement functions
+    public void setStockAmount(int stockAmount) {
+        this.stockAmount = stockAmount;
+    }
+
+    public int getStockAmount() {
+        return stockAmount;
+    }
+
+    public void incStockAmount() {
+        stockAmount++;
+    }
+
+    public void decStockAmount() {
+        stockAmount--;
     }
 }

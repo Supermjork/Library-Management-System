@@ -20,8 +20,13 @@ public class LibStudent implements LibUserInterface {
         creationDate = LocalDate.now();
     }
 
-    public void addAmountBorrowed() {
+    //Two functions to update the student's borrowed amount of books
+    public void incBorrowAmount() {
         currentBorrowedBooks++;
+    }
+
+    public void decBorrowAmount() {
+        currentBorrowedBooks--;
     }
 
     //Intellij created such methods and their @Override, I filled in the returns after copying the info fields
