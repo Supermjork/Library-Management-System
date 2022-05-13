@@ -8,10 +8,10 @@ import javax.swing.*;
  * The original GUI is harder to use and more complicated to install.
  * @author Icen Zeyada
  */
-public class LibGUIAwt {    
+public class LibGUISwing {    
   
     // initializing using constructor  
-    LibGUIAwt() {  
+    LibGUISwing() {  
         
         // creating frame
         JFrame f = new JFrame("LibGUI Main Window");
@@ -66,7 +66,7 @@ public class LibGUIAwt {
     public static void main(String args[]) {   
     
         // creating instance of Frame class   
-        LibGUIAwt window = new LibGUIAwt();    
+        LibGUISwing window = new LibGUISwing();    
     
     }  
    
