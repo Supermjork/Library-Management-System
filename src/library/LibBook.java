@@ -30,7 +30,7 @@ public class LibBook {
 
     // Accessors and Modifiers for each private field above.
 
-    // Book Name
+    // Book Name 
     public void setBookName(String bookName) {
         this.bookName = bookName;
     }
