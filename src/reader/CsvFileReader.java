@@ -9,7 +9,6 @@ import library.LibStudent;
 import java.util.List;
 
 /**
- * 
  * @author Icen Zeyada
  * @apiNote Still a prototype.
  * @version 1.0 Beta
@@ -26,11 +25,16 @@ public class CsvFileReader {
             String[] constructorValues; 
             while(sc.hasNextLine()) {
                 constructorValues = sc.nextLine().split(",");
-                bookList.add(new LibBook(constructorValues[0],constructorValues[1],
-                                         Integer.parseInt(constructorValues[2]), Integer.parseInt(constructorValues[3]),
-                                         Integer.parseInt(constructorValues[4]), Integer.parseInt(constructorValues[5]),
-                                         Integer.parseInt(constructorValues[6]), Integer.parseInt(constructorValues[7]),
-                                         Integer.parseInt(constructorValues[8]), Integer.parseInt(constructorValues[9]))
+                bookList.add(new LibBook(constructorValues[0],
+                                         constructorValues[1],
+                                         Integer.parseInt(constructorValues[2]),
+                                         Integer.parseInt(constructorValues[3]),
+                                         Integer.parseInt(constructorValues[4]),
+                                         Integer.parseInt(constructorValues[5]),
+                                         Integer.parseInt(constructorValues[6]),
+                                         Integer.parseInt(constructorValues[7]),
+                                         Integer.parseInt(constructorValues[8]),
+                                         Integer.parseInt(constructorValues[9]))
                             );
             }
             sc.close();
@@ -50,8 +54,10 @@ public class CsvFileReader {
             String[] constructorValues; 
             while(sc.hasNextLine()) {
                 constructorValues = sc.nextLine().split(",");
-                studentList.add(new LibStudent(constructorValues[0], Integer.parseInt(constructorValues[1]),
-                                               Long.parseLong(constructorValues[2]),constructorValues[3]));
+                studentList.add(new LibStudent(constructorValues[0], 
+                                               Integer.parseInt(constructorValues[1]),
+                                               Long.parseLong(constructorValues[2]),
+                                               constructorValues[3]));
             }
             sc.close();
         } catch (FileNotFoundException e) {
@@ -70,8 +76,11 @@ public class CsvFileReader {
             String[] constructorValues; 
             while(sc.hasNextLine()) {
                 constructorValues = sc.nextLine().split(",");
-                adminList.add(new LibAdmin(constructorValues[0], Integer.parseInt(constructorValues[1]),
-                                           Long.parseLong(constructorValues[2]),constructorValues[3]));
+                adminList.add(new LibAdmin(constructorValues[0], 
+                                           Integer.parseInt(constructorValues[1]),
+                                           Long.parseLong(constructorValues[2]),
+                                           constructorValues[3])
+                            );
 
             }
             sc.close();
