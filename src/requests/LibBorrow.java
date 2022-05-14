@@ -44,4 +44,30 @@ public class LibBorrow implements LibRequest {
         return "The borrowed book ID: " + bookID + ", the borrowing user ID: " + studentID +
                ", Borrowed on: " + borrowDate + ", and should return on: " + borrowDate.plusDays(14);
     }
+
+    // Getters and Setters for the book ID, student ID, and borrow date
+    public long getBookID() {
+        return bookID;
+    }
+
+    public void setBookID(long bookID) {
+        this.bookID = bookID;
+    }
+
+    public int getStudentID() {
+        return studentID;
+    }
+
+    public void setStudentID(int studentID) {
+        this.studentID = studentID;
+    }
+
+    public LocalDate getBorrowDate() {
+        return borrowDate;
+    }
+
+    public void setBorrowDate(LocalDate borrowDate) {
+        this.borrowDate = borrowDate;
+    }
+
 }

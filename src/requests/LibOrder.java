@@ -35,4 +35,29 @@ public class LibOrder implements LibRequest {
         return "The ordered book ID: " + bookID + ", the ordering user ID: " + studentID +
                 ", ordered on: " + orderDate;
     }
+
+    //Getters and Setters for the book ID, student ID, and order date
+    public long getBookID() {
+        return bookID;
+    }
+
+    public void setBookID(long bookID) {
+        this.bookID = bookID;
+    }
+
+    public int getStudentID() {
+        return studentID;
+    }
+
+    public void setStudentID(int studentID) {
+        this.studentID = studentID;
+    }
+
+    public LocalDate getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(LocalDate orderDate) {
+        this.orderDate = orderDate;
+    }
 }

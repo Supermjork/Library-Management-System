@@ -44,4 +44,42 @@ public class LibReturn implements LibRequest{
         return "The returning book ID: " + bookID + ", the returning user ID: " + studentID +
                 ", returned on: " + returnDate;
     }
+
+
+    public long getBookID() {
+        return bookID;
+    }
+
+    public void setBookID(long bookID) {
+        this.bookID = bookID;
+    }
+
+    public int getStudentID() {
+        return studentID;
+    }
+
+    public void setStudentID(int studentID) {
+        this.studentID = studentID;
+    }
+
+    public LocalDate getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(LocalDate returnDate) {
+        this.returnDate = returnDate;
+    }
+
+    public int getFine() {
+        return fine;
+    }
+
+    public void setFine(int fine) {
+        this.fine = fine;
+    }
+
+    public int getFineRate() {
+        return fineRate;
+    }
+
 }
