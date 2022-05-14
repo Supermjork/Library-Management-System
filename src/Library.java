@@ -16,19 +16,21 @@ public class Library {
         List<LibBorrow> borrowList = new ArrayList<>();
         List<LibReturn> returnList = new ArrayList<>();
 
-    //#region ####################### Load Data ################################
+    /**                     ########################
+     *                      # Loading Data Section #
+     *                      ########################
+     */
         CsvFileReader.loadDataBook("books.csv", bookList);
         CsvFileReader.loadDataStudent("students.csv", studentList);
         CsvFileReader.loadDataAdmin("admins.csv", adminList);
         CsvFileReader.loadDataOrder("orders.csv", orderList);
         CsvFileReader.loadDataBorrow("borrows.csv", borrowList);
         CsvFileReader.loadDataReturn("returns.csv", returnList);
-    //#endregion ####################### Load Data #############################
 
-
-
-
-    //#region ####################### Loading tests ############################
+    /**                     #########################
+     *                      #    Testing Section    #
+     *                      #########################
+     */
         System.out.println("\nBooks loaded: " + bookList.size());
         for(LibBook book : bookList) {
             System.out.println(
@@ -87,8 +89,12 @@ public class Library {
                         " returndate: " + return1.getReturnDate()
                         );
         }
-    //#endregion ####################### Loading tests #########################
-    
-
     }
+
+    /** 
+     *                  #########################
+     *                  #    Utility Methods    # 
+     *                  #########################
+     */
+
 }
