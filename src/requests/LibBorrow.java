@@ -6,18 +6,25 @@ import library.LibStudent;
 import java.time.LocalDate;
 
 public class LibBorrow implements LibRequest {
-    protected long bookID;          //Adds the ordered book's ID.
-    protected int studentID;        //Adds the Student's ID (Who had ordered the book).
-    protected LocalDate borrowDate;  //Assigns the current date when the request had been created.
+    protected long bookID;           // Adds the ordered book's ID.
+    protected int studentID;         // Adds the Student's ID (Who had ordered the book).
+    protected LocalDate borrowDate;  // Assigns the current date when the request had been created.
 
-    //Constructor for the Order object that holds the book ID, student ID, Date
+    // Constructor for the Order object that holds the book ID, student ID, Date
     public LibBorrow(long bookID, int studentID) {
         this.bookID = bookID;
         this.studentID = studentID;
         this.borrowDate = LocalDate.now();
     }
 
-    //Creates a request of type Borrow, carries the book ID and user ID, also prints out the due date after 2 weeks
+    // Allow/Deny request methods
+
+    // Addition/Removal of books from user's array of books
+    public void addBorrowed(LibBook book, LibStudent student) {
+        student.addBook(book);
+    }
+
+    // Creates a request of type Borrow, carries the book ID and user ID, also prints out the due date after 2 weeks
     @Override
     public LibRequest createRequest(LibBook book, LibStudent student) {
         LibBorrow borrow = new LibBorrow(book.getBookID(), student.getUsrID());
@@ -25,6 +32,12 @@ public class LibBorrow implements LibRequest {
         student.incBorrowAmount();
         return borrow;
     }
+
+    @Override
+    public void allowRequest() {}
+
+    @Override
+    public void denyRequest() {}
 
     @Override
     public String toString() {

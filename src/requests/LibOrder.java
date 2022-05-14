@@ -21,9 +21,14 @@ public class LibOrder implements LibRequest {
      */
     @Override
     public LibRequest createRequest(LibBook book, LibStudent student) {
-        LibOrder order = new LibOrder(book.getBookID(), student.getUsrID());
-        return order;
+        return new LibOrder(book.getBookID(), student.getUsrID());
     }
+
+    @Override
+    public void allowRequest() {}
+
+    @Override
+    public void denyRequest() {}
 
     @Override
     public String toString() {

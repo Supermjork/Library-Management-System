@@ -34,6 +34,12 @@ public class LibReturn implements LibRequest{
     }
 
     @Override
+    public void allowRequest() {}
+
+    @Override
+    public void denyRequest() {}
+
+    @Override
     public String toString() {
         return "The returning book ID: " + bookID + ", the returning user ID: " + studentID +
                 ", returned on: " + returnDate;

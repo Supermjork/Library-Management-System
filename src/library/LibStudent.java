@@ -10,7 +10,8 @@ public class LibStudent implements LibUserInterface {
     private String userEmail;
     private LocalDate creationDate;
     private final int maxBorrowBooks = 3;
-    private int currentBorrowedBooks;
+    private int currentAmountBorrowed;
+    private LibBook[] borrowedBooks = new LibBook[maxBorrowBooks];
 
     public LibStudent(String studentName, int studentID, long studentPhone, String studentEmail) {
         usrName = studentName;
@@ -20,16 +21,19 @@ public class LibStudent implements LibUserInterface {
         creationDate = LocalDate.now();
     }
 
-    //Two functions to update the student's borrowed amount of books
+    // Reminder function
+    public void remind() {}
+
+    // Two functions to update the student's borrowed amount of books
     public void incBorrowAmount() {
-        currentBorrowedBooks++;
+        currentAmountBorrowed++;
     }
 
     public void decBorrowAmount() {
-        currentBorrowedBooks--;
+        currentAmountBorrowed--;
     }
 
-    //Intellij created such methods and their @Override, I filled in the returns after copying the info fields
+    // Intellij created such methods and their @Override, I filled in the returns after copying the info fields
 
     @Override
     public void setName(String usrName) {
@@ -79,5 +83,21 @@ public class LibStudent implements LibUserInterface {
     @Override
     public LocalDate getCreationDate() {
         return creationDate;
+    }
+
+    public void addBook(LibBook book) {
+        for(int i = 0; i < maxBorrowBooks; i++) {
+            if(borrowedBooks[i] == null) {
+                borrowedBooks[i] = book;
+            }
+        }
+    }
+
+    public void removeBook(LibBook book) {
+        for(int i = 0; i < maxBorrowBooks; i++) {
+            if(borrowedBooks[i].getBookID() == book.getBookID()) {
+                borrowedBooks[i] = null;
+            }
+        }
     }
 }

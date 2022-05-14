@@ -10,4 +10,6 @@ import library.LibStudent;
 
 interface LibRequest {
     LibRequest createRequest(LibBook book, LibStudent student);
+    void allowRequest();
+    void denyRequest();
 }
