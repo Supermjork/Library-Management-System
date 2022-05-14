@@ -3,9 +3,9 @@ package reader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import library.LibAdmin;
-import library.LibBook;
-import library.LibStudent;
+import library.*;
+import requests.*;
+
 import java.util.List;
 
 /**
@@ -70,9 +70,6 @@ public class CsvFileReader {
         try {
             Scanner sc = new Scanner(new File(filename));
 
-            //splitting the data by space
-            // sc.useDelimiter(" ");
-
             String[] constructorValues; 
             while(sc.hasNextLine()) {
                 constructorValues = sc.nextLine().split(",");
@@ -82,6 +79,65 @@ public class CsvFileReader {
                                            constructorValues[3])
                             );
 
+            }
+            sc.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void loadDataBorrow(String filename, List<LibBorrow> borrowRequests) {
+        //parsing a CSV file into Scanner class constructor  
+        try {
+            Scanner sc = new Scanner(new File(filename));
+
+            String[] constructorValues; 
+            while(sc.hasNextLine()) {
+                constructorValues = sc.nextLine().split(",");
+                borrowRequests.add(new LibBorrow(
+                                        Integer.parseInt(constructorValues[0]),
+                                        Integer.parseInt(constructorValues[1]))
+                            );
+            }
+            sc.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    
+    public static void loadDataOrder(String filename, List<LibOrder> orderRequests) {
+        //parsing a CSV file into Scanner class constructor  
+        try {
+            Scanner sc = new Scanner(new File(filename));
+
+            String[] constructorValues; 
+            while(sc.hasNextLine()) {
+                constructorValues = sc.nextLine().split(",");
+                orderRequests.add(new LibOrder(
+                                        Long.parseLong(constructorValues[0]),
+                                        Integer.parseInt(constructorValues[1]))
+                            );
+            }
+            sc.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    
+    public static void loadDataReturn(String filename, List<LibReturn> returnRequests) {
+        //parsing a CSV file into Scanner class constructor  
+        try {
+            Scanner sc = new Scanner(new File(filename));
+
+            String[] constructorValues; 
+            while(sc.hasNextLine()) {
+                constructorValues = sc.nextLine().split(",");
+                returnRequests.add(new LibReturn(
+                                        Long.parseLong(constructorValues[0]),
+                                        Integer.parseInt(constructorValues[1]))
+                            );
             }
             sc.close();
         } catch (FileNotFoundException e) {
