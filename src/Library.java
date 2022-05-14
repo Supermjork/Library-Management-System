@@ -9,15 +9,26 @@ import java.util.*;
  */
 public class Library {
     public static void main(String[] args) {
-        List<LibBook> bookList = new ArrayList<LibBook>();
-        List<LibStudent> studentList = new ArrayList<LibStudent>();
-        List<LibAdmin> adminList = new ArrayList<LibAdmin>();
-        List<LibOrder> orderList = new ArrayList<LibOrder>();
-        List<LibBorrow> borrowList = new ArrayList<LibBorrow>();
-        List<LibReturn> returnList = new ArrayList<LibReturn>();
+        List<LibBook> bookList = new ArrayList<>();
+        List<LibStudent> studentList = new ArrayList<>();
+        List<LibAdmin> adminList = new ArrayList<>();
+        List<LibOrder> orderList = new ArrayList<>();
+        List<LibBorrow> borrowList = new ArrayList<>();
+        List<LibReturn> returnList = new ArrayList<>();
 
-
+    //#region ####################### Load Data ################################
         CsvFileReader.loadDataBook("books.csv", bookList);
+        CsvFileReader.loadDataStudent("students.csv", studentList);
+        CsvFileReader.loadDataAdmin("admins.csv", adminList);
+        CsvFileReader.loadDataOrder("orders.csv", orderList);
+        CsvFileReader.loadDataBorrow("borrows.csv", borrowList);
+        CsvFileReader.loadDataReturn("returns.csv", returnList);
+    //#endregion ####################### Load Data #############################
+
+
+
+
+    //#region ####################### Loading tests ############################
         System.out.println("\nBooks loaded: " + bookList.size());
         for(LibBook book : bookList) {
             System.out.println(
@@ -30,7 +41,6 @@ public class Library {
                         );
         }
 
-        CsvFileReader.loadDataStudent("students.csv", studentList);
         System.out.println("\nStudents loaded: " + studentList.size());
         for(LibStudent student : studentList) {
             System.out.println(
@@ -41,7 +51,6 @@ public class Library {
                         );
         }
 
-        CsvFileReader.loadDataAdmin("admins.csv", adminList);
         System.out.println("\nAdmins loaded: " + adminList.size());
         for(LibAdmin admin : adminList) {
             System.out.println(
@@ -52,34 +61,34 @@ public class Library {
                         );
         }
 
-        CsvFileReader.loadDataOrder("orders.csv", orderList);
         System.out.println("\nOrders loaded: " + orderList.size());
         for(LibOrder order : orderList) {
             System.out.println(
-                        " bookid: " + order.getBookID() + 
+                        "bookid: " + order.getBookID() + 
                         " studentid: " + order.getStudentID() + 
                         " orderdate: " + order.getOrderDate()
                         );
         }
 
-        CsvFileReader.loadDataBorrow("borrows.csv", borrowList);
         System.out.println("\nBorrows loaded: " + borrowList.size());
         for(LibBorrow borrow : borrowList) {
             System.out.println(
-                        " bookid: " + borrow.getBookID() + 
+                        "bookid: " + borrow.getBookID() + 
                         " studentid: " + borrow.getStudentID() + 
                         " borrowdate: " + borrow.getBorrowDate()
                         );
         }
 
-        CsvFileReader.loadDataReturn("returns.csv", returnList);
         System.out.println("\nReturns loaded: " + returnList.size());
         for(LibReturn return1 : returnList) {
             System.out.println(
-                        " bookid: " + return1.getBookID() + 
+                        "bookid: " + return1.getBookID() + 
                         " studentid: " + return1.getStudentID() + 
                         " returndate: " + return1.getReturnDate()
                         );
         }
+    //#endregion ####################### Loading tests #########################
+    
+
     }
 }
