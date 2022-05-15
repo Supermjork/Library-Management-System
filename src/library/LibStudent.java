@@ -8,7 +8,6 @@ public class LibStudent implements LibUserInterface {
     private int usrID;
     private long phoneNum;
     private String userEmail;
-    private LocalDate creationDate;
     private final int maxBorrowBooks = 3;
     private int currentAmountBorrowed;
     private LibBook[] borrowedBooks = new LibBook[maxBorrowBooks];
@@ -19,7 +18,6 @@ public class LibStudent implements LibUserInterface {
         usrID = studentID;
         phoneNum = studentPhone;
         userEmail = studentEmail;
-        creationDate = LocalDate.now();
     }
 
     // Reminder function
@@ -82,16 +80,6 @@ public class LibStudent implements LibUserInterface {
     @Override
     public String getUserEmail() {
         return userEmail;
-    }
-
-    @Override
-    public void setCreationDate(int day, int month, int year) {
-        this.creationDate = LocalDate.of(year, month, day);
-    }
-
-    @Override
-    public LocalDate getCreationDate() {
-        return creationDate;
     }
 
     public void addBook(LibBook book) {

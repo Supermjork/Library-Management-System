@@ -21,6 +21,4 @@ public interface LibUserInterface {
     long getPhoneNum();
     void setUserEmail(String userEmail);
     String getUserEmail();
-    void setCreationDate(int day, int month, int year);
-    LocalDate getCreationDate();
 }
