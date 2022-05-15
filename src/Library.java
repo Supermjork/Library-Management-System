@@ -1,6 +1,8 @@
 import library.*;
 import reader.*;
 import requests.*;
+
+import java.io.*;
 import java.util.*;
 
 /**
@@ -97,7 +99,16 @@ public class Library {
      *                  #########################
      */
 
-    public static boolean loginValidator(String email, long phoneNum) {
-        return true;
+    public static <T extends LibUserInterface> boolean loginValidator(String email, long phoneNum, ArrayList<T> userList) {
+        for(T user : userList) {
+            if(email.equals(user.getUserEmail()) && phoneNum == user.getPhoneNum()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void studentRegister(String name, int studentID, long phoneNum, String email) {
+        LibStudent student = new LibStudent(name, studentID, phoneNum, email);
     }
 }
