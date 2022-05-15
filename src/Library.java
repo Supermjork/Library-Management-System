@@ -108,20 +108,10 @@ public class Library {
         return false;
     }
 
-    public static void studentRegister(String userData) {
+    public static void fileAppend(String dataStr, String fileName) {
         try {
-            FileWriter fw = new FileWriter("students.csv", true);
-            fw.write(userData);
-            fw.close();
-        } catch (IOException e) {
-            System.out.println("Error appending to file");
-        }
-    }
-
-    public static void bookAdd(String userData) {
-        try {
-            FileWriter fw = new FileWriter("books.csv", true);
-            fw.write(userData);
+            FileWriter fw = new FileWriter(fileName, true);
+            fw.write(dataStr);
             fw.close();
         } catch (IOException e) {
             System.out.println("Error appending to file");
