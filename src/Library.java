@@ -1,6 +1,8 @@
 import library.*;
 import reader.*;
 import requests.*;
+
+import java.io.*;
 import java.util.*;
 
 /**
@@ -97,4 +99,22 @@ public class Library {
      *                  #########################
      */
 
+    public static <T extends LibUserInterface> boolean loginValidator(String email, long phoneNum, ArrayList<T> userList) {
+        for(T user : userList) {
+            if(email.equals(user.getUserEmail()) && phoneNum == user.getPhoneNum()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void fileAppend(String dataStr, String fileName) {
+        try {
+            FileWriter fw = new FileWriter(fileName, true);
+            fw.write(dataStr);
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("Error appending to file");
+        }
+    }
 }

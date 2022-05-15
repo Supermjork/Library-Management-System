@@ -10,14 +10,12 @@ public class LibAdmin implements LibUserInterface {    //Basic Info for student,
     private int usrID;
     private long phoneNum;
     private String userEmail;
-    private LocalDate creationDate;
 
     public LibAdmin(String studentName, int studentID, long studentPhone, String studentEmail) {
         usrName = studentName;
         usrID = studentID;
         phoneNum = studentPhone;
         userEmail = studentEmail;
-        creationDate = LocalDate.now();
     }
 
     //Intellij created such methods and their @Override, I filled in the returns after copying the info fields
@@ -63,13 +61,4 @@ public class LibAdmin implements LibUserInterface {    //Basic Info for student,
         return userEmail;
     }
 
-    @Override
-    public void setCreationDate(int day, int month, int year) {
-        this.creationDate = LocalDate.of(year, month, day);
-    }
-
-    @Override
-    public LocalDate getCreationDate() {
-        return creationDate;
-    }
 }

@@ -10,7 +10,7 @@ import java.time.LocalDate;
  * - Email ID
  * - Account's date of creation
  */
-interface LibUserInterface {
+public interface LibUserInterface {
     //Basic info (Deleted all fields, assuming they are static and wrote them in the child class(es))
 
     void setName(String usrName);
@@ -21,6 +21,4 @@ interface LibUserInterface {
     long getPhoneNum();
     void setUserEmail(String userEmail);
     String getUserEmail();
-    void setCreationDate(int day, int month, int year);
-    LocalDate getCreationDate();
 }
