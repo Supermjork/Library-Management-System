@@ -97,4 +97,7 @@ public class Library {
      *                  #########################
      */
 
+    public static boolean loginValidator(String email, long phoneNum) {
+        return true;
+    }
 }

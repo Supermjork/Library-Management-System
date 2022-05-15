@@ -12,6 +12,7 @@ public class LibStudent implements LibUserInterface {
     private final int maxBorrowBooks = 3;
     private int currentAmountBorrowed;
     private LibBook[] borrowedBooks = new LibBook[maxBorrowBooks];
+    private LocalDate[] borrowDates = new LocalDate[maxBorrowBooks];
 
     public LibStudent(String studentName, int studentID, long studentPhone, String studentEmail) {
         usrName = studentName;
@@ -22,7 +23,15 @@ public class LibStudent implements LibUserInterface {
     }
 
     // Reminder function
-    public void remind() {}
+    public void remind() {
+        LocalDate dateToday = LocalDate.now();
+
+        for(int i = 0; i < maxBorrowBooks; i++) {
+            if(borrowDates[i].minusDays(4) == dateToday) {
+                System.out.println("You have 4 days to return: " + borrowedBooks[i]);
+            }
+        }
+    }
 
     // Two functions to update the student's borrowed amount of books
     public void incBorrowAmount() {
@@ -89,6 +98,7 @@ public class LibStudent implements LibUserInterface {
         for(int i = 0; i < maxBorrowBooks; i++) {
             if(borrowedBooks[i] == null) {
                 borrowedBooks[i] = book;
+                borrowDates[i] = LocalDate.now();
             }
         }
     }
@@ -97,6 +107,7 @@ public class LibStudent implements LibUserInterface {
         for(int i = 0; i < maxBorrowBooks; i++) {
             if(borrowedBooks[i].getBookID() == book.getBookID()) {
                 borrowedBooks[i] = null;
+                borrowDates[i] = null;
             }
         }
     }
