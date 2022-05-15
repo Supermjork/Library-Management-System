@@ -20,12 +20,12 @@ public class Library {
      *                      # Loading Data Section #
      *                      ########################
      */
-        CsvFileReader.loadDataBook("books.csv", bookList);
-        CsvFileReader.loadDataStudent("students.csv", studentList);
-        CsvFileReader.loadDataAdmin("admins.csv", adminList);
-        CsvFileReader.loadDataOrder("orders.csv", orderList);
-        CsvFileReader.loadDataBorrow("borrows.csv", borrowList);
-        CsvFileReader.loadDataReturn("returns.csv", returnList);
+        CsvFileReader.loadDataBook("src\\books.csv", bookList);
+        CsvFileReader.loadDataStudent("src\\students.csv", studentList);
+        CsvFileReader.loadDataAdmin("src\\admins.csv", adminList);
+        CsvFileReader.loadDataOrder("src\\orders.csv", orderList);
+        CsvFileReader.loadDataBorrow("src\\borrows.csv", borrowList);
+        CsvFileReader.loadDataReturn("src\\returns.csv", returnList);
 
     /**                     #########################
      *                      #    Testing Section    #
