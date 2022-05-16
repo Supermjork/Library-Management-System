@@ -84,21 +84,37 @@ public class LibStudent implements LibUserInterface {
         return userEmail;
     }
 
-    // Creates a request of the type order, and returns it
+    // Creates a request of the type order using objects, and returns it
     public LibOrder createOrder(LibBook book, LibStudent student) {
         return new LibOrder(book.getBookID(),student.getUsrID());
-
     }
 
-    // Creates a request of the type borrow, and returns it
+    // Creates a request of the type order usind ids, and returns it
+    public LibOrder createOrder(int bookId, int studentId) {
+        return new LibOrder(bookId,studentId);
+    }
+
+    // Creates a request of the type borrow with objects, and returns it
     public LibBorrow createBorrow(LibBook book, LibStudent student) {
         return new LibBorrow(book.getBookID(),student.getUsrID());
     }
 
-    // Creates a request of the type return, and returns it
+    
+    // Creates a request of the type borrow with ids, and returns it
+    public LibBorrow createBorrow(int bookId, int studentId) {
+        return new LibBorrow(bookId,studentId);
+    }
+
+    // Creates a request of the type return using objects, and returns it
     public LibReturn createReturn(LibBook book, LibStudent student) {
         return new LibReturn(book.getBookID(),student.getUsrID());
     }
+
+    // Creates a request of the type return using ids, and returns it
+    public LibReturn createReturn(int bookId, int studentId) {
+        return new LibReturn(bookId,studentId);
+    }
+    
 
     public void addBook(LibBook book) {
         for(int i = 0; i < maxBorrowBooks; i++) {
