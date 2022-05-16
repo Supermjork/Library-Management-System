@@ -1,27 +1,17 @@
 package requests;
 
-import library.LibBook;
-import library.LibStudent;
 import java.time.LocalDate;
 
 public class LibOrder implements LibRequest {
-    protected long bookID;          //Adds the ordered book's ID.
-    protected int studentID;        //Adds the Student's ID (Who had ordered the book).
+    protected int bookId;          //Adds the ordered book's ID.
+    protected int studentId;        //Adds the Student's ID (Who had ordered the book).
     protected LocalDate orderDate;  //Assigns the current date when the request had been created.
 
     //Constructor for the Order object that holds the book ID, student ID, Date (Will be same for Borrow)
-    public LibOrder(long bookID, int studentID) {
-        this.bookID = bookID;
-        this.studentID = studentID;
+    public LibOrder(int bookId, int studentId) {
+        this.bookId = bookId;
+        this.studentId = studentId;
         this.orderDate = LocalDate.now();
-    }
-
-    /*Method from interface to create the request, takes in the book object, and the student object
-      Then creates a new order object within that holds the book ID and the user ID
-     */
-    @Override
-    public LibRequest request(LibBook book, LibStudent student) {
-        return new LibOrder(book.getBookID(), student.getUsrID());
     }
 
     @Override
@@ -32,25 +22,18 @@ public class LibOrder implements LibRequest {
 
     @Override
     public String toString() {
-        return "The ordered book ID: " + bookID + ", the ordering user ID: " + studentID +
+        return  "The ordered book ID: " + bookId + 
+                ", the ordering user ID: " + studentId +
                 ", ordered on: " + orderDate;
     }
 
     //Getters and Setters for the book ID, student ID, and order date
-    public long getBookID() {
-        return bookID;
-    }
-
-    public void setBookID(long bookID) {
-        this.bookID = bookID;
+    public int getBookID() {
+        return bookId;
     }
 
     public int getStudentID() {
-        return studentID;
-    }
-
-    public void setStudentID(int studentID) {
-        this.studentID = studentID;
+        return studentId;
     }
 
     public LocalDate getOrderDate() {

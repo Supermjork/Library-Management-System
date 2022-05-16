@@ -9,7 +9,6 @@ import library.LibStudent;
  */
 
 public interface LibRequest {
-    LibRequest request(LibBook book, LibStudent student);
     void allowRequest();
     void denyRequest();
 }

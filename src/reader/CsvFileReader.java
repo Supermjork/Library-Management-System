@@ -115,7 +115,7 @@ public class CsvFileReader {
             while(sc.hasNextLine()) {
                 constructorValues = sc.nextLine().split(",");
                 orderRequests.add(new LibOrder(
-                                        Long.parseLong(constructorValues[0]),
+                                        Integer.parseInt(constructorValues[0]),
                                         Integer.parseInt(constructorValues[1]))
                             );
             }
@@ -135,7 +135,7 @@ public class CsvFileReader {
             while(sc.hasNextLine()) {
                 constructorValues = sc.nextLine().split(",");
                 returnRequests.add(new LibReturn(
-                                        Long.parseLong(constructorValues[0]),
+                                        Integer.parseInt(constructorValues[0]),
                                         Integer.parseInt(constructorValues[1]))
                             );
             }

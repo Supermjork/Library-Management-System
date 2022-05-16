@@ -2,6 +2,8 @@ package library;
 
 import java.time.LocalDate;
 
+import requests.*;
+
 /**
  * Child class of the libUser which inherits basic fields, uses super constructor, also overrides privileges
  */
@@ -59,6 +61,22 @@ public class LibAdmin implements LibUserInterface {    //Basic Info for student,
     @Override
     public String getUserEmail() {
         return userEmail;
+    }
+
+    // Creates a request of the type order, and returns it
+    public LibOrder createOrder(LibBook book, LibStudent student) {
+        return new LibOrder(book.getBookID(),student.getUsrID());
+
+    }
+
+    // Creates a request of the type borrow, and returns it
+    public LibBorrow createBorrow(LibBook book, LibStudent student) {
+        return new LibBorrow(book.getBookID(),student.getUsrID());
+    }
+
+    // Creates a request of the type return, and returns it
+    public LibReturn createReturn(LibBook book, LibStudent student) {
+        return new LibReturn(book.getBookID(),student.getUsrID());
     }
 
 }
