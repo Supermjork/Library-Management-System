@@ -89,7 +89,7 @@ public class LibStudent implements LibUserInterface {
         return new LibOrder(book.getBookID(),student.getUsrID());
     }
 
-    // Creates a request of the type order usind ids, and returns it
+    // Creates a request of the type order using ids, and returns it
     public LibOrder createOrder(int bookId, int studentId) {
         return new LibOrder(bookId,studentId);
     }
@@ -114,7 +114,8 @@ public class LibStudent implements LibUserInterface {
     public LibReturn createReturn(int bookId, int studentId) {
         return new LibReturn(bookId,studentId);
     }
-    
+
+    // Add/Remove books into parallel arrays of Book/Date
 
     public void addBook(LibBook book) {
         for(int i = 0; i < maxBorrowBooks; i++) {
@@ -131,6 +132,18 @@ public class LibStudent implements LibUserInterface {
                 borrowedBooks[i] = null;
                 borrowDates[i] = null;
             }
+        }
+    }
+
+    // Allowing the user to view their borrowed books and when their borrowed said books and when should they return
+
+    public void showBorrowed() {
+        for(int i = 0; i < maxBorrowBooks; i++) {
+            System.out.println("Book Name: " + borrowedBooks[i].getBookName() +
+                               "\nBook Author: " + borrowedBooks[i].getBookAuthor() +
+                               "\nBook ID: " + borrowedBooks[i].getBookID() +
+                               "\nBorrowed on: " + borrowDates[i] +
+                               "\nReturn on: " + borrowDates[i].plusDays(14));
         }
     }
 }

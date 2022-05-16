@@ -118,18 +118,4 @@ public class Library {
             System.out.println("Error appending to file");
         }
     }
-
-    public static void createRequest(LibBook book, LibStudent student) {
-        if() {
-            LibBorrow borrow = new LibBorrow(book.getBookID(), student.getUsrID());
-            System.out.println("Your due date is: " + LocalDate.now().plusDays(14)); // Should show to user when due date is
-            student.incBorrowAmount();
-            return borrow; // idk tbh
-        } else if () {
-            return new LibOrder(book.getBookID(), student.getUsrID()); // Creates Order request object
-        } else if () {
-            return new LibReturn(book.getBookID(), student.getUsrID()); // Creates Return request
-        }
-
-    }
 }
