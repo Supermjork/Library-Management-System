@@ -20,7 +20,7 @@ public class LibOrder implements LibRequest {
       Then creates a new order object within that holds the book ID and the user ID
      */
     @Override
-    public LibRequest createRequest(LibBook book, LibStudent student) {
+    public LibRequest request(LibBook book, LibStudent student) {
         return new LibOrder(book.getBookID(), student.getUsrID());
     }
 

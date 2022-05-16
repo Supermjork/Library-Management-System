@@ -29,7 +29,7 @@ public class LibReturn implements LibRequest{
     }
 
     @Override
-    public LibRequest createRequest(LibBook book, LibStudent student) {
+    public LibRequest request(LibBook book, LibStudent student) {
         return new LibReturn(book.getBookID(), student.getUsrID());
     }
 

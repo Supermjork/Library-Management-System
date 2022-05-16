@@ -8,8 +8,8 @@ import library.LibStudent;
  * and the date of the request.
  */
 
-interface LibRequest {
-    LibRequest createRequest(LibBook book, LibStudent student);
+public interface LibRequest {
+    LibRequest request(LibBook book, LibStudent student);
     void allowRequest();
     void denyRequest();
 }

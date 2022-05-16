@@ -3,6 +3,7 @@ import reader.*;
 import requests.*;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -36,11 +37,11 @@ public class Library {
         System.out.println("\nBooks loaded: " + bookList.size());
         for(LibBook book : bookList) {
             System.out.println(
-                        "name: " + book.getBookName() + 
-                        " author: " + book.getBookAuthor() + 
-                        " id: " + book.getBookID() + 
-                        " isslibdate: " + book.getIssLibDate() + 
-                        " issgldate: " + book.getIssGloDate() +
+                        "Book Name: " + book.getBookName() +
+                        " Author: " + book.getBookAuthor() +
+                        " ID: " + book.getBookID() +
+                        " Issued in Library on: " + book.getIssLibDate() +
+                        " Released Globally on: " + book.getIssGloDate() +
                         " Number in stock: " + book.getStockAmount()
                         );
         }
@@ -48,47 +49,47 @@ public class Library {
         System.out.println("\nStudents loaded: " + studentList.size());
         for(LibStudent student : studentList) {
             System.out.println(
-                        "name: " + student.getUsrName() + 
-                        " id: " + student.getUsrID() + 
-                        " phone: " + student.getPhoneNum() + 
-                        " email: " + student.getUserEmail()
+                        "Name: " + student.getUsrName() +
+                        " ID: " + student.getUsrID() +
+                        " Phone: " + student.getPhoneNum() +
+                        " Email: " + student.getUserEmail()
                         );
         }
 
         System.out.println("\nAdmins loaded: " + adminList.size());
         for(LibAdmin admin : adminList) {
             System.out.println(
-                        "name: " + admin.getUsrName() + 
-                        " id: " + admin.getUsrID() + 
-                        " phone: " + admin.getPhoneNum() + 
-                        " email: " + admin.getUserEmail()
+                        "Name: " + admin.getUsrName() +
+                        " ID: " + admin.getUsrID() +
+                        " Phone: " + admin.getPhoneNum() +
+                        " Email: " + admin.getUserEmail()
                         );
         }
 
         System.out.println("\nOrders loaded: " + orderList.size());
         for(LibOrder order : orderList) {
             System.out.println(
-                        "bookid: " + order.getBookID() + 
-                        " studentid: " + order.getStudentID() + 
-                        " orderdate: " + order.getOrderDate()
+                        "Book ID: " + order.getBookID() +
+                        " Student ID: " + order.getStudentID() +
+                        " Order Date: " + order.getOrderDate()
                         );
         }
 
         System.out.println("\nBorrows loaded: " + borrowList.size());
         for(LibBorrow borrow : borrowList) {
             System.out.println(
-                        "bookid: " + borrow.getBookID() + 
-                        " studentid: " + borrow.getStudentID() + 
-                        " borrowdate: " + borrow.getBorrowDate()
+                        "Book ID: " + borrow.getBookID() +
+                        " Student ID: " + borrow.getStudentID() +
+                        " Borrow Date: " + borrow.getBorrowDate()
                         );
         }
 
         System.out.println("\nReturns loaded: " + returnList.size());
         for(LibReturn return1 : returnList) {
             System.out.println(
-                        "bookid: " + return1.getBookID() + 
-                        " studentid: " + return1.getStudentID() + 
-                        " returndate: " + return1.getReturnDate()
+                        "Book ID: " + return1.getBookID() +
+                        " Student ID: " + return1.getStudentID() +
+                        " Return Date: " + return1.getReturnDate()
                         );
         }
     }
@@ -116,5 +117,19 @@ public class Library {
         } catch (IOException e) {
             System.out.println("Error appending to file");
         }
+    }
+
+    public static void createRequest(LibBook book, LibStudent student) {
+        if() {
+            LibBorrow borrow = new LibBorrow(book.getBookID(), student.getUsrID());
+            System.out.println("Your due date is: " + LocalDate.now().plusDays(14)); // Should show to user when due date is
+            student.incBorrowAmount();
+            return borrow; // idk tbh
+        } else if () {
+            return new LibOrder(book.getBookID(), student.getUsrID()); // Creates Order request object
+        } else if () {
+            return new LibReturn(book.getBookID(), student.getUsrID()); // Creates Return request
+        }
+
     }
 }
