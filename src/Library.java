@@ -118,4 +118,14 @@ public class Library {
             System.out.println("Error appending to file");
         }
     }
+
+    public static <T extends LibUserInterface> boolean isAdmin(String email, long phoneNum, ArrayList<T> adminList) {
+        if(loginValidator(email, phoneNum, adminList)) {
+            System.out.println("Admin found");
+            return true;
+        } else {
+            System.out.println("Admin not found");
+            return false;
+        }
+    }
 }
