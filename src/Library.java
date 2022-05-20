@@ -3,7 +3,6 @@ import reader.*;
 import requests.*;
 
 import java.io.*;
-import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -23,12 +22,12 @@ public class Library {
      *                      # Loading Data Section #
      *                      ########################
      */
-        CsvFileReader.loadDataBook("src\\books.csv", bookList);
-        CsvFileReader.loadDataStudent("src\\students.csv", studentList);
-        CsvFileReader.loadDataAdmin("src\\admins.csv", adminList);
-        CsvFileReader.loadDataOrder("src\\orders.csv", orderList);
-        CsvFileReader.loadDataBorrow("src\\borrows.csv", borrowList);
-        CsvFileReader.loadDataReturn("src\\returns.csv", returnList);
+        CsvFileReader.loadDataBook("src\\filebase\\books.csv", bookList);
+        CsvFileReader.loadDataStudent("src\\filebase\\students.csv", studentList);
+        CsvFileReader.loadDataAdmin("src\\filebase\\admins.csv", adminList);
+        CsvFileReader.loadDataOrder("src\\filebase\\orders.csv", orderList);
+        CsvFileReader.loadDataBorrow("src\\filebase\\borrows.csv", borrowList);
+        CsvFileReader.loadDataReturn("src\\filebase\\returns.csv", returnList);
 
     /**                     #########################
      *                      #    Testing Section    #
@@ -116,17 +115,17 @@ public class Library {
 
         if(isAdmin(userEmail, userNum, adminList)) {
             System.out.println("Logged in as Admin");
-            for(int i = 0; i < adminList.size(); i++) {
-                if(adminList.get(i).getPhoneNum() == userNum) {
-                    userInSession = adminList.get(i);
+            for(LibAdmin libAdmin : adminList) {
+                if (libAdmin.getPhoneNum() == userNum) {
+                    userInSession = libAdmin;
                     break;
                 }
             }
         } else {
             System.out.println("Logged in as Student");
-            for(int i = 0; i < studentList.size(); i++) {
-                if(studentList.get(i).getPhoneNum() == userNum) {
-                    userInSession = studentList.get(i);
+            for(LibStudent student : studentList) {
+                if (student.getPhoneNum() == userNum) {
+                    userInSession = student;
                 }
             }
         }
