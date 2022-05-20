@@ -92,6 +92,34 @@ public class Library {
                         " Return Date: " + return1.getReturnDate()
                         );
         }
+
+        /**
+         *                  #########################
+         *                  #     Supposed Main     #
+         *                  #########################
+         */
+
+        Scanner userEmailIn = new Scanner(System.in);
+        Scanner userNumIn = new Scanner(System.in);
+
+        String userEmail;
+        long userNum;
+        boolean adminFlag;
+
+        do {
+            System.out.print("Enter your email: ");
+            userEmail = userEmailIn.nextLine();
+            System.out.print("Enter your mobile number: ");
+            userNum = userNumIn.nextLong();
+        } while(!(loginValidator(userEmail, userNum, studentList) | loginValidator(userEmail, userNum, adminList)));
+
+        if(isAdmin(userEmail, userNum, adminList)) {
+            System.out.println("Logged in as Admin");
+            adminFlag = true;
+        } else {
+            System.out.println("Logged in as Student");
+            adminFlag = false;
+        }
     }
 
     /** 
@@ -100,7 +128,7 @@ public class Library {
      *                  #########################
      */
 
-    public static <T extends LibUserInterface> boolean loginValidator(String email, long phoneNum, ArrayList<T> userList) {
+    public static <T extends LibUserInterface> boolean loginValidator(String email, long phoneNum, List<T> userList) {
         for(T user : userList) {
             if(email.equals(user.getUserEmail()) && phoneNum == user.getPhoneNum()) {
                 return true;
@@ -119,7 +147,7 @@ public class Library {
         }
     }
 
-    public static <T extends LibUserInterface> boolean isAdmin(String email, long phoneNum, ArrayList<T> adminList) {
+    public static <T extends LibUserInterface> boolean isAdmin(String email, long phoneNum, List<T> adminList) {
         if(loginValidator(email, phoneNum, adminList)) {
             System.out.println("Admin found");
             return true;
