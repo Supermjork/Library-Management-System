@@ -84,6 +84,11 @@ public class LibStudent implements LibUserInterface {
         return userEmail;
     }
 
+    @Override
+    public String toString() {
+        return getUsrName() + " " + getPhoneNum() + " " + getUserEmail() + " " + getUsrID();
+    }
+
     // Creates a request of the type order using objects, and returns it
     public LibOrder createOrder(LibBook book, LibStudent student) {
         return new LibOrder(book.getBookID(),student.getUsrID());

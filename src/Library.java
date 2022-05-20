@@ -99,12 +99,13 @@ public class Library {
          *                  #########################
          */
 
+        Object userInSession = null;
+
         Scanner userEmailIn = new Scanner(System.in);
         Scanner userNumIn = new Scanner(System.in);
 
         String userEmail;
         long userNum;
-        boolean adminFlag;
 
         do {
             System.out.print("Enter your email: ");
@@ -115,10 +116,27 @@ public class Library {
 
         if(isAdmin(userEmail, userNum, adminList)) {
             System.out.println("Logged in as Admin");
-            adminFlag = true;
+            for(int i = 0; i < adminList.size(); i++) {
+                if(adminList.get(i).getPhoneNum() == userNum) {
+                    userInSession = adminList.get(i);
+                    break;
+                }
+            }
         } else {
             System.out.println("Logged in as Student");
-            adminFlag = false;
+            for(int i = 0; i < studentList.size(); i++) {
+                if(studentList.get(i).getPhoneNum() == userNum) {
+                    userInSession = studentList.get(i);
+                }
+            }
+        }
+
+        System.out.println(userInSession);
+
+        if(userInSession instanceof LibAdmin) {
+            System.out.println("User is instance of an admin");
+        } else {
+            System.out.println("User is instance of a student");
         }
     }
 
