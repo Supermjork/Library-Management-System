@@ -14,56 +14,59 @@ public class LibGUISwing {
     LibGUISwing() {  
         
         // creating frame
-        JFrame f = new JFrame("LibGUI Main Window");
+        JFrame login = new JFrame("LibGUI Login Window");
+        JFrame register = new JFrame("LibGUI Registration Window");
+        JFrame adminUI = new JFrame("LibGUI Admin Window");
+        JFrame studentUI = new JFrame("LibGUI Student Window");
 
         // creating a label
-        JLabel l = new JLabel("Student ID: ");
+        JLabel userIDLabel = new JLabel("User Email: ");
 
         // creating a text field
-        JTextField t = new JTextField();
+        JTextField emailInField = new JTextField();
 
         
         // creating a button   
-        JButton b = new JButton("Login");  
-        b.addActionListener(new ActionListener() {    
-            public void actionPerformed (ActionEvent e) {    
-                    t.setText("gay.");    
-                }    
+        JButton loginButton = new JButton("Login");
+        loginButton.addActionListener(new ActionListener() {
+            public void actionPerformed (ActionEvent e) {
+                    emailInField.setText("gay.");
             }
+        }
         );
         // setting button position on screen for all the above components
-        b.setBounds(105,140,80,30);  
-        l.setBounds(55,100,80,30);
-        t.setBounds(140,100,100,30);
+        loginButton.setBounds(105,140,80,30);
+        userIDLabel.setBounds(55,100,80,30);
+        emailInField.setBounds(140,100,100,30);
     
         // adding the components to frame    
-        f.add(b);  
-        f.add(l);
-        f.add(t);
+        login.add(loginButton);
+        login.add(userIDLabel);
+        login.add(emailInField);
     
         // frame size 300 width and 300 height    
-        f.setSize(300,300);  
+        login.setSize(300,300);
     
         // setting the title of Frame  
-        f.setTitle("Trying AWT");   
+        login.setTitle("LibGUI Login Window");
             
         // no layout manager   
-        f.setLayout(null);   
+        login.setLayout(null);
     
         // now frame will be visible, by default it is not visible    
-        f.setVisible(true);  
+        login.setVisible(true);
 
         // closing the frame on exit
-        f.addWindowListener(new WindowAdapter() {
+        login.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
-                f.dispose();
+                login.dispose();
             }
         }
 );
     }    
    
     // main method  
-    public static void main(String args[]) {   
+    public static void main(String[] args) {
     
         // creating instance of Frame class   
         LibGUISwing window = new LibGUISwing();    
