@@ -86,7 +86,7 @@ public class LibStudent implements LibUserInterface {
 
     @Override
     public String toString() {
-        return getUsrName() + "," + getUsrID() + "," + getPhoneNum() + "," + getUserEmail();
+        return getUsrName() + "," + getUsrID() + "," + getPhoneNum() + "," + getUserEmail() + "\n";
     }
 
     // Creates a request of the type order using objects, and returns it

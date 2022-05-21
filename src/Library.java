@@ -97,7 +97,7 @@ public class Library {
          *                  #########################
          */
         Scanner userChoiceIn = new Scanner(System.in);
-        int userChoice = 0;
+        int userChoice;
 
         System.out.println("1.Login\n2.Register");
         userChoice = userChoiceIn.nextInt();
@@ -161,7 +161,7 @@ public class Library {
 
                 LibStudent regStudent = new LibStudent(userName, userID, userPhone, userRegEmail);
 
-                fileAppend(regStudent.toString(), "students.csv");
+                fileAppend(regStudent.toString(), "src\\filebase\\students.csv");
 
                 System.out.println("Registration Successful.");
                 break;
