@@ -96,45 +96,75 @@ public class Library {
          *                  #     Supposed Main     #
          *                  #########################
          */
+        Scanner userChoiceIn = new Scanner(System.in);
+        int userChoice = 0;
 
-        Object userInSession = null;
+        System.out.println("1.Login\n2.Register");
+        userChoice = userChoiceIn.nextInt();
 
-        Scanner userEmailIn = new Scanner(System.in);
-        Scanner userNumIn = new Scanner(System.in);
+        switch(userChoice) {
+            case 1:
+                Object userInSession = null;
 
-        String userEmail;
-        long userNum;
+                Scanner userEmailIn = new Scanner(System.in);
+                Scanner userNumIn = new Scanner(System.in);
 
-        do {
-            System.out.print("Enter your email: ");
-            userEmail = userEmailIn.nextLine();
-            System.out.print("Enter your mobile number: ");
-            userNum = userNumIn.nextLong();
-        } while(!(loginValidator(userEmail, userNum, studentList) | loginValidator(userEmail, userNum, adminList)));
+                String userEmail;
+                long userNum;
 
-        if(isAdmin(userEmail, userNum, adminList)) {
-            System.out.println("Logged in as Admin");
-            for(LibAdmin libAdmin : adminList) {
-                if (libAdmin.getPhoneNum() == userNum) {
-                    userInSession = libAdmin;
-                    break;
+                do {
+                    System.out.print("Enter your email: ");
+                    userEmail = userEmailIn.nextLine();
+                    System.out.print("Enter your mobile number: ");
+                    userNum = userNumIn.nextLong();
+                } while (!(loginValidator(userEmail, userNum, studentList) | loginValidator(userEmail, userNum, adminList)));
+
+                if (isAdmin(userEmail, userNum, adminList)) {
+                    System.out.println("Logged in as Admin");
+                    for (LibAdmin libAdmin : adminList) {
+                        if (libAdmin.getPhoneNum() == userNum) {
+                            userInSession = libAdmin;
+                            break;
+                        }
+                    }
+                } else {
+                    System.out.println("Logged in as Student");
+                    for (LibStudent student : studentList) {
+                        if (student.getPhoneNum() == userNum) {
+                            userInSession = student;
+                        }
+                    }
                 }
-            }
-        } else {
-            System.out.println("Logged in as Student");
-            for(LibStudent student : studentList) {
-                if (student.getPhoneNum() == userNum) {
-                    userInSession = student;
+
+                System.out.println(userInSession);
+
+                if (userInSession instanceof LibAdmin) {
+                    System.out.println("User is instance of an admin");
+                } else {
+                    System.out.println("User is instance of a student");
                 }
-            }
-        }
+                break;
+            case 2:
+                Scanner userNameIn = new Scanner(System.in);
+                Scanner userIDIn = new Scanner(System.in);
+                Scanner userPhoneIn = new Scanner(System.in);
+                Scanner userEmailRegIn = new Scanner(System.in);
 
-        System.out.println(userInSession);
+                System.out.print("Enter your Name: ");
+                String userName = userNameIn.nextLine();
+                System.out.print("Enter your ID: ");
+                int userID = userIDIn.nextInt();
+                System.out.print("Enter your Phone Number: ");
+                long userPhone = userPhoneIn.nextLong();
+                System.out.print("Enter your Email: ");
+                String userRegEmail = userEmailRegIn.nextLine();
 
-        if(userInSession instanceof LibAdmin) {
-            System.out.println("User is instance of an admin");
-        } else {
-            System.out.println("User is instance of a student");
+                LibStudent regStudent = new LibStudent(userName, userID, userPhone, userRegEmail);
+
+                fileAppend(regStudent.toString(), "students.csv");
+
+                System.out.println("Registration Successful.");
+                break;
         }
     }
 
