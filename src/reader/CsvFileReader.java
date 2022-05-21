@@ -31,10 +31,7 @@ public class CsvFileReader {
                                          Integer.parseInt(constructorValues[3]),
                                          Integer.parseInt(constructorValues[4]),
                                          Integer.parseInt(constructorValues[5]),
-                                         Integer.parseInt(constructorValues[6]),
-                                         Integer.parseInt(constructorValues[7]),
-                                         Integer.parseInt(constructorValues[8]),
-                                         Integer.parseInt(constructorValues[9]))
+                                         Integer.parseInt(constructorValues[6]))
                             );
             }
             sc.close();

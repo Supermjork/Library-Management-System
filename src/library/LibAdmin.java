@@ -65,7 +65,7 @@ public class LibAdmin implements LibUserInterface {    //Basic Info for student,
 
     @Override
     public String toString() {
-        return getUsrName() + " " + getPhoneNum() + " " + getUserEmail() + " " + getUsrID();
+        return getUsrName() + "," +  getUsrID() + "," + getPhoneNum() + "," + getUserEmail();
     }
 
     // Creates a request of the type order, and returns it

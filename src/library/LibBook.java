@@ -14,17 +14,14 @@ import java.time.LocalDate;
 public class LibBook {
     private String bookName;
     private String bookAuthor;
-    private LocalDate issLibDate;  // Issuing date for when the book was added to the library
-    private LocalDate issGloDate;  //    ~      ~   ~    ~   ~   ~    ~  released globally
+    private LocalDate issGloDate;  // Global Release Date
     private int bookID;
     private int stockAmount;
 
-    public LibBook(String bookName, String bookAuthor, int bookID, int dayL, int monthL, int yearL, int dayG,
-                   int monthG, int yearG, int stockAmount) {
+    public LibBook(String bookName, String bookAuthor, int bookID, int dayG, int monthG, int yearG, int stockAmount) {
         this.bookName = bookName;
         this.bookAuthor = bookAuthor;
         this.bookID = bookID;
-        issLibDate = LocalDate.of(yearL, monthL, dayL);
         issGloDate = LocalDate.of(yearG, monthG, dayG);
         this.stockAmount = stockAmount;
     }
@@ -47,15 +44,6 @@ public class LibBook {
 
     public String getBookAuthor() {
         return bookAuthor;
-    }
-
-    // Date when book got issued in the library
-    public void setIssLibDate(int dayL, int monthL, int yearL) {
-        this.issLibDate = LocalDate.of(yearL, monthL, dayL);
-    }
-
-    public LocalDate getIssLibDate() {
-        return issLibDate;
     }
 
     // Global release date
@@ -91,5 +79,10 @@ public class LibBook {
 
     public void decStockAmount() {
         stockAmount--;
+    }
+
+    @Override
+    public String toString() {
+        return getBookName() + "," + getBookAuthor() + "," + getBookID() + "," + getIssGloDate() + "," + getStockAmount();
     }
 }

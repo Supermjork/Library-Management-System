@@ -39,7 +39,6 @@ public class Library {
                         "Book Name: " + book.getBookName() +
                         " Author: " + book.getBookAuthor() +
                         " ID: " + book.getBookID() +
-                        " Issued in Library on: " + book.getIssLibDate() +
                         " Released Globally on: " + book.getIssGloDate() +
                         " Number in stock: " + book.getStockAmount()
                         );
