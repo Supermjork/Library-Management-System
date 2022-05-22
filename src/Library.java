@@ -140,12 +140,56 @@ public class Library {
                     }
                 }
 
-                System.out.println(userInSession);
+                if(userInSession instanceof LibAdmin) {
+                    Scanner adminInput = new Scanner(System.in);
 
-                if (userInSession instanceof LibAdmin) {
-                    System.out.println("User is instance of an admin");
-                } else {
-                    System.out.println("User is instance of a student");
+                    System.out.println("Enter what operation you'd like to do: ");
+                    System.out.println("1.Add Book\n2.Remove Book\n3.Update Book Info\n4.View Orders\n");
+
+                    int adminChoice = adminInput.nextInt();
+
+                    switch(adminChoice) {
+                        case 1:
+                            Scanner newBookName   = new Scanner(System.in);
+                            Scanner newBookAuthor = new Scanner(System.in);
+                            Scanner newBookID     = new Scanner(System.in);
+                            Scanner newBookDay    = new Scanner(System.in);
+                            Scanner newBookMonth  = new Scanner(System.in);
+                            Scanner newBookYear   = new Scanner(System.in);
+                            Scanner newBookStock  = new Scanner(System.in);
+                            Scanner newBookPrice  = new Scanner(System.in);
+
+                            System.out.print("Book Name: ");
+                            String bookName = newBookName.nextLine();
+                            System.out.print("Book Author: ");
+                            String bookAuthor = newBookAuthor.nextLine();
+                            System.out.print("Book ID: ");
+                            int bookID = newBookID.nextInt();
+                            System.out.print("Book release Day: ");
+                            int bookReleaseDay = newBookDay.nextInt();
+                            System.out.print("Book release Month: ");
+                            int bookReleaseMonth = newBookMonth.nextInt();
+                            System.out.print("Book release Year: ");
+                            int bookReleaseYear = newBookYear.nextInt();
+                            System.out.print("Book amount in Stock: ");
+                            int bookStock = newBookStock.nextInt();
+                            System.out.print("Book Price: ");
+                            int bookPrice = newBookPrice.nextInt();
+
+                            LibBook addedBook = new LibBook(bookName, bookAuthor, bookID, bookReleaseDay,
+                                                            bookReleaseMonth, bookReleaseYear, bookStock, bookPrice);
+
+                            fileAppend(addedBook.toString(), "src\\filebase\\books.csv");
+                            break;
+                        case 4:
+                            for(LibOrder order : orderList) {
+                                System.out.println(
+                                                "Book ID: " + order.getBookID() +
+                                                " Student ID: " + order.getStudentID() +
+                                                " Order Date: " + order.getOrderDate()
+                                );
+                            }
+                    }
                 }
                 break;
             case 2:

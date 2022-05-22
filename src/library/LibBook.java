@@ -17,10 +17,10 @@ public class LibBook {
     private LocalDate issGloDate;  // Global Release Date
     private int bookID;
     private int stockAmount;
-    private double price;
+    private int price;
 
     public LibBook(String bookName, String bookAuthor, int bookID, int dayG, int monthG, int yearG,
-                   int stockAmount, double price) {
+                   int stockAmount, int price) {
         this.bookName = bookName;
         this.bookAuthor = bookAuthor;
         this.bookID = bookID;
@@ -85,17 +85,18 @@ public class LibBook {
     }
 
     // Book Price
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
     @Override
     public String toString() {
-        return getBookName() + "," + getBookAuthor() + "," + getBookID() + "," + getIssGloDate()
-               + "," + getStockAmount() + "," + getPrice();
+        return getBookName() + "," + getBookAuthor() + "," + getBookID() + "," + issGloDate.getDayOfMonth() + ","
+               + issGloDate.getMonthValue() + "," + issGloDate.getYear() + "," + getStockAmount()
+               + "," + getPrice() + "\n";
     }
 }
