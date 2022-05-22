@@ -22,6 +22,7 @@ public class Library {
      *                      # Loading Data Section #
      *                      ########################
      */
+
         CsvFileReader.loadDataBook("src\\filebase\\books.csv", bookList);
         CsvFileReader.loadDataStudent("src\\filebase\\students.csv", studentList);
         CsvFileReader.loadDataAdmin("src\\filebase\\admins.csv", adminList);
@@ -33,6 +34,7 @@ public class Library {
      *                      #    Testing Section    #
      *                      #########################
      */
+
         System.out.println("\nBooks loaded: " + bookList.size());
         for(LibBook book : bookList) {
             System.out.println(
@@ -40,7 +42,8 @@ public class Library {
                         " Author: " + book.getBookAuthor() +
                         " ID: " + book.getBookID() +
                         " Released Globally on: " + book.getIssGloDate() +
-                        " Number in stock: " + book.getStockAmount()
+                        " Number in stock: " + book.getStockAmount() +
+                        " Price: " + book.getPrice() + "EG£"
                         );
         }
 
@@ -96,6 +99,7 @@ public class Library {
          *                  #     Supposed Main     #
          *                  #########################
          */
+
         Scanner userChoiceIn = new Scanner(System.in);
         int userChoice;
 

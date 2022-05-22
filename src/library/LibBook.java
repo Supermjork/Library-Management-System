@@ -17,13 +17,16 @@ public class LibBook {
     private LocalDate issGloDate;  // Global Release Date
     private int bookID;
     private int stockAmount;
+    private double price;
 
-    public LibBook(String bookName, String bookAuthor, int bookID, int dayG, int monthG, int yearG, int stockAmount) {
+    public LibBook(String bookName, String bookAuthor, int bookID, int dayG, int monthG, int yearG,
+                   int stockAmount, double price) {
         this.bookName = bookName;
         this.bookAuthor = bookAuthor;
         this.bookID = bookID;
         issGloDate = LocalDate.of(yearG, monthG, dayG);
         this.stockAmount = stockAmount;
+        this.price = price;
     }
 
     // Accessors and Modifiers for each private field above.
@@ -81,8 +84,18 @@ public class LibBook {
         stockAmount--;
     }
 
+    // Book Price
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
     @Override
     public String toString() {
-        return getBookName() + "," + getBookAuthor() + "," + getBookID() + "," + getIssGloDate() + "," + getStockAmount();
+        return getBookName() + "," + getBookAuthor() + "," + getBookID() + "," + getIssGloDate()
+               + "," + getStockAmount() + "," + getPrice();
     }
 }
