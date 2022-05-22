@@ -10,7 +10,7 @@ import java.util.*;
  * @author Icen Zeyada
  */
 public class Library {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         List<LibBook> bookList = new ArrayList<>();
         List<LibStudent> studentList = new ArrayList<>();
         List<LibAdmin> adminList = new ArrayList<>();
@@ -144,42 +144,121 @@ public class Library {
                     Scanner adminInput = new Scanner(System.in);
 
                     System.out.println("Enter what operation you'd like to do: ");
-                    System.out.println("1.Add Book\n2.Remove Book\n3.Update Book Info\n4.View Orders\n");
+                    System.out.println("1.Add Book\n2.Remove Book\n3.Update Book Info\n4.View Orders\n5.Search By ID");
 
                     int adminChoice = adminInput.nextInt();
 
                     switch(adminChoice) {
                         case 1:
-                            Scanner newBookName   = new Scanner(System.in);
-                            Scanner newBookAuthor = new Scanner(System.in);
-                            Scanner newBookID     = new Scanner(System.in);
-                            Scanner newBookDay    = new Scanner(System.in);
-                            Scanner newBookMonth  = new Scanner(System.in);
-                            Scanner newBookYear   = new Scanner(System.in);
-                            Scanner newBookStock  = new Scanner(System.in);
-                            Scanner newBookPrice  = new Scanner(System.in);
+                            Scanner newBookStringTypes = new Scanner(System.in);
+                            Scanner newBookIntTypes    = new Scanner(System.in);
 
                             System.out.print("Book Name: ");
-                            String bookName = newBookName.nextLine();
+                            String bookName = newBookStringTypes.nextLine();
                             System.out.print("Book Author: ");
-                            String bookAuthor = newBookAuthor.nextLine();
+                            String bookAuthor = newBookStringTypes.nextLine();
                             System.out.print("Book ID: ");
-                            int bookID = newBookID.nextInt();
+                            int bookID = newBookIntTypes.nextInt();
                             System.out.print("Book release Day: ");
-                            int bookReleaseDay = newBookDay.nextInt();
+                            int bookReleaseDay = newBookIntTypes.nextInt();
                             System.out.print("Book release Month: ");
-                            int bookReleaseMonth = newBookMonth.nextInt();
+                            int bookReleaseMonth = newBookIntTypes.nextInt();
                             System.out.print("Book release Year: ");
-                            int bookReleaseYear = newBookYear.nextInt();
+                            int bookReleaseYear = newBookIntTypes.nextInt();
                             System.out.print("Book amount in Stock: ");
-                            int bookStock = newBookStock.nextInt();
+                            int bookStock = newBookIntTypes.nextInt();
                             System.out.print("Book Price: ");
-                            int bookPrice = newBookPrice.nextInt();
+                            int bookPrice = newBookIntTypes.nextInt();
+
+                            newBookStringTypes.close();
+                            newBookIntTypes.close();
 
                             LibBook addedBook = new LibBook(bookName, bookAuthor, bookID, bookReleaseDay,
                                                             bookReleaseMonth, bookReleaseYear, bookStock, bookPrice);
 
                             fileAppend(addedBook.toString(), "src\\filebase\\books.csv");
+                            break;
+                        case 2:
+                            Scanner deleteBookID = new Scanner(System.in);
+                            System.out.print("What is the ID of the book you'd like to delete? ");
+                            int deletedID = deleteBookID.nextInt();
+
+                            bookList.removeIf(delBook -> delBook.getBookID() == deletedID);
+
+                            FileWriter writer = new FileWriter("src\\filebase\\books.csv");
+                            for(LibBook books: bookList) {
+                                writer.write(books.toString());
+                            }
+                            writer.close();
+                            break;
+                        case 3:
+                            Scanner updatedBookID = new Scanner(System.in);
+                            System.out.print("Enter ID of the book you'd like to update: ");
+                            int updateID = updatedBookID.nextInt();
+
+                            for(LibBook bookToUpdate : bookList) {
+                                if(updateID == bookToUpdate.getBookID()) {
+
+                                    Scanner fieldChoice = new Scanner(System.in);
+                                    System.out.print("What field to update?\n1.Name\n2.Author\n3.Release Date" +
+                                            "\n4.Stock Amount\n5.Price");
+                                    int fieldSelect = fieldChoice.nextInt();
+
+                                    switch(fieldSelect) {
+                                        case 1:
+                                            Scanner updateName = new Scanner(System.in);
+
+                                            System.out.print("Enter new Name: ");
+                                            String updatedName = updateName.nextLine();
+
+                                            bookToUpdate.setBookName(updatedName);
+                                            break;
+                                        case 2:
+                                            Scanner updateAuthor = new Scanner(System.in);
+
+                                            System.out.print("Enter Author name: ");
+                                            String updatedAuthor = updateAuthor.nextLine();
+
+                                            bookToUpdate.setBookAuthor(updatedAuthor);
+                                            break;
+                                        case 3:
+                                            Scanner updateDate = new Scanner(System.in);
+
+                                            System.out.print("Enter new release day: ");
+                                            int updatedDay = updateDate.nextInt();
+                                            System.out.print("Enter new release month:");
+                                            int updatedMonth = updateDate.nextInt();
+                                            System.out.print("Enter new release year: ");
+                                            int updatedYear = updateDate.nextInt();
+
+                                            bookToUpdate.setIssGloDate(updatedDay, updatedMonth, updatedYear);
+                                            break;
+                                        case 4:
+                                            Scanner updateStock = new Scanner(System.in);
+
+                                            System.out.print("Enter updated amount in stock: ");
+                                            int updatedStockAmount = updateStock.nextInt();
+
+                                            bookToUpdate.setStockAmount(updatedStockAmount);
+                                            break;
+                                        case 5:
+                                            Scanner updatePrice = new Scanner(System.in);
+
+                                            System.out.print("Enter the new price: ");
+                                            int updatedPrice = updatePrice.nextInt();
+
+                                            bookToUpdate.setPrice(updatedPrice);
+                                            break;
+                                    }
+
+                                    FileWriter writeBook = new FileWriter("src\\filebase\\books.csv");
+                                    for(LibBook books: bookList) {
+                                        writeBook.write(books.toString());
+                                    }
+                                    writeBook.close();
+                                    break;
+                                }
+                            }
                             break;
                         case 4:
                             for(LibOrder order : orderList) {
@@ -189,6 +268,21 @@ public class Library {
                                                 " Order Date: " + order.getOrderDate()
                                 );
                             }
+                            break;
+                        case 5:
+                            Scanner idSearch = new Scanner(System.in);
+                            System.out.print("Enter book Name you'd like to find: ");
+                            String searchName = idSearch.nextLine();
+
+                            for(LibBook searchBook : bookList) {
+                                if(searchName.equalsIgnoreCase(searchBook.getBookName())) {
+                                    System.out.println(searchBook);
+                                    break;
+                                } else {
+                                    System.out.println("Book not found.");
+                                }
+                            }
+                            break;
                     }
                 }
                 break;
