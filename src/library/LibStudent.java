@@ -33,13 +33,17 @@ public class LibStudent implements LibUserInterface {
         }
     }
 
-    // Two functions to update the student's borrowed amount of books
+    // Two functions to update/get the student's borrowed amount of books
     public void incBorrowAmount() {
         currentAmountBorrowed++;
     }
 
     public void decBorrowAmount() {
         currentAmountBorrowed--;
+    }
+
+    public int getCurrentAmountBorrowed() {
+        return currentAmountBorrowed;
     }
 
     // Intellij created such methods and their @Override, I filled in the returns after copying the info fields

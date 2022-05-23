@@ -287,6 +287,8 @@ public class Library {
                 } else {
                     Scanner studentInput = new Scanner(System.in);
 
+                    System.out.println(userInSession);
+
                     System.out.println("Enter what operation to do: ");
                     System.out.println("1.View borrowed Books\n2.Search for Book\n3.Return a Book\n" +
                                        "4.Order a Book\n5.Borrow Book");
@@ -350,6 +352,31 @@ public class Library {
                                 writer.write(books.toString());
                             }
                             writer.close();
+                            break;
+                        case 5:
+                            if(((LibStudent) userInSession).getCurrentAmountBorrowed() < 3) {
+                                System.out.println("Showing books in stock: ");
+                                for (LibBook shownBooks : bookList) {
+                                    System.out.println(shownBooks.toString());
+                                }
+
+                                Scanner studentBorrow = new Scanner(System.in);
+
+                                System.out.print("Enter ID of book to borrow: ");
+                                int borrowID = studentBorrow.nextInt();
+
+                                LibBorrow newBorrow = new LibBorrow(borrowID, ((LibStudent) userInSession).getUsrID());
+
+                                for (LibBook bookBorrowed : bookList) {
+                                    if (borrowID == bookBorrowed.getBookID()) {
+                                        bookBorrowed.decStockAmount();
+                                        ((LibStudent) userInSession).addBook(bookBorrowed);
+                                    }
+                                }
+                            } else {
+                                System.out.println("Cannot borrow more than 3 books");
+                                break;
+                            }
                             break;
                     }
                 }

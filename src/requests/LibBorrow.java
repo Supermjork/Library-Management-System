@@ -25,7 +25,7 @@ public class LibBorrow implements LibRequest {
     }
 
     public void removeBorrowed(LibBook book, LibStudent student) {
-        student.removeBook(book);
+        student.removeBook(book.getBookID());
     }
 
     @Override

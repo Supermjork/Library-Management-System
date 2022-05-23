@@ -20,8 +20,8 @@ public class LibAdmin implements LibUserInterface {    //Basic Info for student,
         userEmail = studentEmail;
     }
 
-    //Intellij created such methods and their @Override, I filled in the returns after copying the info fields
-    //This is an entire copy-paste of LibStudent.java
+    // Intellij created such methods and their @Override, I filled in the returns after copying the info fields
+    // This is an entire copy-paste of LibStudent.java
 
     @Override
     public void setName(String usrName) {
