@@ -131,9 +131,9 @@ public class LibStudent implements LibUserInterface {
         }
     }
 
-    public void removeBook(LibBook book) {
+    public void removeBook(int bookID) {
         for(int i = 0; i < maxBorrowBooks; i++) {
-            if(borrowedBooks[i].getBookID() == book.getBookID()) {
+            if(bookID == borrowedBooks[i].getBookID()) {
                 borrowedBooks[i] = null;
                 borrowDates[i] = null;
             }

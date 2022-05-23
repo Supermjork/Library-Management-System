@@ -284,6 +284,74 @@ public class Library {
                             }
                             break;
                     }
+                } else {
+                    Scanner studentInput = new Scanner(System.in);
+
+                    System.out.println("Enter what operation to do: ");
+                    System.out.println("1.View borrowed Books\n2.Search for Book\n3.Return a Book\n" +
+                                       "4.Order a Book\n5.Borrow Book");
+
+                    int studentChoice = studentInput.nextInt();
+
+                    switch(studentChoice) {
+                        case 1:
+                            System.out.println("Showing borrowed books:");
+                            ((LibStudent) userInSession).showBorrowed();
+                            break;
+                        case 2:
+                            Scanner studentSearch = new Scanner(System.in);
+                            System.out.print("Enter ID of book to search for: ");
+                            int bookSearchID = studentSearch.nextInt();
+
+                            for(LibBook bookSearch : bookList) {
+                                if(bookSearchID == bookSearch.getBookID()) {
+                                    System.out.println(bookSearch);
+                                    break;
+                                }
+                            }
+                            break;
+                        case 3:
+                            System.out.println("Showing borrowed books: ");
+                            ((LibStudent) userInSession).showBorrowed();
+
+                            Scanner bookReturn = new Scanner(System.in);
+
+                            System.out.println("Enter book ID to return: ");
+                            int returningID = bookReturn.nextInt();
+
+                            LibReturn requestToReturn = new LibReturn(returningID, ((LibStudent) userInSession).getUsrID());
+                            returnList.add(requestToReturn);
+                            fileAppend(requestToReturn.toString(), "src\\filebase\\returns.csv");
+
+                            ((LibStudent) userInSession).removeBook(returningID);
+                            break;
+                        case 4:
+                            System.out.println("Showing books in stock: ");
+                            for(LibBook shownBooks : bookList) {
+                                System.out.println(shownBooks.toString());
+                            }
+
+                            Scanner studentBuy = new Scanner(System.in);
+
+                            System.out.print("Enter the ID of book you'd like to buy: ");
+                            int buyingBookID = studentBuy.nextInt();
+
+                            LibOrder newOrder = new LibOrder(buyingBookID, ((LibStudent) userInSession).getUsrID());
+
+                            for(LibBook bookBought : bookList) {
+                                if(buyingBookID == bookBought.getBookID()) {
+                                    bookBought.decStockAmount();
+                                }
+                                break;
+                            }
+
+                            FileWriter writer = new FileWriter("src\\filebase\\books.csv");
+                            for(LibBook books: bookList) {
+                                writer.write(books.toString());
+                            }
+                            writer.close();
+                            break;
+                    }
                 }
                 break;
             case 2:
