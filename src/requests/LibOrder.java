@@ -22,9 +22,7 @@ public class LibOrder implements LibRequest {
 
     @Override
     public String toString() {
-        return  "The ordered book ID: " + bookId + 
-                ", the ordering user ID: " + studentId +
-                ", ordered on: " + orderDate;
+        return  bookId + "," + studentId + "\n";
     }
 
     //Getters and Setters for the book ID, student ID, and order date

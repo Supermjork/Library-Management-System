@@ -344,18 +344,20 @@ public class Library {
 
                             LibOrder newOrder = new LibOrder(buyingBookID, ((LibStudent) userInSession).getUsrID());
 
+                            fileAppend(newOrder.toString(), "src\\filebase\\orders.csv");
+
                             for(LibBook bookBought : bookList) {
                                 if(buyingBookID == bookBought.getBookID()) {
-                                    bookBought.setStockAmount(bookBought.getStockAmount() - 1);
-                                }
-                                break;
-                            }
+                                    bookBought.decStockAmount();
+                                    System.out.println("Statement inside stock amount loop");
 
-                            FileWriter writer = new FileWriter("src\\filebase\\books.csv");
-                            for(LibBook books: bookList) {
-                                writer.write(books.toString());
+                                    FileWriter writeOrder = new FileWriter("src\\filebase\\books.csv");
+                                    for(LibBook books: bookList) {
+                                        writeOrder.write(books.toString());
+                                    }
+                                    writeOrder.close();
+                                }
                             }
-                            writer.close();
                             break;
                         case 5:
                             if(((LibStudent) userInSession).getCurrentAmountBorrowed() < 3) {
