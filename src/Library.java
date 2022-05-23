@@ -136,6 +136,7 @@ public class Library {
                     for (LibStudent student : studentList) {
                         if (student.getPhoneNum() == userNum) {
                             userInSession = student;
+                            break;
                         }
                     }
                 }
@@ -284,10 +285,11 @@ public class Library {
                             }
                             break;
                     }
-                } else {
+                } else if (userInSession != null){
                     Scanner studentInput = new Scanner(System.in);
 
                     System.out.println(userInSession);
+                    System.out.println(((LibStudent) userInSession).getUsrID());
 
                     System.out.println("Enter what operation to do: ");
                     System.out.println("1.View borrowed Books\n2.Search for Book\n3.Return a Book\n" +
