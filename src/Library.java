@@ -304,13 +304,15 @@ public class Library {
                             break;
                         case 2:
                             Scanner studentSearch = new Scanner(System.in);
-                            System.out.print("Enter ID of book to search for: ");
-                            int bookSearchID = studentSearch.nextInt();
+                            System.out.print("Enter Name of book to search for: ");
+                            String bookSearchName = studentSearch.nextLine();
 
                             for(LibBook bookSearch : bookList) {
-                                if(bookSearchID == bookSearch.getBookID()) {
+                                if(bookSearchName.equalsIgnoreCase(bookSearch.getBookName())) {
                                     System.out.println(bookSearch);
                                     break;
+                                } else {
+                                    System.out.println("Book not found.");
                                 }
                             }
                             break;
@@ -344,7 +346,7 @@ public class Library {
 
                             for(LibBook bookBought : bookList) {
                                 if(buyingBookID == bookBought.getBookID()) {
-                                    bookBought.decStockAmount();
+                                    bookBought.setStockAmount(bookBought.getStockAmount() - 1);
                                 }
                                 break;
                             }
