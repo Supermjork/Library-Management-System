@@ -128,12 +128,8 @@ public class LibStudent implements LibUserInterface {
     // Add/Remove books into parallel arrays of Book/Date
 
     public void addBook(LibBook book) {
-        for(int i = 0; i < maxBorrowBooks; i++) {
-            if(borrowedBooks.get(i) == null) {
-                borrowedBooks.set(i, book);
-                borrowDates.set(i, LocalDate.now());
-            }
-        }
+        borrowedBooks.add(book);
+        borrowDates.add(LocalDate.now());
     }
 
     public void removeBook(int bookID) {
