@@ -1,7 +1,5 @@
 package requests;
 
-import library.LibBook;
-import library.LibStudent;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -37,9 +35,8 @@ public class LibReturn implements LibRequest{
 
     @Override
     public String toString() {
-        return "The returning book ID: " + bookId + 
-                ", the returning user ID: " + studentId +
-                ", returned on: " + returnDate;
+        return bookId + "," + studentId + "," + returnDate.getDayOfMonth() + "," + returnDate.getMonthValue() +
+               "," + returnDate.getYear() + "," + fine + "\n";
     }
 
 
@@ -71,5 +68,4 @@ public class LibReturn implements LibRequest{
     public int getFineRate() {
         return fineRate;
     }
-
 }

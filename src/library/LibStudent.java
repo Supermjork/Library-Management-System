@@ -3,6 +3,7 @@ package library;
 import java.time.LocalDate;
 import requests.*;
 import java.lang.*;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class LibStudent implements LibUserInterface {
@@ -13,8 +14,8 @@ public class LibStudent implements LibUserInterface {
     private String userEmail;
     private final int maxBorrowBooks = 3;
     private int currentAmountBorrowed;
-    private LinkedList<LibBook> borrowedBooks = new LinkedList<>();
-    private LinkedList<LocalDate> borrowDates = new LinkedList<>();
+    private LibBook[] borrowedBooks = new LibBook[maxBorrowBooks];
+    private LocalDate[] borrowDates = new LocalDate[maxBorrowBooks];
 
     public LibStudent(String studentName, int studentID, long studentPhone, String studentEmail) {
         usrName = studentName;
@@ -26,10 +27,13 @@ public class LibStudent implements LibUserInterface {
     // Reminder function
     public void remind() {
         LocalDate dateToday = LocalDate.now();
-
-        for(int i = 0; i < maxBorrowBooks; i++) {
-            if(borrowDates.get(i).minusDays(4) == dateToday) {
-                System.out.println("You have 4 days to return: " + borrowedBooks.get(i));
+        if(borrowedBooks[0] == null && borrowedBooks[1] == null && borrowedBooks[2] == null) {
+            System.out.println("No borrowed Books");
+        } else {
+            for (int i = 0; i < maxBorrowBooks; i++) {
+                if (borrowDates[i].minusDays(4) == dateToday) {
+                    System.out.println("You have 4 days to return: " + borrowedBooks[i]);
+                }
             }
         }
     }
@@ -128,21 +132,46 @@ public class LibStudent implements LibUserInterface {
     // Add/Remove books into parallel arrays of Book/Date
 
     public void addBook(LibBook book) {
-        borrowedBooks.add(book);
-        borrowDates.add(LocalDate.now());
+        if(borrowedBooks[0] != null & borrowedBooks[1] != null & borrowedBooks[2] != null) {
+            System.out.println("Cannot borrow any more books");
+        } else {
+            for (int i = 0; i < maxBorrowBooks; i++) {
+                if (borrowedBooks[i] == null & borrowDates[i] == null) {
+                    borrowedBooks[i] = book;
+                    borrowDates[i] = LocalDate.now();
+                    System.out.println("Book added, due date: " + borrowDates[i].plusDays(14));
+                    incBorrowAmount();
+                    break;
+                }
+            }
+        }
     }
 
     public void removeBook(int bookID) {
-        borrowedBooks.removeIf(removedBook -> bookID == removedBook.getBookID());
+        for(int i = 0; i < maxBorrowBooks; i++) {
+            if(bookID == borrowedBooks[i].getBookID()) {
+                borrowedBooks[i] = null;
+                borrowDates[i] = null;
+                decBorrowAmount();
+                break;
+            }
+        }
     }
 
     // Allowing the user to view their borrowed books and when their borrowed said books and when should they return
 
     public void showBorrowed() {
-        for(LibBook borrowedBook : borrowedBooks) {
-            System.out.println("Book Name: " + borrowedBook.getBookName() +
-                               "\nBook Author: " + borrowedBook.getBookAuthor() +
-                               "\nBook ID: " + borrowedBook.getBookID());
+        if(borrowedBooks[0] == null & borrowedBooks[1] == null & borrowedBooks[2] == null) {
+            System.out.print("You don't have any borrowed books");
+        } else {
+            System.out.println("Showing borrowed books: ");
+            for(LibBook borrowedBook : borrowedBooks) {
+                if(borrowedBook != null) {
+                    System.out.println("Book Name: " + borrowedBook.getBookName() +
+                                       "\nBook Author: " + borrowedBook.getBookAuthor() +
+                                       "\nBook ID: " + borrowedBook.getBookID());
+                }
+            }
         }
     }
 }

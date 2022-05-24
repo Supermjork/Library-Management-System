@@ -3,7 +3,7 @@ package requests;
 import java.time.LocalDate;
 
 public class LibOrder implements LibRequest {
-    protected int bookId;          //Adds the ordered book's ID.
+    protected int bookId;           //Adds the ordered book's ID.
     protected int studentId;        //Adds the Student's ID (Who had ordered the book).
     protected LocalDate orderDate;  //Assigns the current date when the request had been created.
 
@@ -22,7 +22,8 @@ public class LibOrder implements LibRequest {
 
     @Override
     public String toString() {
-        return  bookId + "," + studentId + "\n";
+        return  bookId + "," + studentId + "," + orderDate.getDayOfMonth() + "," + orderDate.getMonthValue() +
+                "," + orderDate.getYear() + "," + "\n";
     }
 
     //Getters and Setters for the book ID, student ID, and order date

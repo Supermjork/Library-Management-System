@@ -39,11 +39,11 @@ public class Library {
         for(LibBook book : bookList) {
             System.out.println(
                         "Book Name: " + book.getBookName() +
-                        " Author: " + book.getBookAuthor() +
-                        " ID: " + book.getBookID() +
-                        " Released Globally on: " + book.getIssGloDate() +
-                        " Number in stock: " + book.getStockAmount() +
-                        " Price: " + book.getPrice() + "EG£"
+                        ", Author: " + book.getBookAuthor() +
+                        ", ID: " + book.getBookID() +
+                        ", Released Globally on: " + book.getIssGloDate() +
+                        ", Number in stock: " + book.getStockAmount() +
+                        ", Price: " + book.getPrice() + "EG£"
                         );
         }
 
@@ -51,9 +51,9 @@ public class Library {
         for(LibStudent student : studentList) {
             System.out.println(
                         "Name: " + student.getUsrName() +
-                        " ID: " + student.getUsrID() +
-                        " Phone: " + student.getPhoneNum() +
-                        " Email: " + student.getUserEmail()
+                        ", ID: " + student.getUsrID() +
+                        ", Phone: " + student.getPhoneNum() +
+                        ", Email: " + student.getUserEmail()
                         );
         }
 
@@ -61,9 +61,9 @@ public class Library {
         for(LibAdmin admin : adminList) {
             System.out.println(
                         "Name: " + admin.getUsrName() +
-                        " ID: " + admin.getUsrID() +
-                        " Phone: " + admin.getPhoneNum() +
-                        " Email: " + admin.getUserEmail()
+                        ", ID: " + admin.getUsrID() +
+                        ", Phone: " + admin.getPhoneNum() +
+                        ", Email: " + admin.getUserEmail()
                         );
         }
 
@@ -71,8 +71,8 @@ public class Library {
         for(LibOrder order : orderList) {
             System.out.println(
                         "Book ID: " + order.getBookID() +
-                        " Student ID: " + order.getStudentID() +
-                        " Order Date: " + order.getOrderDate()
+                        ", Student ID: " + order.getStudentID() +
+                        ", Order Date: " + order.getOrderDate()
                         );
         }
 
@@ -80,8 +80,8 @@ public class Library {
         for(LibBorrow borrow : borrowList) {
             System.out.println(
                         "Book ID: " + borrow.getBookID() +
-                        " Student ID: " + borrow.getStudentID() +
-                        " Borrow Date: " + borrow.getBorrowDate()
+                        ", Student ID: " + borrow.getStudentID() +
+                        ", Borrow Date: " + borrow.getBorrowDate()
                         );
         }
 
@@ -294,6 +294,8 @@ public class Library {
                         System.out.println(userInSession);
                         System.out.println(((LibStudent) userInSession).getUsrID());
 
+                        ((LibStudent) userInSession).remind();
+
                         do {
                             System.out.println("Enter what operation to do: ");
                             System.out.println("1.View borrowed Books\n2.Search for Book\n3.Return a Book\n" +
@@ -303,7 +305,6 @@ public class Library {
 
                             switch (studentChoice) {
                                 case 1:
-                                    System.out.println("Showing borrowed books:");
                                     ((LibStudent) userInSession).showBorrowed();
                                     break;
                                 case 2:
@@ -312,26 +313,29 @@ public class Library {
                                     String bookSearchName = studentSearch.nextLine();
 
                                     for (LibBook bookSearch : bookList) {
-                                        if (bookSearchName.equalsIgnoreCase(bookSearch.getBookName())) {
+                                        if (bookSearch.getBookName().contains(bookSearchName)) {
                                             System.out.println(bookSearch);
                                             break;
                                         }
                                     }
                                     break;
                                 case 3:
-                                    System.out.println("Showing borrowed books: ");
-                                    ((LibStudent) userInSession).showBorrowed();
+                                    if(((LibStudent) userInSession).getCurrentAmountBorrowed() == 0) {
+                                        System.out.println("You do not have any borrowed books to return.");
+                                    } else {
+                                        ((LibStudent) userInSession).showBorrowed();
 
-                                    Scanner bookReturn = new Scanner(System.in);
+                                        Scanner bookReturn = new Scanner(System.in);
 
-                                    System.out.println("Enter book ID to return: ");
-                                    int returningID = bookReturn.nextInt();
+                                        System.out.println("Enter book ID to return: ");
+                                        int returningID = bookReturn.nextInt();
 
-                                    LibReturn requestToReturn = new LibReturn(returningID, ((LibStudent) userInSession).getUsrID());
-                                    returnList.add(requestToReturn);
-                                    fileAppend(requestToReturn.toString(), "src\\filebase\\returns.csv");
+                                        LibReturn requestToReturn = new LibReturn(returningID, ((LibStudent) userInSession).getUsrID());
+                                        returnList.add(requestToReturn);
+                                        fileAppend(requestToReturn.toString(), "src\\filebase\\returns.csv");
 
-                                    ((LibStudent) userInSession).removeBook(returningID);
+                                        ((LibStudent) userInSession).removeBook(returningID);
+                                    }
                                     break;
                                 case 4:
                                     System.out.println("Showing books in stock: ");
@@ -388,7 +392,7 @@ public class Library {
                                             }
                                         }
                                     } else {
-                                        System.out.println("Cannot borrow more than 3 books");
+                                        System.out.println("Cannot borrow more than 3 books.");
                                         break;
                                     }
                                         break;
@@ -447,12 +451,6 @@ public class Library {
     }
 
     public static <T extends LibUserInterface> boolean isAdmin(String email, long phoneNum, List<T> adminList) {
-        if(loginValidator(email, phoneNum, adminList)) {
-            System.out.println("Admin found");
-            return true;
-        } else {
-            System.out.println("Admin not found");
-            return false;
-        }
+        return loginValidator(email, phoneNum, adminList);
     }
 }

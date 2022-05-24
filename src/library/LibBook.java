@@ -7,7 +7,6 @@ import java.time.LocalDate;
  * - Book name
  * - Book ID
  * - Book Author
- * - Issue Date in Library (dayL, monthL, yearL)
  * - Issue Date Globally when the book was released (dayG, monthG, yearG)
  */
 

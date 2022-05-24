@@ -30,7 +30,7 @@ public class LibGUISwing {
         JButton loginButton = new JButton("Login");
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed (ActionEvent e) {
-                    emailInField.setText("gay.");
+                    emailInField.setText("nope");
             }
         }
         );
