@@ -36,8 +36,10 @@ public class LibBorrow implements LibRequest {
 
     @Override
     public String toString() {
-        return  bookId + "," + studentId + "," + borrowDate + "," + (borrowDate.getDayOfMonth() + 14) + "," +
-                borrowDate.getMonthValue() + "," + borrowDate.getYear();
+        LocalDate returnDate = borrowDate.plusDays(14);
+        return  bookId + "," + studentId + "," + borrowDate.getDayOfMonth() + "," + borrowDate.getMonthValue() + ","
+                + borrowDate.getYear() + "," + returnDate.getDayOfMonth() + "," + returnDate.getMonthValue() + ","
+                + returnDate.getYear();
     }
 
     // Getters and Setters for the book ID, student ID, and borrow date
