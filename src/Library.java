@@ -145,259 +145,257 @@ public class Library {
                     int studentChoice;
                     int adminChoice;
 
-                        if (userInSession instanceof LibAdmin) {
-                            Scanner adminInput = new Scanner(System.in);
-                            do {
+                    if (userInSession instanceof LibAdmin) {
+                        Scanner adminInput = new Scanner(System.in);
+                        do {
+                            System.out.println("Enter what operation you'd like to do: ");
+                            System.out.println("1.Add Book\n2.Remove Book\n3.Update Book Info\n4.View Orders" +
+                                               "\n5.Search By ID\n-1.Log Out");
+                            adminChoice = adminInput.nextInt();
 
-                                System.out.println("Enter what operation you'd like to do: ");
-                                System.out.println("1.Add Book\n2.Remove Book\n3.Update Book Info\n4.View Orders" +
-                                                   "\n5.Search By ID\n-1.Log Out");
+                            switch (adminChoice) {
+                                case 1:
+                                    Scanner newBookStringTypes = new Scanner(System.in);
+                                    Scanner newBookIntTypes = new Scanner(System.in);
 
-                                adminChoice = adminInput.nextInt();
+                                    System.out.print("Book Name: ");
+                                    String bookName = newBookStringTypes.nextLine();
+                                    System.out.print("Book Author: ");
+                                    String bookAuthor = newBookStringTypes.nextLine();
+                                    System.out.print("Book ID: ");
+                                    int bookID = newBookIntTypes.nextInt();
+                                    System.out.print("Book release Day: ");
+                                    int bookReleaseDay = newBookIntTypes.nextInt();
+                                    System.out.print("Book release Month: ");
+                                    int bookReleaseMonth = newBookIntTypes.nextInt();
+                                    System.out.print("Book release Year: ");
+                                    int bookReleaseYear = newBookIntTypes.nextInt();
+                                    System.out.print("Book amount in Stock: ");
+                                    int bookStock = newBookIntTypes.nextInt();
+                                    System.out.print("Book Price: ");
+                                    int bookPrice = newBookIntTypes.nextInt();
 
-                                switch (adminChoice) {
-                                    case 1:
-                                        Scanner newBookStringTypes = new Scanner(System.in);
-                                        Scanner newBookIntTypes = new Scanner(System.in);
+                                    newBookStringTypes.close();
+                                    newBookIntTypes.close();
 
-                                        System.out.print("Book Name: ");
-                                        String bookName = newBookStringTypes.nextLine();
-                                        System.out.print("Book Author: ");
-                                        String bookAuthor = newBookStringTypes.nextLine();
-                                        System.out.print("Book ID: ");
-                                        int bookID = newBookIntTypes.nextInt();
-                                        System.out.print("Book release Day: ");
-                                        int bookReleaseDay = newBookIntTypes.nextInt();
-                                        System.out.print("Book release Month: ");
-                                        int bookReleaseMonth = newBookIntTypes.nextInt();
-                                        System.out.print("Book release Year: ");
-                                        int bookReleaseYear = newBookIntTypes.nextInt();
-                                        System.out.print("Book amount in Stock: ");
-                                        int bookStock = newBookIntTypes.nextInt();
-                                        System.out.print("Book Price: ");
-                                        int bookPrice = newBookIntTypes.nextInt();
+                                    LibBook addedBook = new LibBook(bookName, bookAuthor, bookID, bookReleaseDay,
+                                            bookReleaseMonth, bookReleaseYear, bookStock, bookPrice);
 
-                                        newBookStringTypes.close();
-                                        newBookIntTypes.close();
+                                    fileAppend(addedBook.toString(), "src\\filebase\\books.csv");
+                                    break;
+                                case 2:
+                                    Scanner deleteBookID = new Scanner(System.in);
+                                    System.out.print("What is the ID of the book you'd like to delete? ");
+                                    int deletedID = deleteBookID.nextInt();
 
-                                        LibBook addedBook = new LibBook(bookName, bookAuthor, bookID, bookReleaseDay,
-                                                bookReleaseMonth, bookReleaseYear, bookStock, bookPrice);
+                                    bookList.removeIf(delBook -> delBook.getBookID() == deletedID);
 
-                                        fileAppend(addedBook.toString(), "src\\filebase\\books.csv");
-                                        break;
-                                    case 2:
-                                        Scanner deleteBookID = new Scanner(System.in);
-                                        System.out.print("What is the ID of the book you'd like to delete? ");
-                                        int deletedID = deleteBookID.nextInt();
+                                    FileWriter writer = new FileWriter("src\\filebase\\books.csv");
+                                    for (LibBook books : bookList) {
+                                        writer.write(books.toString());
+                                    }
+                                    writer.close();
+                                    break;
+                                case 3:
+                                    Scanner updatedBookID = new Scanner(System.in);
+                                    System.out.print("Enter ID of the book you'd like to update: ");
+                                    int updateID = updatedBookID.nextInt();
 
-                                        bookList.removeIf(delBook -> delBook.getBookID() == deletedID);
+                                    for (LibBook bookToUpdate : bookList) {
+                                        if (updateID == bookToUpdate.getBookID()) {
 
-                                        FileWriter writer = new FileWriter("src\\filebase\\books.csv");
-                                        for (LibBook books : bookList) {
-                                            writer.write(books.toString());
-                                        }
-                                        writer.close();
-                                        break;
-                                    case 3:
-                                        Scanner updatedBookID = new Scanner(System.in);
-                                        System.out.print("Enter ID of the book you'd like to update: ");
-                                        int updateID = updatedBookID.nextInt();
+                                            Scanner fieldChoice = new Scanner(System.in);
+                                            System.out.print("What field to update?\n1.Name\n2.Author\n3.Release Date" +
+                                                    "\n4.Stock Amount\n5.Price");
+                                            int fieldSelect = fieldChoice.nextInt();
 
-                                        for (LibBook bookToUpdate : bookList) {
-                                            if (updateID == bookToUpdate.getBookID()) {
+                                            switch (fieldSelect) {
+                                                case 1:
+                                                    Scanner updateName = new Scanner(System.in);
 
-                                                Scanner fieldChoice = new Scanner(System.in);
-                                                System.out.print("What field to update?\n1.Name\n2.Author\n3.Release Date" +
-                                                        "\n4.Stock Amount\n5.Price");
-                                                int fieldSelect = fieldChoice.nextInt();
+                                                    System.out.print("Enter new Name: ");
+                                                    String updatedName = updateName.nextLine();
 
-                                                switch (fieldSelect) {
-                                                    case 1:
-                                                        Scanner updateName = new Scanner(System.in);
+                                                    bookToUpdate.setBookName(updatedName);
+                                                    break;
+                                                case 2:
+                                                    Scanner updateAuthor = new Scanner(System.in);
 
-                                                        System.out.print("Enter new Name: ");
-                                                        String updatedName = updateName.nextLine();
+                                                    System.out.print("Enter Author name: ");
+                                                    String updatedAuthor = updateAuthor.nextLine();
 
-                                                        bookToUpdate.setBookName(updatedName);
-                                                        break;
-                                                    case 2:
-                                                        Scanner updateAuthor = new Scanner(System.in);
+                                                    bookToUpdate.setBookAuthor(updatedAuthor);
+                                                    break;
+                                                case 3:
+                                                    Scanner updateDate = new Scanner(System.in);
 
-                                                        System.out.print("Enter Author name: ");
-                                                        String updatedAuthor = updateAuthor.nextLine();
+                                                    System.out.print("Enter new release day: ");
+                                                    int updatedDay = updateDate.nextInt();
+                                                    System.out.print("Enter new release month:");
+                                                    int updatedMonth = updateDate.nextInt();
+                                                    System.out.print("Enter new release year: ");
+                                                    int updatedYear = updateDate.nextInt();
 
-                                                        bookToUpdate.setBookAuthor(updatedAuthor);
-                                                        break;
-                                                    case 3:
-                                                        Scanner updateDate = new Scanner(System.in);
+                                                    bookToUpdate.setIssGloDate(updatedDay, updatedMonth, updatedYear);
+                                                    break;
+                                                case 4:
+                                                    Scanner updateStock = new Scanner(System.in);
 
-                                                        System.out.print("Enter new release day: ");
-                                                        int updatedDay = updateDate.nextInt();
-                                                        System.out.print("Enter new release month:");
-                                                        int updatedMonth = updateDate.nextInt();
-                                                        System.out.print("Enter new release year: ");
-                                                        int updatedYear = updateDate.nextInt();
+                                                    System.out.print("Enter updated amount in stock: ");
+                                                    int updatedStockAmount = updateStock.nextInt();
 
-                                                        bookToUpdate.setIssGloDate(updatedDay, updatedMonth, updatedYear);
-                                                        break;
-                                                    case 4:
-                                                        Scanner updateStock = new Scanner(System.in);
+                                                    bookToUpdate.setStockAmount(updatedStockAmount);
+                                                    break;
+                                                case 5:
+                                                    Scanner updatePrice = new Scanner(System.in);
 
-                                                        System.out.print("Enter updated amount in stock: ");
-                                                        int updatedStockAmount = updateStock.nextInt();
+                                                    System.out.print("Enter the new price: ");
+                                                    int updatedPrice = updatePrice.nextInt();
 
-                                                        bookToUpdate.setStockAmount(updatedStockAmount);
-                                                        break;
-                                                    case 5:
-                                                        Scanner updatePrice = new Scanner(System.in);
-
-                                                        System.out.print("Enter the new price: ");
-                                                        int updatedPrice = updatePrice.nextInt();
-
-                                                        bookToUpdate.setPrice(updatedPrice);
-                                                        break;
-                                                }
-
-                                                FileWriter writeBook = new FileWriter("src\\filebase\\books.csv");
-                                                for (LibBook books : bookList) {
-                                                    writeBook.write(books.toString());
-                                                }
-                                                writeBook.close();
-                                                break;
+                                                    bookToUpdate.setPrice(updatedPrice);
+                                                    break;
                                             }
-                                        }
-                                        break;
-                                    case 4:
-                                        for (LibOrder order : orderList) {
-                                            System.out.println(
-                                                    "Book ID: " + order.getBookID() +
-                                                            " Student ID: " + order.getStudentID() +
-                                                            " Order Date: " + order.getOrderDate()
-                                            );
-                                        }
-                                        break;
-                                    case 5:
-                                        Scanner idSearch = new Scanner(System.in);
-                                        System.out.print("Enter book Name you'd like to find: ");
-                                        String searchName = idSearch.nextLine();
 
-                                        for (LibBook searchBook : bookList) {
-                                            if (searchName.equalsIgnoreCase(searchBook.getBookName())) {
-                                                System.out.println(searchBook);
-                                                break;
+                                            FileWriter writeBook = new FileWriter("src\\filebase\\books.csv");
+                                            for (LibBook books : bookList) {
+                                                writeBook.write(books.toString());
                                             }
+                                            writeBook.close();
+                                            break;
                                         }
-                                        break;
-                                }
-                            } while (adminChoice != -1);
-                        } else if (userInSession != null) {
-                            Scanner studentInput = new Scanner(System.in);
+                                    }
+                                    break;
+                                case 4:
+                                    for (LibOrder order : orderList) {
+                                        System.out.println(
+                                                        "Book ID: " + order.getBookID() +
+                                                        " Student ID: " + order.getStudentID() +
+                                                        " Order Date: " + order.getOrderDate()
+                                        );
+                                    }
+                                    break;
+                                case 5:
+                                    Scanner idSearch = new Scanner(System.in);
+                                    System.out.print("Enter book Name you'd like to find: ");
+                                    String searchName = idSearch.nextLine();
 
-                            System.out.println(userInSession);
-                            System.out.println(((LibStudent) userInSession).getUsrID());
+                                    for (LibBook searchBook : bookList) {
+                                        if (searchName.equalsIgnoreCase(searchBook.getBookName())) {
+                                            System.out.println(searchBook);
+                                            break;
+                                        }
+                                    }
+                                    break;
+                            }
+                        } while (adminChoice != -1);
+                    } else if (userInSession != null) {
+                        Scanner studentInput = new Scanner(System.in);
 
-                            do {
-                                System.out.println("Enter what operation to do: ");
-                                System.out.println("1.View borrowed Books\n2.Search for Book\n3.Return a Book\n" +
-                                                   "4.Order a Book\n5.Borrow Book\n-1.Log Out");
+                        System.out.println(userInSession);
+                        System.out.println(((LibStudent) userInSession).getUsrID());
 
-                                studentChoice = studentInput.nextInt();
+                        do {
+                            System.out.println("Enter what operation to do: ");
+                            System.out.println("1.View borrowed Books\n2.Search for Book\n3.Return a Book\n" +
+                                               "4.Order a Book\n5.Borrow Book\n-1.Log Out");
 
-                                switch (studentChoice) {
-                                    case 1:
-                                        System.out.println("Showing borrowed books:");
-                                        ((LibStudent) userInSession).showBorrowed();
-                                        break;
-                                    case 2:
-                                        Scanner studentSearch = new Scanner(System.in);
-                                        System.out.print("Enter Name of book to search for: ");
-                                        String bookSearchName = studentSearch.nextLine();
+                            studentChoice = studentInput.nextInt();
 
-                                        for (LibBook bookSearch : bookList) {
-                                            if (bookSearchName.equalsIgnoreCase(bookSearch.getBookName())) {
-                                                System.out.println(bookSearch);
-                                                break;
+                            switch (studentChoice) {
+                                case 1:
+                                    System.out.println("Showing borrowed books:");
+                                    ((LibStudent) userInSession).showBorrowed();
+                                    break;
+                                case 2:
+                                    Scanner studentSearch = new Scanner(System.in);
+                                    System.out.print("Enter Name of book to search for: ");
+                                    String bookSearchName = studentSearch.nextLine();
+
+                                    for (LibBook bookSearch : bookList) {
+                                        if (bookSearchName.equalsIgnoreCase(bookSearch.getBookName())) {
+                                            System.out.println(bookSearch);
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                case 3:
+                                    System.out.println("Showing borrowed books: ");
+                                    ((LibStudent) userInSession).showBorrowed();
+
+                                    Scanner bookReturn = new Scanner(System.in);
+
+                                    System.out.println("Enter book ID to return: ");
+                                    int returningID = bookReturn.nextInt();
+
+                                    LibReturn requestToReturn = new LibReturn(returningID, ((LibStudent) userInSession).getUsrID());
+                                    returnList.add(requestToReturn);
+                                    fileAppend(requestToReturn.toString(), "src\\filebase\\returns.csv");
+
+                                    ((LibStudent) userInSession).removeBook(returningID);
+                                    break;
+                                case 4:
+                                    System.out.println("Showing books in stock: ");
+                                    for (LibBook shownBooks : bookList) {
+                                        System.out.println(shownBooks.toString());
+                                    }
+
+                                    Scanner studentBuy = new Scanner(System.in);
+
+                                    System.out.print("Enter the ID of book you'd like to buy: ");
+                                    int buyingBookID = studentBuy.nextInt();
+
+                                    LibOrder newOrder = new LibOrder(buyingBookID, ((LibStudent) userInSession).getUsrID());
+
+                                    fileAppend(newOrder.toString(), "src\\filebase\\orders.csv");
+
+                                    for (LibBook bookBought : bookList) {
+                                        if (buyingBookID == bookBought.getBookID()) {
+                                            bookBought.decStockAmount();
+
+                                            FileWriter writeOrder = new FileWriter("src\\filebase\\books.csv");
+                                            for (LibBook books : bookList) {
+                                                writeOrder.write(books.toString());
                                             }
+                                            writeOrder.close();
                                         }
-                                        break;
-                                    case 3:
-                                        System.out.println("Showing borrowed books: ");
-                                        ((LibStudent) userInSession).showBorrowed();
-
-                                        Scanner bookReturn = new Scanner(System.in);
-
-                                        System.out.println("Enter book ID to return: ");
-                                        int returningID = bookReturn.nextInt();
-
-                                        LibReturn requestToReturn = new LibReturn(returningID, ((LibStudent) userInSession).getUsrID());
-                                        returnList.add(requestToReturn);
-                                        fileAppend(requestToReturn.toString(), "src\\filebase\\returns.csv");
-
-                                        ((LibStudent) userInSession).removeBook(returningID);
-                                        break;
-                                    case 4:
+                                    }
+                                    break;
+                                case 5:
+                                    if (((LibStudent) userInSession).getCurrentAmountBorrowed() < 3) {
                                         System.out.println("Showing books in stock: ");
                                         for (LibBook shownBooks : bookList) {
                                             System.out.println(shownBooks.toString());
                                         }
 
-                                        Scanner studentBuy = new Scanner(System.in);
+                                        Scanner borrowIDIn = new Scanner(System.in);
 
-                                        System.out.print("Enter the ID of book you'd like to buy: ");
-                                        int buyingBookID = studentBuy.nextInt();
+                                        System.out.print("Enter ID of book to borrow: ");
+                                        int borrowID = borrowIDIn.nextInt();
 
-                                        LibOrder newOrder = new LibOrder(buyingBookID, ((LibStudent) userInSession).getUsrID());
+                                        LibBorrow newBorrow = new LibBorrow(borrowID, ((LibStudent) userInSession).getUsrID());
+                                        fileAppend(newBorrow.toString(), "src\\filebase\\borrows.csv");
 
-                                        fileAppend(newOrder.toString(), "src\\filebase\\orders.csv");
+                                        for (LibBook bookBorrowed : bookList) {
+                                            if (borrowID == bookBorrowed.getBookID()) {
+                                                bookBorrowed.decStockAmount();
+                                                ((LibStudent) userInSession).addBook(bookBorrowed);
 
-                                        for (LibBook bookBought : bookList) {
-                                            if (buyingBookID == bookBought.getBookID()) {
-                                                bookBought.decStockAmount();
-
-                                                FileWriter writeOrder = new FileWriter("src\\filebase\\books.csv");
+                                                FileWriter writeBorrow = new FileWriter("src\\filebase\\books.csv");
                                                 for (LibBook books : bookList) {
-                                                    writeOrder.write(books.toString());
+                                                    writeBorrow.write(books.toString());
                                                 }
-                                                writeOrder.close();
+                                                writeBorrow.close();
                                             }
                                         }
+                                    } else {
+                                        System.out.println("Cannot borrow more than 3 books");
                                         break;
-                                    case 5:
-                                        if (((LibStudent) userInSession).getCurrentAmountBorrowed() < 3) {
-                                            System.out.println("Showing books in stock: ");
-                                            for (LibBook shownBooks : bookList) {
-                                                System.out.println(shownBooks.toString());
-                                            }
-
-                                            Scanner borrowIDIn = new Scanner(System.in);
-
-                                            System.out.print("Enter ID of book to borrow: ");
-                                            int borrowID = borrowIDIn.nextInt();
-
-                                            LibBorrow newBorrow = new LibBorrow(borrowID, ((LibStudent) userInSession).getUsrID());
-                                            fileAppend(newBorrow.toString(), "src\\filebase\\borrows.csv");
-
-                                            for (LibBook bookBorrowed : bookList) {
-                                                if (borrowID == bookBorrowed.getBookID()) {
-                                                    bookBorrowed.decStockAmount();
-                                                    ((LibStudent) userInSession).addBook(bookBorrowed);
-
-                                                    FileWriter writeBorrow = new FileWriter("src\\filebase\\books.csv");
-                                                    for (LibBook books : bookList) {
-                                                        writeBorrow.write(books.toString());
-                                                    }
-                                                    writeBorrow.close();
-                                                }
-                                            }
-                                        } else {
-                                            System.out.println("Cannot borrow more than 3 books");
-                                            break;
-                                        }
+                                    }
                                         break;
-                                }
-                            } while (studentChoice != -1);
-                        }
-                        break;
+                            }
+                        } while (studentChoice != -1);
+                    }
+                break;
                 case 2:
                     Scanner userNameIn = new Scanner(System.in);
                     Scanner userIDIn = new Scanner(System.in);
