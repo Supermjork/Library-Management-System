@@ -39,7 +39,7 @@ public class LibBorrow implements LibRequest {
         LocalDate returnDate = borrowDate.plusDays(14);
         return  bookId + "," + studentId + "," + borrowDate.getDayOfMonth() + "," + borrowDate.getMonthValue() + ","
                 + borrowDate.getYear() + "," + returnDate.getDayOfMonth() + "," + returnDate.getMonthValue() + ","
-                + returnDate.getYear();
+                + returnDate.getYear() + "\n";
     }
 
     // Getters and Setters for the book ID, student ID, and borrow date
