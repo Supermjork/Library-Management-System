@@ -20,7 +20,7 @@ public class LibGUISwing {
         JFrame studentUI = new JFrame("LibGUI Student Window");
 
         // creating a label
-        JLabel userIDLabel = new JLabel("User Email: ");
+        JLabel userEmailLabel = new JLabel("User Email: ");
 
         // creating a text field
         JTextField emailInField = new JTextField();
@@ -36,12 +36,12 @@ public class LibGUISwing {
         );
         // setting button position on screen for all the above components
         loginButton.setBounds(105,140,80,30);
-        userIDLabel.setBounds(55,100,80,30);
+        userEmailLabel.setBounds(55,100,80,30);
         emailInField.setBounds(140,100,100,30);
     
         // adding the components to frame    
         login.add(loginButton);
-        login.add(userIDLabel);
+        login.add(userEmailLabel);
         login.add(emailInField);
     
         // frame size 300 width and 300 height    
