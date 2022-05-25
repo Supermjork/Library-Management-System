@@ -175,9 +175,6 @@ public class Library {
                                     System.out.print("Book Price: ");
                                     int bookPrice = newBookIntTypes.nextInt();
 
-                                    newBookStringTypes.close();
-                                    newBookIntTypes.close();
-
                                     LibBook addedBook = new LibBook(bookName, bookAuthor, bookID, bookReleaseDay,
                                             bookReleaseMonth, bookReleaseYear, bookStock, bookPrice);
 
