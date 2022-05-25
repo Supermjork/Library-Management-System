@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 public class LibBorrow implements LibRequest {
     protected int bookId;               // Adds the ordered book's ID.
-    protected int studentId;            // Adds the Student's ID (Who had ordered the book).
+    protected int studentId;            // Adds the Student's ID.
     protected LocalDate borrowDate;     // Assigns the current date when the request had been created.
 
     // Constructor for the Borrow object that holds the book ID, student ID, Date

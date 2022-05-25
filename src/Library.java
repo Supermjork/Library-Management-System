@@ -89,8 +89,8 @@ public class Library {
         for(LibReturn return1 : returnList) {
             System.out.println(
                         "Book ID: " + return1.getBookID() +
-                        " Student ID: " + return1.getStudentID() +
-                        " Return Date: " + return1.getReturnDate()
+                        ", Student ID: " + return1.getStudentID() +
+                        ", Return Date: " + return1.getReturnDate()
                         );
         }
 
@@ -107,10 +107,10 @@ public class Library {
             System.out.println("1.Login\n2.Register\n-1.Exit");
             userChoice = userChoiceIn.nextInt();
 
+            Object userInSession = null;
+
             switch (userChoice) {
                 case 1:
-                    Object userInSession = null;
-
                     Scanner userEmailIn = new Scanner(System.in);
                     Scanner userNumIn = new Scanner(System.in);
 
@@ -266,11 +266,30 @@ public class Library {
                                     }
                                     break;
                                 case 4:
-                                    for (LibOrder order : orderList) {
+                                    System.out.println("\nOrders loaded: " + orderList.size());
+                                    for(LibOrder order : orderList) {
                                         System.out.println(
                                                         "Book ID: " + order.getBookID() +
-                                                        " Student ID: " + order.getStudentID() +
-                                                        " Order Date: " + order.getOrderDate()
+                                                        ", Student ID: " + order.getStudentID() +
+                                                        ", Order Date: " + order.getOrderDate()
+                                        );
+                                    }
+
+                                    System.out.println("\nBorrows loaded: " + borrowList.size());
+                                    for(LibBorrow borrow : borrowList) {
+                                        System.out.println(
+                                                        "Book ID: " + borrow.getBookID() +
+                                                        ", Student ID: " + borrow.getStudentID() +
+                                                        ", Borrow Date: " + borrow.getBorrowDate()
+                                        );
+                                    }
+
+                                    System.out.println("\nReturns loaded: " + returnList.size());
+                                    for(LibReturn return1 : returnList) {
+                                        System.out.println(
+                                                        "Book ID: " + return1.getBookID() +
+                                                        ", Student ID: " + return1.getStudentID() +
+                                                        ", Return Date: " + return1.getReturnDate()
                                         );
                                     }
                                     break;
@@ -295,6 +314,17 @@ public class Library {
                         System.out.println(((LibStudent) userInSession).getUsrID());
 
                         ((LibStudent) userInSession).remind();
+
+                        for(LibBorrow borrows : borrowList) {
+                            if(((LibStudent) userInSession).getUsrID() == borrows.getStudentID()) {
+                                for (LibBook bookBorrowed : bookList) {
+                                    if (borrows.getBookID() == bookBorrowed.getBookID()) {
+                                        ((LibStudent) userInSession).addBook(bookBorrowed);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
 
                         do {
                             System.out.println("Enter what operation to do: ");
@@ -327,14 +357,30 @@ public class Library {
 
                                         Scanner bookReturn = new Scanner(System.in);
 
-                                        System.out.println("Enter book ID to return: ");
+                                        System.out.print("Enter book ID to return: ");
                                         int returningID = bookReturn.nextInt();
 
                                         LibReturn requestToReturn = new LibReturn(returningID, ((LibStudent) userInSession).getUsrID());
+                                        ((LibStudent) userInSession).removeBook(returningID);
+
                                         returnList.add(requestToReturn);
                                         fileAppend(requestToReturn.toString(), "src\\filebase\\returns.csv");
 
-                                        ((LibStudent) userInSession).removeBook(returningID);
+                                        for(LibBorrow borrowReturn : borrowList) {
+                                            if(borrowReturn.getBookID() == returningID && borrowReturn.getStudentID() == ((LibStudent) userInSession).getUsrID()) {
+                                                borrowList.remove(borrowReturn);
+
+                                                FileWriter writeBorrow = new FileWriter("src\\filebase\\borrows.csv");
+                                                for (LibBorrow removeBorrow : borrowList) {
+                                                    writeBorrow.write(removeBorrow.toString());
+                                                }
+                                                writeBorrow.close();
+
+                                                break;
+                                            }
+                                        }
+
+
                                     }
                                     break;
                                 case 4:
@@ -365,7 +411,7 @@ public class Library {
                                     }
                                     break;
                                 case 5:
-                                    if (((LibStudent) userInSession).getCurrentAmountBorrowed() < 3) {
+                                    if (((LibStudent) userInSession).getCurrentAmountBorrowed() <= 3) {
                                         System.out.println("Showing books in stock: ");
                                         for (LibBook shownBooks : bookList) {
                                             System.out.println(shownBooks.toString());

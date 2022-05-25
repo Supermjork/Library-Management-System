@@ -135,7 +135,7 @@ public class LibStudent implements LibUserInterface {
         if(borrowedBooks[0] != null & borrowedBooks[1] != null & borrowedBooks[2] != null) {
             System.out.println("Cannot borrow any more books");
         } else {
-            for (int i = 0; i < maxBorrowBooks; i++) {
+            for (int i = 0; i <= maxBorrowBooks; i++) {
                 if (borrowedBooks[i] == null & borrowDates[i] == null) {
                     borrowedBooks[i] = book;
                     borrowDates[i] = LocalDate.now();
@@ -162,7 +162,7 @@ public class LibStudent implements LibUserInterface {
 
     public void showBorrowed() {
         if(borrowedBooks[0] == null & borrowedBooks[1] == null & borrowedBooks[2] == null) {
-            System.out.print("You don't have any borrowed books");
+            System.out.println("You don't have any borrowed books");
         } else {
             System.out.println("Showing borrowed books: ");
             for(LibBook borrowedBook : borrowedBooks) {
