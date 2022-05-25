@@ -150,7 +150,7 @@ public class Library {
                         do {
                             System.out.println("Enter what operation you'd like to do: ");
                             System.out.println("1.Add Book\n2.Remove Book\n3.Update Book Info\n4.View Orders" +
-                                               "\n5.Search By ID\n-1.Log Out");
+                                               "\n5.Search By Name\n-1.Log Out");
                             adminChoice = adminInput.nextInt();
 
                             switch (adminChoice) {
@@ -299,7 +299,7 @@ public class Library {
                                     String searchName = idSearch.nextLine();
 
                                     for (LibBook searchBook : bookList) {
-                                        if (searchName.equalsIgnoreCase(searchBook.getBookName())) {
+                                        if (searchBook.getBookName().contains(searchName)) {
                                             System.out.println(searchBook);
                                             break;
                                         }
@@ -394,19 +394,21 @@ public class Library {
                                     System.out.print("Enter the ID of book you'd like to buy: ");
                                     int buyingBookID = studentBuy.nextInt();
 
-                                    LibOrder newOrder = new LibOrder(buyingBookID, ((LibStudent) userInSession).getUsrID());
-
-                                    fileAppend(newOrder.toString(), "src\\filebase\\orders.csv");
-
                                     for (LibBook bookBought : bookList) {
-                                        if (buyingBookID == bookBought.getBookID()) {
+                                        if (buyingBookID == bookBought.getBookID() & bookBought.getStockAmount() > 0) {
                                             bookBought.decStockAmount();
+
+                                            LibOrder newOrder = new LibOrder(buyingBookID, ((LibStudent) userInSession).getUsrID());
+
+                                            fileAppend(newOrder.toString(), "src\\filebase\\orders.csv");
 
                                             FileWriter writeOrder = new FileWriter("src\\filebase\\books.csv");
                                             for (LibBook books : bookList) {
                                                 writeOrder.write(books.toString());
                                             }
                                             writeOrder.close();
+                                        } else {
+                                            System.out.println("Cannot order book.");
                                         }
                                     }
                                     break;
