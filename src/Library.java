@@ -7,7 +7,6 @@ import java.util.*;
 
 /**
  * The main class that the objects will be used in.
- * @author Icen Zeyada
  */
 public class Library {
     public static void main(String[] args) throws IOException {
@@ -17,6 +16,7 @@ public class Library {
         List<LibOrder> orderList = new ArrayList<>();
         List<LibBorrow> borrowList = new ArrayList<>();
         List<LibReturn> returnList = new ArrayList<>();
+        List<LibReserve> reserveList = new ArrayList<>();
 
     /**                     ########################
      *                      # Loading Data Section #
@@ -29,6 +29,7 @@ public class Library {
         CsvFileReader.loadDataOrder("src\\filebase\\orders.csv", orderList);
         CsvFileReader.loadDataBorrow("src\\filebase\\borrows.csv", borrowList);
         CsvFileReader.loadDataReturn("src\\filebase\\returns.csv", returnList);
+        CsvFileReader.loadDataReserve("src\\filebase\\reservations.csv", reserveList);
 
     /**                     #########################
      *                      #    Testing Section    #
@@ -92,6 +93,15 @@ public class Library {
                         ", Student ID: " + return1.getStudentID() +
                         ", Return Date: " + return1.getReturnDate()
                         );
+        }
+
+        System.out.println("\nReserves loaded: " + reserveList.size());
+        for(LibReserve reservation : reserveList) {
+            System.out.println(
+                            "Book ID: " + reservation.getBookID() +
+                            ", Student ID: " + reservation.getStudentID() +
+                            ", Reservation date: " + reservation.getReserveDate()
+            );
         }
 
         /**
@@ -282,11 +292,20 @@ public class Library {
                                     }
 
                                     System.out.println("\nReturns loaded: " + returnList.size());
-                                    for(LibReturn return1 : returnList) {
+                                    for(LibReturn returns : returnList) {
                                         System.out.println(
-                                                        "Book ID: " + return1.getBookID() +
-                                                        ", Student ID: " + return1.getStudentID() +
-                                                        ", Return Date: " + return1.getReturnDate()
+                                                        "Book ID: " + returns.getBookID() +
+                                                        ", Student ID: " + returns.getStudentID() +
+                                                        ", Return Date: " + returns.getReturnDate()
+                                        );
+                                    }
+
+                                    System.out.println("\nReserves loaded: " + reserveList.size());
+                                    for(LibReserve reservation : reserveList) {
+                                        System.out.println(
+                                                        "Book ID: " + reservation.getBookID() +
+                                                        ", Student ID: " + reservation.getStudentID() +
+                                                        ", Reservation date: " + reservation.getReserveDate()
                                         );
                                     }
                                     break;
@@ -405,7 +424,9 @@ public class Library {
                                             }
                                             writeOrder.close();
                                         } else {
-                                            System.out.println("Cannot order book.");
+                                            System.out.println("Cannot order book, will make a reservation.");
+                                            LibReserve reservationRequest = new LibReserve(buyingBookID, ((LibStudent) userInSession).getUsrID());
+                                            fileAppend(reservationRequest.toString(), "src\\filebase\\reservations.csv");
                                         }
                                     }
                                     break;
@@ -425,7 +446,7 @@ public class Library {
                                         fileAppend(newBorrow.toString(), "src\\filebase\\borrows.csv");
 
                                         for (LibBook bookBorrowed : bookList) {
-                                            if (borrowID == bookBorrowed.getBookID()) {
+                                            if (borrowID == bookBorrowed.getBookID() & bookBorrowed.getStockAmount() > 0) {
                                                 bookBorrowed.decStockAmount();
                                                 ((LibStudent) userInSession).addBook(bookBorrowed);
 

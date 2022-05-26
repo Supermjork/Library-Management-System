@@ -6,14 +6,14 @@ import java.time.temporal.ChronoUnit;
 public class LibReturn implements LibRequest{
     protected final int fineRate = 50;
     protected int fine;
-    protected int bookId;
-    protected int studentId;
+    protected int bookID;
+    protected int studentID;
     protected LocalDate returnDate;
 
     //Constructor for the Order object that holds the book ID, student ID, Date (Will be same for Borrow)
-    public LibReturn(int bookId, int studentId) {
-        this.bookId = bookId;
-        this.studentId = studentId;
+    public LibReturn(int bookID, int studentID) {
+        this.bookID = bookID;
+        this.studentID = studentID;
         returnDate = LocalDate.now();
     }
 
@@ -35,18 +35,18 @@ public class LibReturn implements LibRequest{
 
     @Override
     public String toString() {
-        return bookId + "," + studentId + "," + returnDate.getDayOfMonth() + "," + returnDate.getMonthValue() +
+        return bookID + "," + studentID + "," + returnDate.getDayOfMonth() + "," + returnDate.getMonthValue() +
                "," + returnDate.getYear() + "," + fine + "\n";
     }
 
 
     //Getters and Setters for the book ID, student ID, and order date
     public int getBookID() {
-        return bookId;
+        return bookID;
     }
 
     public int getStudentID() {
-        return studentId;
+        return studentID;
     }
 
     public LocalDate getReturnDate() {

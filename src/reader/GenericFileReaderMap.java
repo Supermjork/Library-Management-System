@@ -5,19 +5,10 @@ import java.util.Map;
 
 /**
  * A class that reads a file and adds it to a Map based structure mentioned.
- * @author Icen Zeyada
  * @apiNote Still a prototype.
  * @version 1.0 Beta  
  */
 public class GenericFileReaderMap {
-    /**
-     * Reads a file and adds it to whichever structure mentioned.
-     * @param <E> The type of the collection
-     * @param fileName is the file we want to read
-     * @param collection The collection we want to add the file contents to
-     * @note delimiter A new line is the delimiter between each element
-     *                  in the collection.
-     */
     private static <E extends Map> void readFileTo(String fileName, E map) {
         
         // Declares a scanner to read the file.

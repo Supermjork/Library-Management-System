@@ -9,7 +9,6 @@ import requests.*;
 import java.util.List;
 
 /**
- * @author Icen Zeyada
  * @apiNote Still a prototype.
  * @version 1.0 Beta
  */
@@ -136,6 +135,25 @@ public class CsvFileReader {
                                         Integer.parseInt(constructorValues[0]),
                                         Integer.parseInt(constructorValues[1]))
                             );
+            }
+            sc.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void loadDataReserve(String filename, List<LibReserve> reserveRequests) {
+        //parsing a CSV file into Scanner class constructor
+        try {
+            Scanner sc = new Scanner(new File(filename));
+
+            String[] constructorValues;
+            while(sc.hasNextLine()) {
+                constructorValues = sc.nextLine().split(",");
+                reserveRequests.add(new LibReserve(
+                                    Integer.parseInt(constructorValues[0]),
+                                    Integer.parseInt(constructorValues[1]))
+                );
             }
             sc.close();
         } catch (FileNotFoundException e) {
