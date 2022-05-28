@@ -17,6 +17,8 @@ import javax.swing.*;
  * The original GUI is harder to use and more complicated to install.
  */
 public class LibMainWindow extends JPanel{
+    String userInEmail;
+    long userInPhone;
   
     // initializing using constructor  
     public LibMainWindow() {
@@ -76,6 +78,9 @@ public class LibMainWindow extends JPanel{
                 login.dispose();
             }
         });
+
+        userInEmail = emailInField.getText();
+        userInPhone = Long.parseLong(phoneInField.getText());
     }
 
     // main method
@@ -88,8 +93,8 @@ public class LibMainWindow extends JPanel{
     
         // creating instance of Frame class
         LibMainWindow window = new LibMainWindow();
-        LibRegisterWindow regWindow = new LibRegisterWindow();
-        LibStudentWindow studentWindow = new LibStudentWindow();
+
+        isAdmin(window.userInEmail, window.userInPhone, adminList);
     }
 
     public static <T extends LibUserInterface> boolean loginValidator(String email, long phoneNum, List<T> userList) {
