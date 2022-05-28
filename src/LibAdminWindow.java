@@ -1,8 +1,14 @@
-import library.LibUserInterface;
+import library.LibBook;
+import reader.CsvFileReader;
+import requests.LibBorrow;
+import requests.LibOrder;
+import requests.LibReserve;
+import requests.LibReturn;
 
 import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LibAdminWindow {
@@ -12,13 +18,18 @@ public class LibAdminWindow {
         JButton adminAddBook = new JButton();
     }
 
-    public static <T extends LibUserInterface> boolean loginValidator(String email, long phoneNum, List<T> userList) {
-        for(T user : userList) {
-            if(email.equals(user.getUserEmail()) && phoneNum == user.getPhoneNum()) {
-                return true;
-            }
-        }
-        return false;
+    public static void main(String[] args) {
+        List<LibBook> bookList = new ArrayList<>();
+        List<LibOrder> orderList = new ArrayList<>();
+        List<LibBorrow> borrowList = new ArrayList<>();
+        List<LibReturn> returnList = new ArrayList<>();
+        List<LibReserve> reserveList = new ArrayList<>();
+
+        CsvFileReader.loadDataBook("src\\filebase\\books.csv", bookList);
+        CsvFileReader.loadDataOrder("src\\filebase\\orders.csv", orderList);
+        CsvFileReader.loadDataBorrow("src\\filebase\\borrows.csv", borrowList);
+        CsvFileReader.loadDataReturn("src\\filebase\\returns.csv", returnList);
+        CsvFileReader.loadDataReserve("src\\filebase\\reservations.csv", reserveList);
     }
 
     public static void fileAppend(String dataStr, String fileName) {
@@ -29,9 +40,5 @@ public class LibAdminWindow {
         } catch (IOException e) {
             System.out.println("Error appending to file");
         }
-    }
-
-    public static <T extends LibUserInterface> boolean isAdmin(String email, long phoneNum, List<T> adminList) {
-        return loginValidator(email, phoneNum, adminList);
     }
 }

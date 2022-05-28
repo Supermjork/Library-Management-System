@@ -1,9 +1,13 @@
 // importing Java AWT class
+import library.LibAdmin;
+import library.LibStudent;
 import library.LibUserInterface;
+import reader.CsvFileReader;
 
 import java.awt.event.*;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
@@ -76,6 +80,11 @@ public class LibMainWindow extends JPanel{
 
     // main method
     public static void main(String[] args) {
+        List<LibStudent> studentList = new ArrayList<>();
+        List<LibAdmin> adminList = new ArrayList<>();
+
+        CsvFileReader.loadDataStudent("src\\filebase\\students.csv", studentList);
+        CsvFileReader.loadDataAdmin("src\\filebase\\admins.csv", adminList);
     
         // creating instance of Frame class
         LibMainWindow window = new LibMainWindow();

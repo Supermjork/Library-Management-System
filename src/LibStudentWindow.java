@@ -1,10 +1,14 @@
-import library.LibUserInterface;
+import library.LibBook;
+import reader.CsvFileReader;
+import requests.LibBorrow;
+import requests.LibReturn;
 
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LibStudentWindow {
@@ -85,13 +89,14 @@ public class LibStudentWindow {
         });
     }
 
-    public static <T extends LibUserInterface> boolean loginValidator(String email, long phoneNum, List<T> userList) {
-        for(T user : userList) {
-            if(email.equals(user.getUserEmail()) && phoneNum == user.getPhoneNum()) {
-                return true;
-            }
-        }
-        return false;
+    public static void main(String[] args) {
+        List<LibBook> bookList = new ArrayList<>();
+        List<LibBorrow> borrowList = new ArrayList<>();
+        List<LibReturn> returnList = new ArrayList<>();
+
+        CsvFileReader.loadDataBook("src\\filebase\\books.csv", bookList);
+        CsvFileReader.loadDataBorrow("src\\filebase\\borrows.csv", borrowList);
+        CsvFileReader.loadDataReturn("src\\filebase\\returns.csv", returnList);
     }
 
     public static void fileAppend(String dataStr, String fileName) {
@@ -102,9 +107,5 @@ public class LibStudentWindow {
         } catch (IOException e) {
             System.out.println("Error appending to file");
         }
-    }
-
-    public static <T extends LibUserInterface> boolean isAdmin(String email, long phoneNum, List<T> adminList) {
-        return loginValidator(email, phoneNum, adminList);
     }
 }

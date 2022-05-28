@@ -1,10 +1,12 @@
-import library.LibUserInterface;
+import library.LibStudent;
+import reader.CsvFileReader;
 
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LibRegisterWindow extends JPanel {
@@ -82,13 +84,9 @@ public class LibRegisterWindow extends JPanel {
         });
     }
 
-    public static <T extends LibUserInterface> boolean loginValidator(String email, long phoneNum, List<T> userList) {
-        for(T user : userList) {
-            if(email.equals(user.getUserEmail()) && phoneNum == user.getPhoneNum()) {
-                return true;
-            }
-        }
-        return false;
+    public static void main(String[] args) {
+        List<LibStudent> studentList = new ArrayList<>();
+        CsvFileReader.loadDataStudent("src\\filebase\\students.csv", studentList);
     }
 
     public static void fileAppend(String dataStr, String fileName) {
@@ -99,9 +97,5 @@ public class LibRegisterWindow extends JPanel {
         } catch (IOException e) {
             System.out.println("Error appending to file");
         }
-    }
-
-    public static <T extends LibUserInterface> boolean isAdmin(String email, long phoneNum, List<T> adminList) {
-        return loginValidator(email, phoneNum, adminList);
     }
 }
