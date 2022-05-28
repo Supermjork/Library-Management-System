@@ -1,4 +1,5 @@
 import library.LibBook;
+import library.LibStudent;
 import reader.CsvFileReader;
 import requests.LibBorrow;
 import requests.LibReturn;
@@ -14,8 +15,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LibStudentWindow extends JPanel {
+    Object studentInSession = LibMainWindow.userInSession;
+
     public LibStudentWindow() {
-        // Creating frame for student UI
+        List<LibBorrow> borrowList = new ArrayList<>();
+        List<LibBook> bookList = new ArrayList<>();
+        CsvFileReader.loadDataBorrow("src\\filebase\\borrows.csv", borrowList);
+        CsvFileReader.loadDataBook("src\\filebase\\books.csv", bookList);
+
+        for(LibBorrow borrows : borrowList) {
+            if (((LibStudent) studentInSession).getUsrID() == borrows.getStudentID()) {
+                for (LibBook bookBorrowed : bookList) {
+                    if (borrows.getBookID() == bookBorrowed.getBookID()) {
+                        ((LibStudent) studentInSession).addBook(bookBorrowed);
+                        break;
+                    }
+                }
+            }
+        }
+
+            // Creating frame for student UI
         JFrame studentUI = new JFrame("LibGUI Student Window");
 
         // Creating buttons for user
@@ -39,7 +58,8 @@ public class LibStudentWindow extends JPanel {
         JButton exitSession = new JButton("Log out");
 
         // Display Panel for Search/Books in Stock/Borrowed Books
-        JScrollPane displayBooks = new JScrollPane();
+        JTextArea displayBooks = new JTextArea();
+        displayBooks.setEditable(false);
 
         // Setting boundaries
         studentUI.setSize(750, 750);
@@ -82,11 +102,24 @@ public class LibStudentWindow extends JPanel {
 
         studentUI.setLayout(null);
         studentUI.setVisible(true);
+        studentUI.setLocationRelativeTo(null);
         studentUI.setTitle("Student View");
 
         studentUI.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
                 studentUI.dispose();
+            }
+        });
+
+        viewBorrowed.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<LibBorrow> borrowList = new ArrayList<>();
+                List<LibBook> bookList = new ArrayList<>();
+                CsvFileReader.loadDataBorrow("src\\filebase\\borrows.csv", borrowList);
+                CsvFileReader.loadDataBook("src\\filebase\\books.csv", bookList);
+
+                displayBooks.setText(((LibStudent) studentInSession).showBorrowedStr());
             }
         });
 
@@ -101,14 +134,6 @@ public class LibStudentWindow extends JPanel {
 
     public static void main(String[] args) {
         LibStudentWindow studentWindow = new LibStudentWindow();
-
-        List<LibBook> bookList = new ArrayList<>();
-        List<LibBorrow> borrowList = new ArrayList<>();
-        List<LibReturn> returnList = new ArrayList<>();
-
-        CsvFileReader.loadDataBook("src\\filebase\\books.csv", bookList);
-        CsvFileReader.loadDataBorrow("src\\filebase\\borrows.csv", borrowList);
-        CsvFileReader.loadDataReturn("src\\filebase\\returns.csv", returnList);
     }
 
     public static void fileAppend(String dataStr, String fileName) {

@@ -16,6 +16,7 @@ public class LibAdminWindow extends JPanel {
         JFrame adminUI = new JFrame("LibGUI Admin Window");
 
         JButton adminAddBook = new JButton();
+        adminUI.setLocationRelativeTo(null);
     }
 
     public static void main(String[] args) {

@@ -70,6 +70,7 @@ public class LibRegisterWindow extends JPanel {
 
         register.setLayout(null);
         register.setVisible(true);
+        register.setLocationRelativeTo(null);
         register.setTitle("Registration Window");
 
         register.addWindowListener(new WindowAdapter() {

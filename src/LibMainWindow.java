@@ -5,8 +5,6 @@ import library.LibUserInterface;
 import reader.CsvFileReader;
 
 import java.awt.event.*;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
@@ -17,6 +15,7 @@ import javax.swing.*;
  * The original GUI is harder to use and more complicated to install.
  */
 public class LibMainWindow extends JPanel {
+    static Object userInSession;
     String userInEmail;
     long userInPhone;
   
@@ -68,6 +67,7 @@ public class LibMainWindow extends JPanel {
             
         // no layout manager   
         login.setLayout(null);
+        login.setLocationRelativeTo(null);
     
         // now frame will be visible, by default it is not visible    
         login.setVisible(true);
@@ -103,6 +103,11 @@ public class LibMainWindow extends JPanel {
                     userInPhone = Long.parseLong(phoneInField.getText());
 
                     if(loginValidator(userInEmail, userInPhone, studentList)) {
+                        for(LibStudent student : studentList) {
+                            if(userInEmail.equals(student.getUserEmail()) & userInPhone == student.getPhoneNum()) {
+                                userInSession = student;
+                            }
+                        }
                         login.dispose();
                         new LibStudentWindow().setVisible(true);
                     } else if(loginValidator(userInEmail, userInPhone, adminList)) {
@@ -129,19 +134,5 @@ public class LibMainWindow extends JPanel {
             }
         }
         return false;
-    }
-
-    public static void fileAppend(String dataStr, String fileName) {
-        try {
-            FileWriter fw = new FileWriter(fileName, true);
-            fw.write(dataStr);
-            fw.close();
-        } catch (IOException e) {
-            System.out.println("Error appending to file");
-        }
-    }
-
-    public static <T extends LibUserInterface> boolean isAdmin(String email, long phoneNum, List<T> adminList) {
-        return loginValidator(email, phoneNum, adminList);
     }
 }

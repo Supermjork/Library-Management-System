@@ -174,4 +174,23 @@ public class LibStudent implements LibUserInterface {
             }
         }
     }
+
+    public String showBorrowedStr() {
+        String borrowString = "";
+        if(borrowedBooks[0] == null & borrowedBooks[1] == null & borrowedBooks[2] == null) {
+            return "You don't have any borrowed books";
+        } else {
+            StringBuilder sb = new StringBuilder();
+
+            for(LibBook borrowedBook : borrowedBooks) {
+                if(borrowedBook != null) {
+                    String str1 = "Book Name: " + borrowedBook.getBookName();
+                    String str2 = "\nBook Author: " + borrowedBook.getBookAuthor();
+                    String str3 = "\nBook ID: " + borrowedBook.getBookID() + "\n";
+                    borrowString = sb.append(str1).append(str2).append(str3).toString();
+                }
+            }
+        }
+        return borrowString;
+    }
 }
