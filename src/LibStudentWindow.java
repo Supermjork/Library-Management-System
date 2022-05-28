@@ -4,6 +4,8 @@ import requests.LibBorrow;
 import requests.LibReturn;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileWriter;
@@ -11,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LibStudentWindow {
+public class LibStudentWindow extends JPanel {
     public LibStudentWindow() {
         // Creating frame for student UI
         JFrame studentUI = new JFrame("LibGUI Student Window");
@@ -87,9 +89,19 @@ public class LibStudentWindow {
                 studentUI.dispose();
             }
         });
+
+        exitSession.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                studentUI.dispose();
+                new LibMainWindow().setVisible(true);
+            }
+        });
     }
 
     public static void main(String[] args) {
+        LibStudentWindow studentWindow = new LibStudentWindow();
+
         List<LibBook> bookList = new ArrayList<>();
         List<LibBorrow> borrowList = new ArrayList<>();
         List<LibReturn> returnList = new ArrayList<>();

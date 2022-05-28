@@ -16,7 +16,7 @@ import javax.swing.*;
  * Prototype: LibGUI.java is made to replace the original GUI that used javafx.
  * The original GUI is harder to use and more complicated to install.
  */
-public class LibMainWindow extends JPanel{
+public class LibMainWindow extends JPanel {
     String userInEmail;
     long userInPhone;
   
@@ -79,22 +79,47 @@ public class LibMainWindow extends JPanel{
             }
         });
 
-        userInEmail = emailInField.getText();
-        userInPhone = Long.parseLong(phoneInField.getText());
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                login.dispose();
+                new LibRegisterWindow().setVisible(true);
+            }
+        });
+
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<LibStudent> studentList = new ArrayList<>();
+                List<LibAdmin> adminList = new ArrayList<>();
+
+                CsvFileReader.loadDataStudent("src\\filebase\\students.csv", studentList);
+                CsvFileReader.loadDataAdmin("src\\filebase\\admins.csv", adminList);
+
+                if(emailInField.getText() == null || phoneInField.getText() == null) {
+                    JOptionPane.showMessageDialog(login,"Credentials Insufficient");
+                } else {
+                    userInEmail = emailInField.getText();
+                    userInPhone = Long.parseLong(phoneInField.getText());
+
+                    if(loginValidator(userInEmail, userInPhone, studentList)) {
+                        login.dispose();
+                        new LibStudentWindow().setVisible(true);
+                    } else if(loginValidator(userInEmail, userInPhone, adminList)) {
+                        login.dispose();
+                        new LibAdminWindow().setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(login,"User not found");
+                    }
+                }
+            }
+        });
     }
 
     // main method
     public static void main(String[] args) {
-        List<LibStudent> studentList = new ArrayList<>();
-        List<LibAdmin> adminList = new ArrayList<>();
-
-        CsvFileReader.loadDataStudent("src\\filebase\\students.csv", studentList);
-        CsvFileReader.loadDataAdmin("src\\filebase\\admins.csv", adminList);
-    
         // creating instance of Frame class
         LibMainWindow window = new LibMainWindow();
-
-        isAdmin(window.userInEmail, window.userInPhone, adminList);
     }
 
     public static <T extends LibUserInterface> boolean loginValidator(String email, long phoneNum, List<T> userList) {

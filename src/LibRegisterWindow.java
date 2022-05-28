@@ -10,7 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LibRegisterWindow extends JPanel {
-    public LibRegisterWindow() {
+    String studentName;
+    int studentID;
+    long studentNum;
+    String studentEmail;
+
+    LibRegisterWindow() {
         // Creating Frame for registration
         JFrame register = new JFrame("LibGUI Registration Window");
 
@@ -76,15 +81,30 @@ public class LibRegisterWindow extends JPanel {
 
         regButton.addActionListener(e -> {
             // Should check for emptiness of text fields before appending to students.csv
+            if(nameInReg.getText().equals("") || emailInReg.getText().equals("") || IDInReg.getText().equals("") || phoneInReg.getText().equals("")) {
+                System.out.println("Empty Fields");
+            } else {
+               studentName = nameInReg.getText();
+               studentEmail = emailInReg.getText();
+               studentNum = Long.parseLong(phoneInReg.getText());
+               studentID = Integer.parseInt(IDInReg.getText());
+
+                LibStudent registerStudent = new LibStudent(studentName, studentID, studentNum, studentEmail);
+
+                fileAppend(registerStudent.toString(), "src\\filebase\\students.csv");
+            }
         });
 
         backButton.addActionListener(e -> {
             // Needs to return to the main window "login"
             register.dispose();
+            new LibMainWindow().setVisible(true);
         });
     }
 
     public static void main(String[] args) {
+        LibRegisterWindow registrationWindow = new LibRegisterWindow();
+
         List<LibStudent> studentList = new ArrayList<>();
         CsvFileReader.loadDataStudent("src\\filebase\\students.csv", studentList);
     }

@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LibAdminWindow {
+public class LibAdminWindow extends JPanel {
     public LibAdminWindow() {
         JFrame adminUI = new JFrame("LibGUI Admin Window");
 
@@ -19,6 +19,8 @@ public class LibAdminWindow {
     }
 
     public static void main(String[] args) {
+        LibAdminWindow adminWindow = new LibAdminWindow();
+
         List<LibBook> bookList = new ArrayList<>();
         List<LibOrder> orderList = new ArrayList<>();
         List<LibBorrow> borrowList = new ArrayList<>();
