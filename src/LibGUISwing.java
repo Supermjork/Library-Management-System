@@ -1,16 +1,5 @@
-// importing Java AWT class  
-import library.LibAdmin;
-import library.LibBook;
-import library.LibStudent;
-import reader.CsvFileReader;
-import requests.LibBorrow;
-import requests.LibOrder;
-import requests.LibReserve;
-import requests.LibReturn;
-
+// importing Java AWT class
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.*;
 
 /**
@@ -87,23 +76,5 @@ public class LibGUISwing {
     
         // creating instance of Frame class   
         LibGUISwing window = new LibGUISwing();
-
-        List<LibBook> bookList = new ArrayList<>();
-        List<LibStudent> studentList = new ArrayList<>();
-        List<LibAdmin> adminList = new ArrayList<>();
-        List<LibOrder> orderList = new ArrayList<>();
-        List<LibBorrow> borrowList = new ArrayList<>();
-        List<LibReturn> returnList = new ArrayList<>();
-        List<LibReserve> reserveList = new ArrayList<>();
-
-        CsvFileReader.loadDataBook("src\\filebase\\books.csv", bookList);
-        CsvFileReader.loadDataStudent("src\\filebase\\students.csv", studentList);
-        CsvFileReader.loadDataAdmin("src\\filebase\\admins.csv", adminList);
-        CsvFileReader.loadDataOrder("src\\filebase\\orders.csv", orderList);
-        CsvFileReader.loadDataBorrow("src\\filebase\\borrows.csv", borrowList);
-        CsvFileReader.loadDataReturn("src\\filebase\\returns.csv", returnList);
-        CsvFileReader.loadDataReserve("src\\filebase\\reservations.csv", reserveList);
-    
-    }  
-   
-}    
+    }
+}
