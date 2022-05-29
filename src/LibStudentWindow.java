@@ -37,37 +37,37 @@ public class LibStudentWindow extends JPanel {
             }
         }
 
-            // Creating frame for student UI
+        // Creating frame for student UI
         JFrame studentUI = new JFrame("LibGUI Student Window");
 
-        // Creating buttons for user
-
-        // Left side
-        JButton searchBooks = new JButton("Search for Book");
+        // Creating buttons and Fields for user
+            // Left side
+        JButton searchBooks = new JButton("Search");
         JTextField searchField = new JTextField();
 
         JButton returnBorrowed = new JButton("Return a Book");
         JTextField returnField = new JTextField();
 
-        // Right Side
+            // Right Side
         JButton orderBook = new JButton("Order Book");
         JTextField orderField = new JTextField();
 
         JButton borrowBook = new JButton("Borrow");
-        JButton displayAll = new JButton("All Books");
         JTextField borrowField = new JTextField();
 
-        // Middle
+            // Middle
         JButton viewBorrowed = new JButton("View Borrowed Books");
+        JButton displayAll = new JButton("All Books");
         JButton exitSession = new JButton("Log out");
 
-        // Display Panel for Search/Books in Stock/Borrowed Books
+            // Display Panel for Search/Books in Stock/Borrowed Books
         JTextArea displayBooks = new JTextArea();
         displayBooks.setEditable(false);
-        JScrollPane displayContainer = new JScrollPane(displayBooks);
+
+        JScrollPane displayContainer = new JScrollPane(displayBooks); // takes the text area as param
         displayContainer.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-        // Setting boundaries
+            // Setting boundaries
         studentUI.setSize(750, 750);
 
         displayContainer.setBounds(10,10,715,200);
@@ -90,6 +90,7 @@ public class LibStudentWindow extends JPanel {
 
         exitSession.setBounds(750 / 3, (3 * 750) / 4, 750 / 3, 70);
 
+            //Adding elements to UI
         studentUI.add(viewBorrowed);
 
         studentUI.add(searchBooks);
@@ -98,7 +99,7 @@ public class LibStudentWindow extends JPanel {
         studentUI.add(returnBorrowed);
         studentUI.add(returnField);
 
-        studentUI.add(displayContainer);
+        studentUI.add(displayContainer); // Adding the scroll panel containing the text area
 
         studentUI.add(orderBook);
         studentUI.add(orderField);
@@ -114,6 +115,8 @@ public class LibStudentWindow extends JPanel {
         studentUI.setLocationRelativeTo(null);
         studentUI.setTitle("Student View");
 
+
+            // Creating functional buttons
         studentUI.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
                 studentUI.dispose();
@@ -185,7 +188,6 @@ public class LibStudentWindow extends JPanel {
                 for (LibBook searchingBook : bookList) {
                     if (searchingBook.getBookName().contains(searchBook)) {
                         searchStr = searchBuild.append(bookInfo(searchingBook)).toString();
-                        break;
                     }
                 }
                 displayBooks.setText(searchStr);

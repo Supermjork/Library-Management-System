@@ -318,7 +318,6 @@ public class Library {
                                     for (LibBook searchBook : bookList) {
                                         if (searchBook.getBookName().contains(searchName)) {
                                             System.out.println(searchBook);
-                                            break;
                                         }
                                     }
                                     break;
@@ -362,7 +361,6 @@ public class Library {
                                     for (LibBook bookSearch : bookList) {
                                         if (bookSearch.getBookName().contains(bookSearchName)) {
                                             System.out.println(bookSearch);
-                                            break;
                                         }
                                     }
                                     break;

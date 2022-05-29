@@ -12,20 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LibAdminWindow extends JPanel {
+    Object adminInSession = LibMainWindow.userInSession;
+
     public LibAdminWindow() {
-        JFrame adminUI = new JFrame("LibGUI Admin Window");
-
-        JButton adminAddBook = new JButton();
-        adminUI.setLocationRelativeTo(null);
-    }
-
-    public static void main(String[] args) {
-        LibAdminWindow adminWindow = new LibAdminWindow();
-
-        List<LibBook> bookList = new ArrayList<>();
-        List<LibOrder> orderList = new ArrayList<>();
-        List<LibBorrow> borrowList = new ArrayList<>();
-        List<LibReturn> returnList = new ArrayList<>();
+        List<LibBook> bookList       = new ArrayList<>();
+        List<LibOrder> orderList     = new ArrayList<>();
+        List<LibBorrow> borrowList   = new ArrayList<>();
+        List<LibReturn> returnList   = new ArrayList<>();
         List<LibReserve> reserveList = new ArrayList<>();
 
         CsvFileReader.loadDataBook("src\\filebase\\books.csv", bookList);
@@ -33,6 +26,47 @@ public class LibAdminWindow extends JPanel {
         CsvFileReader.loadDataBorrow("src\\filebase\\borrows.csv", borrowList);
         CsvFileReader.loadDataReturn("src\\filebase\\returns.csv", returnList);
         CsvFileReader.loadDataReserve("src\\filebase\\reservations.csv", reserveList);
+
+        // Creating Frame for Admin
+        JFrame adminUI = new JFrame("LibGUI Admin Window");
+
+        // Creating Buttons and Fields
+            // Left Side
+        JButton addBookButton = new JButton("Add");
+        JButton updateBookButton = new JButton("Update");
+
+            // Right Side
+        JButton removeBookButton = new JButton("Remove Book");
+        JTextField removeIDIn    = new JTextField();
+        JButton searchBookButton = new JButton("Search");
+        JTextField searchInField = new JTextField();
+
+            // Middle Side
+        JButton viewAllRequest   = new JButton();
+        JButton viewAllBooks     = new JButton();
+        JButton exitSession      = new JButton();
+
+            // Display panel to show data on
+        JTextArea displayBooks = new JTextArea();
+        displayBooks.setEditable(false);
+
+        JScrollPane displayContainer = new JScrollPane(displayBooks); // takes the text area as param
+        displayContainer.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        // Setting Boundaries
+        adminUI.setSize(750,750);
+
+        displayContainer.setBounds(10,10,715,200);
+        displayBooks.setBounds(10, 10, 715, 200);
+
+        adminUI.setLocationRelativeTo(null);
+        adminUI.setVisible(true);
+        adminUI.setLayout(null);
+        adminUI.setTitle("Admin Window");
+    }
+
+    public static void main(String[] args) {
+        LibAdminWindow adminWindow = new LibAdminWindow();
     }
 
     public static void fileAppend(String dataStr, String fileName) {
