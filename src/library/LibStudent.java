@@ -30,7 +30,7 @@ public class LibStudent implements LibUserInterface {
         if(borrowedBooks[0] == null && borrowedBooks[1] == null && borrowedBooks[2] == null) {
             System.out.println("No borrowed Books");
         } else {
-            for (int i = 0; i < maxBorrowBooks; i++) {
+            for (int i = 0; i < getCurrentAmountBorrowed(); i++) {
                 if (borrowDates[i].minusDays(4) == dateToday) {
                     System.out.println("You have 4 days to return: " + borrowedBooks[i]);
                 }

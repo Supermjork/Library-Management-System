@@ -23,7 +23,7 @@ public class LibOrder implements LibRequest {
     @Override
     public String toString() {
         return  bookId + "," + studentId + "," + orderDate.getDayOfMonth() + "," + orderDate.getMonthValue() +
-                "," + orderDate.getYear() + "," + "\n";
+                "," + orderDate.getYear() + "\n";
     }
 
     //Getters and Setters for the book ID, student ID, and order date

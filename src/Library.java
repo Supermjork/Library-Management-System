@@ -329,8 +329,6 @@ public class Library {
                         System.out.println(userInSession);
                         System.out.println(((LibStudent) userInSession).getUsrID());
 
-                        ((LibStudent) userInSession).remind();
-
                         for(LibBorrow borrows : borrowList) {
                             if(((LibStudent) userInSession).getUsrID() == borrows.getStudentID()) {
                                 for (LibBook bookBorrowed : bookList) {
@@ -341,6 +339,8 @@ public class Library {
                                 }
                             }
                         }
+
+                        ((LibStudent) userInSession).remind();
 
                         do {
                             System.out.println("Enter what operation to do: ");
@@ -423,7 +423,8 @@ public class Library {
                                                 writeOrder.write(books.toString());
                                             }
                                             writeOrder.close();
-                                        } else {
+                                            break;
+                                        } else if (buyingBookID == bookBought.getBookID() & bookBought.getStockAmount() == 0) {
                                             System.out.println("Cannot order book, will make a reservation.");
                                             LibReserve reservationRequest = new LibReserve(buyingBookID, ((LibStudent) userInSession).getUsrID());
                                             fileAppend(reservationRequest.toString(), "src\\filebase\\reservations.csv");

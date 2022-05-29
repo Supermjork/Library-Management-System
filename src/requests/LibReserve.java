@@ -35,7 +35,7 @@ public class LibReserve implements LibRequest{
 
     public String toString() {
         return getBookID() + "," + getStudentID() + "," + reserveDate.getDayOfMonth() + "," +
-               reserveDate.getMonthValue() + "," + reserveDate.getYear();
+               reserveDate.getMonthValue() + "," + reserveDate.getYear() + "\n";
     }
 
     @Override
