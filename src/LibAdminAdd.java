@@ -2,6 +2,10 @@ import library.LibBook;
 import reader.CsvFileReader;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +17,7 @@ public class LibAdminAdd extends JPanel {
         JFrame adminAdd = new JFrame("Admin Adding");
 
         JButton addBookButton = new JButton("Add");
+        JButton returnButton = new JButton("Return");
 
         JLabel idLabel = new JLabel("Book ID: ");
         JTextField idField = new JTextField();
@@ -38,9 +43,25 @@ public class LibAdminAdd extends JPanel {
         JLabel priceLabel = new JLabel("Price: ");
         JTextField priceField = new JTextField();
 
-        adminAdd.setLocationRelativeTo(null);
-        adminAdd.setVisible(true);
+        adminAdd.setSize(450,400);
+
+        returnButton.setBounds(10, 320, 150,30);
+        addBookButton.setBounds(275,320,150,30);
+
+        adminAdd.add(returnButton);
+        adminAdd.add(addBookButton);
+
         adminAdd.setLayout(null);
+        adminAdd.setVisible(true);
+        adminAdd.setLocationRelativeTo(null);
         adminAdd.setTitle("Book Adding");
+
+        adminAdd.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                adminAdd.dispose();
+            }
+        });
+
+        returnButton.addActionListener(e -> adminAdd.dispose());
     }
 }

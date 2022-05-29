@@ -1,11 +1,12 @@
 import library.LibBook;
 import reader.CsvFileReader;
-import requests.LibBorrow;
-import requests.LibOrder;
-import requests.LibReserve;
-import requests.LibReturn;
+import requests.*;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,9 +43,9 @@ public class LibAdminWindow extends JPanel {
         JTextField searchInField = new JTextField();
 
             // Middle Side
-        JButton viewAllRequest   = new JButton();
-        JButton viewAllBooks     = new JButton();
-        JButton exitSession      = new JButton();
+        JButton viewAllRequests  = new JButton("View Requests");
+        JButton viewAllBooks     = new JButton("View Books");
+        JButton exitSession      = new JButton("Log out");
 
             // Display panel to show data on
         JTextArea displayBooks = new JTextArea();
@@ -56,13 +57,187 @@ public class LibAdminWindow extends JPanel {
         // Setting Boundaries
         adminUI.setSize(750,750);
 
+        addBookButton.setBounds(10, 260, 175, 30);
+        updateBookButton.setBounds(10, 410, 175, 30);
+
         displayContainer.setBounds(10,10,715,200);
         displayBooks.setBounds(10, 10, 715, 200);
 
-        adminUI.setLocationRelativeTo(null);
-        adminUI.setVisible(true);
+        searchBookButton.setBounds(549, 230, 175, 30);
+        searchInField.setBounds(549, 290, 175, 30);
+
+        removeBookButton.setBounds(550, 380, 175, 30);
+        removeIDIn.setBounds(550, 440, 175, 30);
+
+        viewAllBooks.setBounds(292, 260, 175, 30);
+        viewAllRequests.setBounds(292, 410, 175, 30);
+
+        exitSession.setBounds(750 / 3, (3 * 750) / 4, 750 / 3, 70);
+
+        adminUI.add(addBookButton);
+        adminUI.add(updateBookButton);
+
+        adminUI.add(displayContainer);
+
+        adminUI.add(searchBookButton);
+        adminUI.add(searchInField);
+
+        adminUI.add(removeIDIn);
+        adminUI.add(removeBookButton);
+
+        adminUI.add(viewAllBooks);
+        adminUI.add(viewAllRequests);
+
+        adminUI.add(exitSession);
+
         adminUI.setLayout(null);
+        adminUI.setVisible(true);
+        adminUI.setLocationRelativeTo(null);
         adminUI.setTitle("Admin Window");
+
+        adminUI.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                adminUI.dispose();
+            }
+        });
+
+        searchBookButton.addActionListener(e -> {
+            String searchBook = searchInField.getText();
+
+            if(!searchInField.getText().equals("")) {
+                StringBuilder searchBuild = new StringBuilder();
+                String searchStr = null;
+
+                for (LibBook searchingBook : bookList) {
+                    if (searchingBook.getBookName().contains(searchBook)) {
+                        searchStr = searchBuild.append(bookInfo(searchingBook)).toString();
+                    }
+                }
+                displayBooks.setText(searchStr);
+            } else {
+                JOptionPane.showMessageDialog(adminUI,"Enter a substring of book title to search for");
+            }
+        });
+
+        viewAllBooks.addActionListener(e -> {
+            StringBuilder allBooks = new StringBuilder();
+            String showAll = null;
+
+            for(LibBook displayBook : bookList) {
+                showAll = allBooks.append(bookInfo(displayBook)).toString();
+            }
+
+            displayBooks.setText(showAll);
+        });
+
+        addBookButton.addActionListener(e -> new LibAdminAdd().setVisible(true));
+
+        removeBookButton.addActionListener(e -> {
+            if(!removeIDIn.getText().equals("")) {
+                int removeID = Integer.parseInt(removeIDIn.getText());
+
+                bookList.removeIf(bookRemoved -> removeID == bookRemoved.getBookID());
+
+                FileWriter writer = null;
+                try {
+                    writer = new FileWriter("src\\filebase\\books.csv");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                for (LibBook books : bookList) {
+                    try {
+                        assert writer != null;
+                        writer.write(books.toString());
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                try {
+                    assert writer != null;
+                    writer.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                JOptionPane.showMessageDialog(adminUI, "Please enter ID to remove");
+            }
+        });
+
+        viewAllRequests.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StringBuilder sb = new StringBuilder();
+                String allRequests;
+
+                if(orderList.size() == 0) {
+                    allRequests = sb.append("No Orders \n").toString();
+                } else {
+                    allRequests = sb.append("Orders: \n").toString();
+                    for (LibOrder orderRequest : orderList) {
+                        String bookID = "Book ID: " + orderRequest.getBookID();
+                        String studentID = ", Student ID: " + orderRequest.getBookID();
+                        String orderDate = ", Order Date: " + orderRequest.getOrderDate().getDayOfMonth() +
+                                ", " + orderRequest.getOrderDate().getMonthValue() +
+                                ", " + orderRequest.getOrderDate().getYear() + "\n";
+
+                        allRequests = sb.append(bookID).append(studentID).append(orderDate).toString();
+                    }
+                }
+
+                if(borrowList.size() == 0) {
+                    allRequests = sb.append("No Borrows \n").toString();
+                } else {
+                    allRequests = sb.append("Borrows: \n").toString();
+                    for (LibBorrow borrowRequest : borrowList) {
+                        String bookID = "Book ID: " + borrowRequest.getBookID();
+                        String studentID = ", Student ID: " + borrowRequest.getStudentID();
+                        String borrowDate = ", Borrow Date: " + borrowRequest.getBorrowDate().getDayOfMonth() +
+                                ", " + borrowRequest.getBorrowDate().getMonthValue() +
+                                ", " + borrowRequest.getBorrowDate().getYear() + "\n";
+
+                        allRequests = sb.append(bookID).append(studentID).append(borrowDate).toString();
+                    }
+                }
+
+                if(returnList.size() == 0) {
+                    allRequests = sb.append("No returns \n").toString();
+                } else {
+                    allRequests = sb.append("Returns: \n").toString();
+                    for (LibReturn returnRequest : returnList) {
+                        String bookID = "Book ID: " + returnRequest.getBookID();
+                        String studentID = ", Student ID: " + returnRequest.getStudentID();
+                        String borrowDate = ", Return Date: " + returnRequest.getReturnDate().getDayOfMonth() +
+                                ", " + returnRequest.getReturnDate().getMonthValue() +
+                                ", " + returnRequest.getReturnDate().getYear();
+                        String fine = ", Fine: " + returnRequest.getFine() + "\n";
+
+                        allRequests = sb.append(bookID).append(studentID).append(borrowDate).append(fine).toString();
+                    }
+                }
+
+                if(reserveList.size() == 0) {
+                    allRequests = sb.append("No Reservations \n").toString();
+                } else {
+                    for (LibReserve reserveRequest : reserveList) {
+                        String bookID = "Book ID" + reserveRequest.getBookID();
+                        String studentID = ", Reserved By: " + reserveRequest.getStudentID();
+                        String reserveDate = ", Reserved On: " + reserveRequest.getReserveDate().getDayOfMonth() +
+                                             ", " + reserveRequest.getReserveDate().getMonthValue() +
+                                             ", " + reserveRequest.getReserveDate().getYear() + "\n";
+                        allRequests = sb.append(bookID).append(studentID).append(reserveDate).toString();
+                    }
+                }
+
+                displayBooks.setText(allRequests);
+            }
+        });
+
+        updateBookButton.addActionListener(e -> new LibAdminUpdate().setVisible(true));
+
+        exitSession.addActionListener(e -> {
+            adminUI.dispose();
+            new LibMainWindow().setVisible(true);
+        });
     }
 
     public static void main(String[] args) {
@@ -77,5 +252,21 @@ public class LibAdminWindow extends JPanel {
         } catch (IOException e) {
             System.out.println("Error appending to file");
         }
+    }
+
+    public static String bookInfo(LibBook book) {
+        StringBuilder bookDetails = new StringBuilder();
+
+        String bookName     = "Book Name: " + book.getBookName();
+        String bookAuthor   = "\nBook Author: " + book.getBookAuthor();
+        String bookID       = "\nBook ID: " + book.getBookID();
+        String bookRelease  = "\nRelease Date: " + book.getIssGloDate().getDayOfMonth() +
+                ", " + book.getIssGloDate().getMonthValue() +
+                ", " + book.getIssGloDate().getYear();
+        String bookStock    = "\nStock Amount: " + book.getStockAmount();
+        String bookPrice    = "\nPrice: " + book.getPrice() + "EG£\n\n";
+
+        return bookDetails.append(bookName).append(bookAuthor).append(bookID)
+                .append(bookRelease).append(bookStock).append(bookPrice).toString();
     }
 }
