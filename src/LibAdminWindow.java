@@ -74,6 +74,8 @@ public class LibAdminWindow extends JPanel {
 
         exitSession.setBounds(750 / 3, (3 * 750) / 4, 750 / 3, 70);
 
+
+        // Adding components to Frame
         adminUI.add(addBookButton);
         adminUI.add(updateBookButton);
 
@@ -94,6 +96,8 @@ public class LibAdminWindow extends JPanel {
         adminUI.setVisible(true);
         adminUI.setLocationRelativeTo(null);
         adminUI.setTitle("Admin Window");
+
+        // Adding button Functionality
 
         adminUI.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
@@ -163,73 +167,71 @@ public class LibAdminWindow extends JPanel {
             }
         });
 
-        viewAllRequests.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                StringBuilder sb = new StringBuilder();
-                String allRequests;
+        viewAllRequests.addActionListener(e -> {
+            StringBuilder sb = new StringBuilder();
+            String allRequests;
 
-                if(orderList.size() == 0) {
-                    allRequests = sb.append("No Orders \n").toString();
-                } else {
-                    allRequests = sb.append("Orders: \n").toString();
-                    for (LibOrder orderRequest : orderList) {
-                        String bookID = "Book ID: " + orderRequest.getBookID();
-                        String studentID = ", Student ID: " + orderRequest.getBookID();
-                        String orderDate = ", Order Date: " + orderRequest.getOrderDate().getDayOfMonth() +
-                                ", " + orderRequest.getOrderDate().getMonthValue() +
-                                ", " + orderRequest.getOrderDate().getYear() + "\n";
+            if(orderList.size() == 0) {
+                allRequests = sb.append("No Orders \n").toString();
+            } else {
+                allRequests = sb.append("Orders: \n").toString();
+                for (LibOrder orderRequest : orderList) {
+                    String bookID = "Book ID: " + orderRequest.getBookID();
+                    String studentID = ", Student ID: " + orderRequest.getBookID();
+                    String orderDate = ", Order Date: " + orderRequest.getOrderDate().getDayOfMonth() +
+                            ", " + orderRequest.getOrderDate().getMonthValue() +
+                            ", " + orderRequest.getOrderDate().getYear() + "\n";
 
-                        allRequests = sb.append(bookID).append(studentID).append(orderDate).toString();
-                    }
+                    allRequests = sb.append(bookID).append(studentID).append(orderDate).toString();
                 }
-
-                if(borrowList.size() == 0) {
-                    allRequests = sb.append("No Borrows \n").toString();
-                } else {
-                    allRequests = sb.append("Borrows: \n").toString();
-                    for (LibBorrow borrowRequest : borrowList) {
-                        String bookID = "Book ID: " + borrowRequest.getBookID();
-                        String studentID = ", Student ID: " + borrowRequest.getStudentID();
-                        String borrowDate = ", Borrow Date: " + borrowRequest.getBorrowDate().getDayOfMonth() +
-                                ", " + borrowRequest.getBorrowDate().getMonthValue() +
-                                ", " + borrowRequest.getBorrowDate().getYear() + "\n";
-
-                        allRequests = sb.append(bookID).append(studentID).append(borrowDate).toString();
-                    }
-                }
-
-                if(returnList.size() == 0) {
-                    allRequests = sb.append("No returns \n").toString();
-                } else {
-                    allRequests = sb.append("Returns: \n").toString();
-                    for (LibReturn returnRequest : returnList) {
-                        String bookID = "Book ID: " + returnRequest.getBookID();
-                        String studentID = ", Student ID: " + returnRequest.getStudentID();
-                        String borrowDate = ", Return Date: " + returnRequest.getReturnDate().getDayOfMonth() +
-                                ", " + returnRequest.getReturnDate().getMonthValue() +
-                                ", " + returnRequest.getReturnDate().getYear();
-                        String fine = ", Fine: " + returnRequest.getFine() + "\n";
-
-                        allRequests = sb.append(bookID).append(studentID).append(borrowDate).append(fine).toString();
-                    }
-                }
-
-                if(reserveList.size() == 0) {
-                    allRequests = sb.append("No Reservations \n").toString();
-                } else {
-                    for (LibReserve reserveRequest : reserveList) {
-                        String bookID = "Book ID" + reserveRequest.getBookID();
-                        String studentID = ", Reserved By: " + reserveRequest.getStudentID();
-                        String reserveDate = ", Reserved On: " + reserveRequest.getReserveDate().getDayOfMonth() +
-                                             ", " + reserveRequest.getReserveDate().getMonthValue() +
-                                             ", " + reserveRequest.getReserveDate().getYear() + "\n";
-                        allRequests = sb.append(bookID).append(studentID).append(reserveDate).toString();
-                    }
-                }
-
-                displayBooks.setText(allRequests);
             }
+
+            if(borrowList.size() == 0) {
+                allRequests = sb.append("\nNo Borrows \n").toString();
+            } else {
+                allRequests = sb.append("\nBorrows: \n").toString();
+                for (LibBorrow borrowRequest : borrowList) {
+                    String bookID = "Book ID: " + borrowRequest.getBookID();
+                    String studentID = ", Student ID: " + borrowRequest.getStudentID();
+                    String borrowDate = ", Borrow Date: " + borrowRequest.getBorrowDate().getDayOfMonth() +
+                            ", " + borrowRequest.getBorrowDate().getMonthValue() +
+                            ", " + borrowRequest.getBorrowDate().getYear() + "\n";
+
+                    allRequests = sb.append(bookID).append(studentID).append(borrowDate).toString();
+                }
+            }
+
+            if(returnList.size() == 0) {
+                allRequests = sb.append("\nNo returns \n").toString();
+            } else {
+                allRequests = sb.append("\nReturns: \n").toString();
+                for (LibReturn returnRequest : returnList) {
+                    String bookID = "Book ID: " + returnRequest.getBookID();
+                    String studentID = ", Student ID: " + returnRequest.getStudentID();
+                    String borrowDate = ", Return Date: " + returnRequest.getReturnDate().getDayOfMonth() +
+                            ", " + returnRequest.getReturnDate().getMonthValue() +
+                            ", " + returnRequest.getReturnDate().getYear();
+                    String fine = ", Fine: " + returnRequest.getFine() + "\n";
+
+                    allRequests = sb.append(bookID).append(studentID).append(borrowDate).append(fine).toString();
+                }
+            }
+
+            if(reserveList.size() == 0) {
+                allRequests = sb.append("\nNo Reservations \n").toString();
+            } else {
+                allRequests = sb.append("\nReservations: \n").toString();
+                for (LibReserve reserveRequest : reserveList) {
+                    String bookID = "Book ID" + reserveRequest.getBookID();
+                    String studentID = ", Reserved By: " + reserveRequest.getStudentID();
+                    String reserveDate = ", Reserved On: " + reserveRequest.getReserveDate().getDayOfMonth() +
+                                         ", " + reserveRequest.getReserveDate().getMonthValue() +
+                                         ", " + reserveRequest.getReserveDate().getYear() + "\n";
+                    allRequests = sb.append(bookID).append(studentID).append(reserveDate).toString();
+                }
+            }
+
+            displayBooks.setText(allRequests);
         });
 
         updateBookButton.addActionListener(e -> new LibAdminUpdate().setVisible(true));
