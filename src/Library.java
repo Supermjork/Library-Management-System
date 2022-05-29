@@ -214,7 +214,7 @@ public class Library {
 
                                             Scanner fieldChoice = new Scanner(System.in);
                                             System.out.print("What field to update?\n1.Name\n2.Author\n3.Release Date" +
-                                                    "\n4.Stock Amount\n5.Price");
+                                                             "\n4.Stock Amount\n5.Price");
                                             int fieldSelect = fieldChoice.nextInt();
 
                                             switch (fieldSelect) {
