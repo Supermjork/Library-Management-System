@@ -126,7 +126,7 @@ public class LibAdminAdd extends JPanel {
             }
         });
 
-        returnButton.addActionListener(e -> adminAdd.dispose());
+        returnButton.addActionListener(e -> {new LibAdminWindow().setVisible(true); adminAdd.dispose();});
     }
 
     public static void fileAppend(String dataStr, String fileName) {

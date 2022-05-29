@@ -3,6 +3,8 @@ import reader.CsvFileReader;
 import requests.*;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileWriter;
@@ -134,7 +136,10 @@ public class LibAdminWindow extends JPanel {
             displayBooks.setText(showAll);
         });
 
-        addBookButton.addActionListener(e -> new LibAdminAdd().setVisible(true));
+        addBookButton.addActionListener(e -> {
+            adminUI.dispose();
+            new LibAdminAdd();
+        });
 
         removeBookButton.addActionListener(e -> {
             if(!removeIDIn.getText().equals("")) {
@@ -234,7 +239,10 @@ public class LibAdminWindow extends JPanel {
             displayBooks.setText(allRequests);
         });
 
-        updateBookButton.addActionListener(e -> new LibAdminUpdate().setVisible(true));
+        updateBookButton.addActionListener(e -> {
+            adminUI.dispose();
+            new LibAdminUpdate().setVisible(true);
+        });
 
         exitSession.addActionListener(e -> {
             adminUI.dispose();

@@ -174,6 +174,6 @@ public class LibAdminUpdate extends JPanel {
             }
         });
 
-        returnButton.addActionListener(e -> adminUpdate.dispose());
+        returnButton.addActionListener(e -> {new LibAdminWindow().setVisible(true); adminUpdate.dispose();});
     }
 }
