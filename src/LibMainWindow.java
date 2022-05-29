@@ -13,6 +13,7 @@ import javax.swing.*;
  * This class is used to create a GUI for the Library management system.
  * Prototype: LibGUI.java is made to replace the original GUI that used javafx.
  * The original GUI is harder to use and more complicated to install.
+ * @author Icen Zeyada
  */
 public class LibMainWindow extends JPanel {
     static Object userInSession;

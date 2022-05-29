@@ -5,6 +5,7 @@ import java.util.Map;
 
 /**
  * A class that reads a file and adds it to a Map based structure mentioned.
+ * @author Icen Zeyada
  * @apiNote Still a prototype.
  * @version 1.0 Beta  
  */

@@ -5,6 +5,8 @@ import java.util.Collection;
 
 /**
  * A class that reads a file and adds it to whichever structure mentioned.
+ * @author Icen Zeyada
+ * @apiNote Still a prototype.
  * @version 1.0 Beta  
  */
 public class GenericFileReaderCollection {

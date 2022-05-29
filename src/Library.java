@@ -7,6 +7,7 @@ import java.util.*;
 
 /**
  * The main class that the objects will be used in.
+ * @author Icen Zeyada
  */
 public class Library {
     public static void main(String[] args) throws IOException {
@@ -395,8 +396,6 @@ public class Library {
                                                 break;
                                             }
                                         }
-
-
                                     }
                                     break;
                                 case 4:

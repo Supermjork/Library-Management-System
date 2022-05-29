@@ -9,6 +9,7 @@ import requests.*;
 import java.util.List;
 
 /**
+ * @author Icen Zeyada
  * @apiNote Still a prototype.
  * @version 1.0 Beta
  */
