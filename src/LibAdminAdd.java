@@ -122,6 +122,7 @@ public class LibAdminAdd extends JPanel {
 
                 fileAppend(addBook.toString(), "src\\filebase\\books.csv");
                 CsvFileReader.loadDataBook("src\\filebase\\books.csv", bookList);
+                JOptionPane.showMessageDialog(adminAdd, "Book Added");
             }
         });
 
