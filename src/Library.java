@@ -8,6 +8,9 @@ import java.util.*;
 /**
  * The main class that the objects will be used in.
  * @author Icen Zeyada
+ *
+ * The terminal-ready version of the program.
+ * @author Mark Ehab
  */
 public class Library {
     public static void main(String[] args) throws IOException {
@@ -106,28 +109,33 @@ public class Library {
         }
 
         /**
-         *                  #########################
-         *                  #     Supposed Main     #
-         *                  #########################
+         *                  ########################
+         *                  #         Main         #
+         *                  ########################
          */
 
         Scanner userChoiceIn = new Scanner(System.in);
         int userChoice;
 
         do {
+            // Starting off by asking the user about what they'd like to do
             System.out.println("1.Login\n2.Register\n-1.Exit");
             userChoice = userChoiceIn.nextInt();
 
+            // Instantiating an object to hold the user that logs in
             Object userInSession = null;
 
             switch (userChoice) {
                 case 1:
+                    // Scanners for both user input types
                     Scanner userEmailIn = new Scanner(System.in);
                     Scanner userNumIn = new Scanner(System.in);
 
                     String userEmail;
                     long userNum;
 
+                    // Looping until both email and phone number are entered
+                    // will log in, but we do not know who they may be
                     do {
                         System.out.print("Enter your email: ");
                         userEmail = userEmailIn.nextLine();
@@ -135,6 +143,7 @@ public class Library {
                         userNum = userNumIn.nextLong();
                     } while (!(loginValidator(userEmail, userNum, studentList) | loginValidator(userEmail, userNum, adminList)));
 
+                    // Checking if the user is an admin using the isAdmin() method
                     if (isAdmin(userEmail, userNum, adminList)) {
                         System.out.println("Logged in as Admin");
                         for (LibAdmin libAdmin : adminList) {
@@ -156,6 +165,8 @@ public class Library {
                     int studentChoice;
                     int adminChoice;
 
+                    // Checking if the session user is an instance of admin to know which
+                    // options to display
                     if (userInSession instanceof LibAdmin) {
                         Scanner adminInput = new Scanner(System.in);
                         do {
@@ -166,6 +177,7 @@ public class Library {
 
                             switch (adminChoice) {
                                 case 1:
+                                    // Getting new book information
                                     Scanner newBookStringTypes = new Scanner(System.in);
                                     Scanner newBookIntTypes = new Scanner(System.in);
 
@@ -186,12 +198,15 @@ public class Library {
                                     System.out.print("Book Price: ");
                                     int bookPrice = newBookIntTypes.nextInt();
 
+                                    // Creating new book to be added
                                     LibBook addedBook = new LibBook(bookName, bookAuthor, bookID, bookReleaseDay,
                                             bookReleaseMonth, bookReleaseYear, bookStock, bookPrice);
 
+                                    // Appending book to csv
                                     fileAppend(addedBook.toString(), "src\\filebase\\books.csv");
                                     break;
                                 case 2:
+                                    // Deleting book by ID
                                     Scanner deleteBookID = new Scanner(System.in);
                                     System.out.print("What is the ID of the book you'd like to delete? ");
                                     int deletedID = deleteBookID.nextInt();
@@ -213,6 +228,7 @@ public class Library {
                                         if (updateID == bookToUpdate.getBookID()) {
 
                                             Scanner fieldChoice = new Scanner(System.in);
+                                            // Selecting field to change within a book
                                             System.out.print("What field to update?\n1.Name\n2.Author\n3.Release Date" +
                                                              "\n4.Stock Amount\n5.Price");
                                             int fieldSelect = fieldChoice.nextInt();
@@ -264,6 +280,7 @@ public class Library {
                                                     break;
                                             }
 
+                                            // Rewriting the book csv with the new updated book
                                             FileWriter writeBook = new FileWriter("src\\filebase\\books.csv");
                                             for (LibBook books : bookList) {
                                                 writeBook.write(books.toString());
@@ -322,6 +339,7 @@ public class Library {
                                     }
                                     break;
                             }
+                            // All whilst the choice does not equal -1 (Will put you at the login/register screen)
                         } while (adminChoice != -1);
                     } else if (userInSession != null) {
                         Scanner studentInput = new Scanner(System.in);
@@ -329,6 +347,7 @@ public class Library {
                         System.out.println(userInSession);
                         System.out.println(((LibStudent) userInSession).getUsrID());
 
+                        // Loads the logged in student's borrows
                         for(LibBorrow borrows : borrowList) {
                             if(((LibStudent) userInSession).getUsrID() == borrows.getStudentID()) {
                                 for (LibBook bookBorrowed : bookList) {
@@ -340,6 +359,8 @@ public class Library {
                             }
                         }
 
+                        // Should the student log in x days before the due date, reminder will pop up
+                        // did not implement a proper fining nor reminding system only pseudo
                         ((LibStudent) userInSession).remind();
 
                         do {
@@ -375,13 +396,17 @@ public class Library {
                                         System.out.print("Enter book ID to return: ");
                                         int returningID = bookReturn.nextInt();
 
+                                        // Creates new return request and appends
                                         LibReturn requestToReturn = new LibReturn(returningID, ((LibStudent) userInSession).getUsrID());
+                                        // Removes book from student's array of borrowed books
                                         ((LibStudent) userInSession).removeBook(returningID);
 
-                                        returnList.add(requestToReturn);
+                                        returnList.add(requestToReturn); // Adds return request to list
                                         fileAppend(requestToReturn.toString(), "src\\filebase\\returns.csv");
 
                                         for(LibBorrow borrowReturn : borrowList) {
+                                            // Removing the borrowing of the book from the csv
+                                            // instead of needing to check both borrows and returns, only check returns
                                             if(borrowReturn.getBookID() == returningID && borrowReturn.getStudentID() == ((LibStudent) userInSession).getUsrID()) {
                                                 borrowList.remove(borrowReturn);
 
@@ -429,6 +454,7 @@ public class Library {
                                     }
                                     break;
                                 case 5:
+                                    // Checks if the student has a borrowed amount exceeding the  borrow limit
                                     if (((LibStudent) userInSession).getCurrentAmountBorrowed() <= 3) {
                                         System.out.println("Showing books in stock: ");
                                         for (LibBook shownBooks : bookList) {
@@ -440,6 +466,7 @@ public class Library {
                                         System.out.print("Enter ID of book to borrow: ");
                                         int borrowID = borrowIDIn.nextInt();
 
+                                        // creating a borrow request and appending to the file
                                         LibBorrow newBorrow = new LibBorrow(borrowID, ((LibStudent) userInSession).getUsrID());
                                         fileAppend(newBorrow.toString(), "src\\filebase\\borrows.csv");
 
@@ -495,6 +522,8 @@ public class Library {
      *                  #########################
      */
 
+    // Method to check if the user (should be student or admin, hence extension) has valid credentials
+    // within the passed list
     public static <T extends LibUserInterface> boolean loginValidator(String email, long phoneNum, List<T> userList) {
         for(T user : userList) {
             if(email.equals(user.getUserEmail()) && phoneNum == user.getPhoneNum()) {
@@ -504,6 +533,7 @@ public class Library {
         return false;
     }
 
+    // Appends a string to the end of the passed csv file
     public static void fileAppend(String dataStr, String fileName) {
         try {
             FileWriter fw = new FileWriter(fileName, true);
@@ -514,6 +544,7 @@ public class Library {
         }
     }
 
+    // Checking if the user is an admin by iteration using the validiation over the admin list
     public static <T extends LibUserInterface> boolean isAdmin(String email, long phoneNum, List<T> adminList) {
         return loginValidator(email, phoneNum, adminList);
     }

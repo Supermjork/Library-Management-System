@@ -93,6 +93,9 @@ public class LibRegisterWindow extends JPanel {
                 LibStudent registerStudent = new LibStudent(studentName, studentID, studentNum, studentEmail);
 
                 fileAppend(registerStudent.toString(), "src\\filebase\\students.csv");
+                JOptionPane.showMessageDialog(register, "Registered Successfully");
+                register.dispose();
+                new LibMainWindow().setVisible(true);
             }
         });
 
@@ -105,9 +108,6 @@ public class LibRegisterWindow extends JPanel {
 
     public static void main(String[] args) {
         LibRegisterWindow registrationWindow = new LibRegisterWindow();
-
-        List<LibStudent> studentList = new ArrayList<>();
-        CsvFileReader.loadDataStudent("src\\filebase\\students.csv", studentList);
     }
 
     public static void fileAppend(String dataStr, String fileName) {

@@ -152,24 +152,16 @@ public class LibAdminUpdate extends JPanel {
                     FileWriter writeBook = null;
                     try {
                         writeBook = new FileWriter("src\\filebase\\books.csv");
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                    for (LibBook books : bookList) {
-                        try {
-                            assert writeBook != null;
-                            writeBook.write(books.toString());
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
+                        for (LibBook books : bookList) {
+                                writeBook.write(books.toString());
                         }
-                    }
-                    try {
-                        assert writeBook != null;
+
                         writeBook.close();
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
 
+                    JOptionPane.showMessageDialog(adminUpdate, "Book Updated");
                 }
             }
         });

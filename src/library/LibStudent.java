@@ -3,8 +3,6 @@ package library;
 import java.time.LocalDate;
 import requests.*;
 import java.lang.*;
-import java.util.Arrays;
-import java.util.LinkedList;
 
 public class LibStudent implements LibUserInterface {
     //Basic Info for student, created constructor as there cannot be super() due to interface
@@ -93,6 +91,7 @@ public class LibStudent implements LibUserInterface {
         return userEmail;
     }
 
+    // toString overridden into outputting in csv format (no blanks)
     @Override
     public String toString() {
         return getUsrName() + "," + getUsrID() + "," + getPhoneNum() + "," + getUserEmail() + "\n";
@@ -132,9 +131,12 @@ public class LibStudent implements LibUserInterface {
     // Add/Remove books into parallel arrays of Book/Date
 
     public void addBook(LibBook book) {
+        // Checks if the list is full by making sure no place is empty
         if(borrowedBooks[0] != null & borrowedBooks[1] != null & borrowedBooks[2] != null) {
             System.out.println("Cannot borrow any more books");
         } else {
+            // otherwise, if empty at any given space of the 3, adds the book to it
+            // and the borrow date is a parallel array, so inherently must be empty due to parallel operations on both
             for (int i = 0; i <= maxBorrowBooks; i++) {
                 if (borrowedBooks[i] == null & borrowDates[i] == null) {
                     borrowedBooks[i] = book;
@@ -158,12 +160,14 @@ public class LibStudent implements LibUserInterface {
         }
     }
 
-    // Allowing the user to view their borrowed books and when their borrowed said books and when should they return
+    // Allowing the user to view their borrowed books, when they borrowed said books, and when should they return
 
     public void showBorrowed() {
+        // Checking for emptiness
         if(borrowedBooks[0] == null & borrowedBooks[1] == null & borrowedBooks[2] == null) {
             System.out.println("You don't have any borrowed books");
         } else {
+            // prints the book in the given space in the array (skips nulls)
             System.out.println("Showing borrowed books: ");
             for(LibBook borrowedBook : borrowedBooks) {
                 if(borrowedBook != null) {
@@ -174,6 +178,8 @@ public class LibStudent implements LibUserInterface {
             }
         }
     }
+
+    // Method to show the user's borrowed books as a whole string to be put into the GUI's display field
 
     public String showBorrowedStr() {
         String borrowString = "";

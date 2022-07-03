@@ -18,6 +18,7 @@ public class LibStudentWindow extends JPanel {
     Object studentInSession = LibMainWindow.userInSession;
 
     public LibStudentWindow() {
+        // Loading student's data
         List<LibBorrow> borrowList = new ArrayList<>();
         List<LibBook> bookList = new ArrayList<>();
         List<LibReturn> returnList = new ArrayList<>();
@@ -26,6 +27,7 @@ public class LibStudentWindow extends JPanel {
         CsvFileReader.loadDataBorrow("src\\filebase\\borrows.csv", borrowList);
         CsvFileReader.loadDataBook("src\\filebase\\books.csv", bookList);
 
+        // Filling the borrow list with the current student's borrows
         for(LibBorrow borrows : borrowList) {
             if (((LibStudent) studentInSession).getUsrID() == borrows.getStudentID()) {
                 for (LibBook bookBorrowed : bookList) {
@@ -117,23 +119,20 @@ public class LibStudentWindow extends JPanel {
 
 
             // Creating functional buttons
+                // Exit button (x on top right)
         studentUI.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
                 studentUI.dispose();
             }
         });
 
-        viewBorrowed.addActionListener(e -> {
-            List<LibBorrow> borrowList1 = new ArrayList<>();
-            List<LibBook> bookList1 = new ArrayList<>();
-            CsvFileReader.loadDataBorrow("src\\filebase\\borrows.csv", borrowList1);
-            CsvFileReader.loadDataBook("src\\filebase\\books.csv", bookList1);
+                // For student to check their borrowed books
+        viewBorrowed.addActionListener(e -> displayBooks.setText(((LibStudent) studentInSession).showBorrowedStr()));
 
-            displayBooks.setText(((LibStudent) studentInSession).showBorrowedStr());
-        });
-
+                // For the student to order a book with its ID
         orderBook.addActionListener(e -> {
             if(!orderField.getText().equals("")) {
+                // Parsing passed "ID" into an integer
                 int orderID = Integer.parseInt(orderField.getText());
 
                 for(LibBook orderingBook : bookList) {
@@ -167,62 +166,69 @@ public class LibStudentWindow extends JPanel {
                         JOptionPane.showMessageDialog(studentUI,"Book ordered");
                         break;
                     } else if(orderID == orderingBook.getBookID() & orderingBook.getStockAmount() == 0) {
+                        // Should the book be out of stock, a reservation request will be made
                         JOptionPane.showMessageDialog(studentUI,"Book out of stock, will make a reservation");
+
                         LibReserve reservationRequest = new LibReserve(orderID, ((LibStudent) studentInSession).getUsrID());
                         fileAppend(reservationRequest.toString(), "src\\filebase\\reservations.csv");
                     }
                 }
             } else {
+                // If the order field is empty
                 JOptionPane.showMessageDialog(studentUI,"Enter book ID to buy");
             }
         });
-
+                // Searching button for books using a substring (Will display all books containing said substring
+                // is case-sensitive
         searchBooks.addActionListener(e -> {
-
             String searchBook = searchField.getText();
 
             if(!searchField.getText().equals("")) {
+                // Instantiates a search string
                 StringBuilder searchBuild = new StringBuilder();
                 String searchStr = null;
 
                 for (LibBook searchingBook : bookList) {
+                    // Checks if the books in the list have any substrings that contain the passed search string
                     if (searchingBook.getBookName().contains(searchBook)) {
                         searchStr = searchBuild.append(bookInfo(searchingBook)).toString();
                     }
                 }
+                // Displays the entire search result (the one big string being appended to)
                 displayBooks.setText(searchStr);
             } else {
                 JOptionPane.showMessageDialog(studentUI,"Enter a substring of book title to search for");
             }
         });
 
+                // Displaying all books in the csv
         displayAll.addActionListener(e -> {
-
             StringBuilder allBooks = new StringBuilder();
             String showAll = null;
 
             for(LibBook displayBook : bookList) {
+                // Appends all books' strings into one string to be displayed
                 showAll = allBooks.append(bookInfo(displayBook)).toString();
             }
 
             displayBooks.setText(showAll);
         });
 
+                // Borrow by ID
         borrowBook.addActionListener(e -> {
-
-
             if(!borrowField.getText().equals("")) {
                 int borrowID = Integer.parseInt(borrowField.getText());
 
                 if (((LibStudent) studentInSession).getCurrentAmountBorrowed() < 3) {
-
                     for (LibBook borrowingBook : bookList) {
                         if (borrowID == borrowingBook.getBookID() & borrowingBook.getStockAmount() > 0) {
 
                             ((LibStudent) studentInSession).addBook(borrowingBook);
 
+                            // Decreases the book's amount
                             borrowingBook.decStockAmount();
 
+                            // Appending the request into the csv
                             LibBorrow borrowRequest = new LibBorrow(borrowingBook.getBookID(), ((LibStudent) studentInSession).getUsrID());
                             fileAppend(borrowRequest.toString(), "src\\filebase\\borrows.csv");
 
@@ -232,6 +238,8 @@ public class LibStudentWindow extends JPanel {
                             } catch (IOException ex) {
                                 ex.printStackTrace();
                             }
+
+                            // Rewrites the book list with the updated stock amount for the borrowed book
                             for (LibBook books : bookList) {
                                 try {
                                     assert writeOrder != null;
@@ -246,59 +254,62 @@ public class LibStudentWindow extends JPanel {
                             } catch (IOException ex) {
                                 ex.printStackTrace();
                             }
+
                         }
                     }
                 } else {
+                    // If student has 3 borrowed books
                     JOptionPane.showMessageDialog(studentUI, "Cannot borrow more books");
                 }
             } else {
+                // Should field be empty
                 JOptionPane.showMessageDialog(studentUI, "Write an ID to borrow");
             }
         });
 
+        // Returning borrowed book
         returnBorrowed.addActionListener(e -> {
             if(!returnField.getText().equals("")) {
                 if(((LibStudent) studentInSession).getCurrentAmountBorrowed() == 0) {
-                    JOptionPane.showMessageDialog(studentUI, "You do not have any borrowed books");
+                    JOptionPane.showMessageDialog(studentUI, "You do not have any borrowed books.");
                 }
+
                 int returningID = Integer.parseInt(returnField.getText());
 
                 LibReturn returnRequest = new LibReturn(returningID, ((LibStudent) studentInSession).getUsrID());
+
+                // Removes the book from the student's inventory
                 ((LibStudent) studentInSession).removeBook(returningID);
 
+                // Adds request to list, appends to its file
                 returnList.add(returnRequest);
                 fileAppend(returnRequest.toString(), "src\\filebase\\returns.csv");
 
                 for(LibBorrow borrowReturn : borrowList) {
                     if(borrowReturn.getBookID() == returningID && borrowReturn.getStudentID() == ((LibStudent) studentInSession).getUsrID()) {
+                        // Removes the borrow request from the list, and rewrites the file using said list
                         borrowList.remove(borrowReturn);
 
                         FileWriter writeBorrow = null;
                         try {
                             writeBorrow = new FileWriter("src\\filebase\\borrows.csv");
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                        }
-                        for (LibBorrow removeBorrow : borrowList) {
-                            try {
-                                assert writeBorrow != null;
-                                writeBorrow.write(removeBorrow.toString());
-                            } catch (IOException ex) {
-                                ex.printStackTrace();
+                            for (LibBorrow removeBorrow : borrowList) {
+                                    writeBorrow.write(removeBorrow.toString());
                             }
-                        }
-                        try {
-                            assert writeBorrow != null;
+
                             writeBorrow.close();
                         } catch (IOException ex) {
                             ex.printStackTrace();
                         }
-                        JOptionPane.showMessageDialog(studentUI, "Book returned");
+
+                        JOptionPane.showMessageDialog(studentUI, "Book returned.");
                         break;
+                    } else {
+                        JOptionPane.showMessageDialog(studentUI, "You do not have a book with such ID borrowed.");
                     }
                 }
             } else {
-                JOptionPane.showMessageDialog(studentUI, "Enter book ID to return");
+                JOptionPane.showMessageDialog(studentUI, "Enter book ID to return.");
             }
         });
 
@@ -322,6 +333,7 @@ public class LibStudentWindow extends JPanel {
         }
     }
 
+    // Entire book info in a string to be written onto the text display
     public static String bookInfo(LibBook book) {
         StringBuilder bookDetails = new StringBuilder();
 

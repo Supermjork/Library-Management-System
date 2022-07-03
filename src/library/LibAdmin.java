@@ -1,13 +1,12 @@
 package library;
 
-import java.time.LocalDate;
-
 import requests.*;
 
 /**
  * Child class of the libUser which inherits basic fields, uses super constructor, also overrides privileges
  */
-public class LibAdmin implements LibUserInterface {    //Basic Info for student, created constructor as there cannot be super() due to interface
+public class LibAdmin implements LibUserInterface {
+    // Basic Info for admin, created constructor as there cannot be super() due to interface
     private String usrName;
     private int usrID;
     private long phoneNum;
@@ -68,6 +67,7 @@ public class LibAdmin implements LibUserInterface {    //Basic Info for student,
         return getUsrName() + "," +  getUsrID() + "," + getPhoneNum() + "," + getUserEmail();
     }
 
+    // Request Creation methods are not used, may be deleted
     // Creates a request of the type order, and returns it
     public LibOrder createOrder(LibBook book, LibStudent student) {
         return new LibOrder(book.getBookID(),student.getUsrID());

@@ -3,8 +3,6 @@ import reader.CsvFileReader;
 import requests.*;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileWriter;
@@ -150,19 +148,10 @@ public class LibAdminWindow extends JPanel {
                 FileWriter writer = null;
                 try {
                     writer = new FileWriter("src\\filebase\\books.csv");
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                for (LibBook books : bookList) {
-                    try {
-                        assert writer != null;
-                        writer.write(books.toString());
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
+                    for (LibBook books : bookList) {
+                            writer.write(books.toString());
                     }
-                }
-                try {
-                    assert writer != null;
+
                     writer.close();
                 } catch (IOException ex) {
                     ex.printStackTrace();
